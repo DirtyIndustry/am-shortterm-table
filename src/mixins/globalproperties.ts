@@ -3,6 +3,7 @@ import AmShortInfo1 from '../types/amshortinfo1'
 import AmShortInfo2 from '../types/amshortinfo2'
 import AmShortInfo3and4 from '../types/amshortinfo3and4'
 import AmShortInfo5 from '../types/amshortinfo5'
+import AmShortInfo6 from '../types/amshortinfo6'
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -13,6 +14,7 @@ declare module 'vue/types/vue' {
         amshorttable2: AmShortInfo2[]
         amshorttable3and4: AmShortInfo3and4[]
         amshorttable5: AmShortInfo5[]
+        amshorttable6: AmShortInfo6[]
     }
 }
 @Component
@@ -31,4 +33,6 @@ export default class GlobalProperties extends Vue {
   set amshorttable3and4(value: AmShortInfo3and4[]) { this.$store.dispatch('setAmShortTable3and4', value) }
   get amshorttable5() { return this.$store.state.amshorttable5 }
   set amshorttable5(value: AmShortInfo5[]) { this.$store.dispatch('setAmShortTable5', value) }
+  get amshorttable6() { return this.$store.state.amshorttable6 }
+  set amshorttable6(value: AmShortInfo6[]) { this.$store.dispatch('setAmShortTable6', value) }
 }

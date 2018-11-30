@@ -10,12 +10,18 @@
     <AmShortTable3and4 title="上午三、3天海洋水文气象预报综述"
       :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW"
       :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEWCX"
-      @valueChange="table3changed"></AmShortTable3and4>
+      @valueChange="table3changed">
+      </AmShortTable3and4>
     <div class="separator-vertical"></div>
     <AmShortTable3and4 title="上午四、24小时水文气象预报综述"
       :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOUR"
       :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX"
-      @valueChange="table4changed"></AmShortTable3and4>
+      @valueChange="table4changed">
+      </AmShortTable3and4>
+    <div class="separator-vertical"></div>
+    <AmShortTable5></AmShortTable5>
+    <div class="separator-vertical"></div>
+    <AmShortTable6></AmShortTable6>
   </div>
 </template>
 
@@ -27,13 +33,17 @@ import HeaderStrip from '@/components/HeaderStrip.vue' // @ is an alias to /src
 import AmShortTable1 from '@/components/AmShortTable1.vue'
 import AmShortTable2 from '@/components/AmShortTable2.vue'
 import AmShortTable3and4 from '@/components/AmShortTable3and4.vue'
+import AmShortTable5 from '@/components/AmShortTable5.vue'
+import AmShortTable6 from '@/components/AmShortTable6.vue'
 
 @Component({
   components: {
     HeaderStrip,
     AmShortTable1,
     AmShortTable2,
-    AmShortTable3and4
+    AmShortTable3and4,
+    AmShortTable5,
+    AmShortTable6
   },
   mixins: [GlobalProperties]
 })
@@ -67,6 +77,7 @@ export default class Home extends Vue {
           this.amshorttable2 = resdata.AmShort2Data
           this.amshorttable3and4 = resdata.AmShort3and4Data
           this.amshorttable5 = resdata.AmShort5Data
+          this.amshorttable6 = resdata.AmShort6Data
         }
       })
       .catch((error) => {
