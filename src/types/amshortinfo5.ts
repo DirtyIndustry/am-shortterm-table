@@ -1,4 +1,4 @@
-export default class AmShortInfo1 {
+export default class AmShortInfo5 {
     public PUBLISHDATE: Date
     public EFWWBHLOWESTWAVE: string
     public EFWWBHHIGHESTWAVE: string

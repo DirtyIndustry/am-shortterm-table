@@ -1,4 +1,4 @@
-export default class AmShortInfo1 {
+export default class AmShortInfo6 {
     public PUBLISHDATE: Date
     public TLFORECASTSTANCE: string
     public FORECASTDATE: Date

@@ -75,11 +75,20 @@
 
 <style scoped>
     .container {
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: -ms-sticky;
+        position: sticky;
+        top: 0;
         width: 100%;
+        min-width: 800px;
+        line-height: 60px;
         display: flex;
         align-items: center;
         flex-wrap: wrap;
         font-weight: bold;
+        background-color: #999999;
+        z-index: 9;
     }
     .yubaoyuan-container {
         display: flex;
