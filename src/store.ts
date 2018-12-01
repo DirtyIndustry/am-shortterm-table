@@ -7,6 +7,7 @@ import AmShortInfo5 from './types/amshortinfo5'
 import AmShortInfo6 from './types/amshortinfo6'
 import AmShortInfo7 from './types/amshortinfo7'
 import AmShortInfo8 from './types/amshortinfo8'
+import AmShortInfo9 from './types/amshortinfo9'
 
 Vue.use(Vuex)
 
@@ -66,6 +67,9 @@ export default new Vuex.Store({
       new AmShortInfo8(),
       new AmShortInfo8(),
       new AmShortInfo8()
+    ],
+    amshorttable9: [
+      new AmShortInfo9()
     ]
   },
   mutations: {
@@ -98,6 +102,9 @@ export default new Vuex.Store({
     },
     setamshorttable8(state, value: AmShortInfo8[]): void {
       state.amshorttable8 = value
+    },
+    setamshorttable9(state, value: AmShortInfo9[]): void {
+      state.amshorttable9 = value
     }
   },
   actions: {
@@ -130,6 +137,9 @@ export default new Vuex.Store({
     },
     setAmShortTable8(context, amshorttable8: AmShortInfo8[]): void {
       context.commit('setamshorttable8', amshorttable8)
+    },
+    setAmShortTable9(context, amshorttable9: AmShortInfo9[]): void {
+      context.commit('setamshorttable9', amshorttable9)
     }
   }
 })
