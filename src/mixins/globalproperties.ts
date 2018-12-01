@@ -5,6 +5,7 @@ import AmShortInfo3and4 from '../types/amshortinfo3and4'
 import AmShortInfo5 from '../types/amshortinfo5'
 import AmShortInfo6 from '../types/amshortinfo6'
 import AmShortInfo7 from '../types/amshortinfo7'
+import AmShortInfo8 from '../types/amshortinfo8'
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -17,26 +18,29 @@ declare module 'vue/types/vue' {
         amshorttable5: AmShortInfo5[]
         amshorttable6: AmShortInfo6[]
         amshorttable7: AmShortInfo7[]
+        amshorttable8: AmShortInfo8[]
     }
 }
 @Component
 export default class GlobalProperties extends Vue {
-  get username() { return this.$store.state.username }
-  set username(value: string) { this.$store.dispatch('setUserName', value) }
-  get usertype() { return this.$store.state.usertype }
-  set usertype(value: string) { this.$store.dispatch('setUserType', value) }
-  get coltime() { return this.$store.state.coltime }
-  set coltime(value: Date) { this.$store.dispatch('setColtime', value) }
-  get amshorttable1() { return this.$store.state.amshorttable1 }
-  set amshorttable1(value: AmShortInfo1[]) { this.$store.dispatch('setAmShortTable1', value) }
-  get amshorttable2() { return this.$store.state.amshorttable2 }
-  set amshorttable2(value: AmShortInfo2[]) { this.$store.dispatch('setAmShortTable2', value) }
-  get amshorttable3and4() { return this.$store.state.amshorttable3and4 }
-  set amshorttable3and4(value: AmShortInfo3and4[]) { this.$store.dispatch('setAmShortTable3and4', value) }
-  get amshorttable5() { return this.$store.state.amshorttable5 }
-  set amshorttable5(value: AmShortInfo5[]) { this.$store.dispatch('setAmShortTable5', value) }
-  get amshorttable6() { return this.$store.state.amshorttable6 }
-  set amshorttable6(value: AmShortInfo6[]) { this.$store.dispatch('setAmShortTable6', value) }
-  get amshorttable7() { return this.$store.state.amshorttable7 }
-  set amshorttable7(value: AmShortInfo7[]) { this.$store.dispatch('setAmShortTable7', value) }
+    get username() { return this.$store.state.username }
+    set username(value: string) { this.$store.dispatch('setUserName', value) }
+    get usertype() { return this.$store.state.usertype }
+    set usertype(value: string) { this.$store.dispatch('setUserType', value) }
+    get coltime() { return this.$store.state.coltime }
+    set coltime(value: Date) { this.$store.dispatch('setColtime', value) }
+    get amshorttable1() { return this.$store.state.amshorttable1 }
+    set amshorttable1(value: AmShortInfo1[]) { this.$store.dispatch('setAmShortTable1', value) }
+    get amshorttable2() { return this.$store.state.amshorttable2 }
+    set amshorttable2(value: AmShortInfo2[]) { this.$store.dispatch('setAmShortTable2', value) }
+    get amshorttable3and4() { return this.$store.state.amshorttable3and4 }
+    set amshorttable3and4(value: AmShortInfo3and4[]) { this.$store.dispatch('setAmShortTable3and4', value) }
+    get amshorttable5() { return this.$store.state.amshorttable5 }
+    set amshorttable5(value: AmShortInfo5[]) { this.$store.dispatch('setAmShortTable5', value) }
+    get amshorttable6() { return this.$store.state.amshorttable6 }
+    set amshorttable6(value: AmShortInfo6[]) { this.$store.dispatch('setAmShortTable6', value) }
+    get amshorttable7() { return this.$store.state.amshorttable7 }
+    set amshorttable7(value: AmShortInfo7[]) { this.$store.dispatch('setAmShortTable7', value) }
+    get amshorttable8() { return this.$store.state.amshorttable8 }
+    set amshorttable8(value: AmShortInfo8[]) { this.$store.dispatch('setAmShortTable8', value) }
 }

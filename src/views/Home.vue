@@ -24,6 +24,8 @@
     <AmShortTable6></AmShortTable6>
     <div class="separator-vertical"></div>
     <AmShortTable7></AmShortTable7>
+    <div class="separator-vertical"></div>
+    <AmShortTable8></AmShortTable8>
   </div>
 </template>
 
@@ -38,6 +40,7 @@ import AmShortTable3and4 from '@/components/AmShortTable3and4.vue'
 import AmShortTable5 from '@/components/AmShortTable5.vue'
 import AmShortTable6 from '@/components/AmShortTable6.vue'
 import AmShortTable7 from '@/components/AmShortTable7.vue'
+import AmShortTable8 from '@/components/AmShortTable8.vue'
 
 @Component({
   components: {
@@ -47,7 +50,8 @@ import AmShortTable7 from '@/components/AmShortTable7.vue'
     AmShortTable3and4,
     AmShortTable5,
     AmShortTable6,
-    AmShortTable7
+    AmShortTable7,
+    AmShortTable8
   },
   mixins: [GlobalProperties]
 })
@@ -83,6 +87,7 @@ export default class Home extends Vue {
           this.amshorttable5 = resdata.AmShort5Data
           this.amshorttable6 = resdata.AmShort6Data
           this.amshorttable7 = resdata.AmShort7Data
+          this.amshorttable8 = resdata.AmShort8Data
         }
       })
       .catch((error) => {
