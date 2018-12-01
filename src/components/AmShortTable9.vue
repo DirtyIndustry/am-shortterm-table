@@ -62,20 +62,12 @@ import AmShortInfo9 from '../types/amshortinfo9'
 })
 export default class AmShortTable9 extends Vue {
     private localtable = [
-        new AmShortInfo9(),
-        new AmShortInfo9(),
-        new AmShortInfo9(),
-        new AmShortInfo9(),
-        new AmShortInfo9(),
-        new AmShortInfo9(),
-        new AmShortInfo9(),
-        new AmShortInfo9(),
         new AmShortInfo9()
     ]
     private deepEqual = require('deep-equal')
     private submitdisable: boolean = true
     @Watch('amshorttable9')
-    private onAmShortTable1Changed(val: any, oldVal: any) {
+    private onAmShortTable9Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable9))
         this.checkSubmit()
     }

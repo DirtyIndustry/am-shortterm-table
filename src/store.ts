@@ -9,6 +9,9 @@ import AmShortInfo7 from './types/amshortinfo7'
 import AmShortInfo8 from './types/amshortinfo8'
 import AmShortInfo9 from './types/amshortinfo9'
 import AmShortInfo10 from './types/amshortinfo10'
+import AmShortInfo11 from './types/amshortinfo11'
+import AmShortInfo12 from './types/amshortinfo12'
+import PublishInfo from './types/publishinfo'
 
 Vue.use(Vuex)
 
@@ -74,6 +77,15 @@ export default new Vuex.Store({
     ],
     amshorttable10: [
       new AmShortInfo10()
+    ],
+    amshorttable11: [
+      new AmShortInfo11()
+    ],
+    amshorttable12: [
+      new AmShortInfo12()
+    ],
+    publishmetainfo: [
+      new PublishInfo()
     ]
   },
   mutations: {
@@ -112,6 +124,15 @@ export default new Vuex.Store({
     },
     setamshorttable10(state, value: AmShortInfo10[]): void {
       state.amshorttable10 = value
+    },
+    setamshorttable11(state, value: AmShortInfo11[]): void {
+      state.amshorttable11 = value
+    },
+    setamshorttable12(state, value: AmShortInfo12[]): void {
+      state.amshorttable12 = value
+    },
+    setpublishmetainfo(state, value: PublishInfo[]): void {
+      state.publishmetainfo = value
     }
   },
   actions: {
@@ -150,6 +171,15 @@ export default new Vuex.Store({
     },
     setAmShortTable10(context, amshorttable10: AmShortInfo10[]): void {
       context.commit('setamshorttable10', amshorttable10)
+    },
+    setAmShortTable11(context, amshorttable11: AmShortInfo11[]): void {
+      context.commit('setamshorttable11', amshorttable11)
+    },
+    setAmShortTable12(context, amshorttable12: AmShortInfo12[]): void {
+      context.commit('setamshorttable12', amshorttable12)
+    },
+    setPublishMetaInfo(context, value: PublishInfo[]): void {
+      context.commit('setpublishmetainfo', value)
     }
   }
 })
