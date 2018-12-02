@@ -29,7 +29,7 @@
                 </div>
                 <div class="reporter-row">
                     <div class="reporter-header">海浪预报员电话：</div>
-                    <el-input class="input" v-model="localtable[0].FWAVEFORECASTERTEL" placeholder="请输入发送电话" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].FWAVEFORECASTERTEL" placeholder="请输入海浪预报员电话" :disabled="!editable" @change="checkSubmit"></el-input>
                 </div>
             </div>
             <div class="separator-horizontal border-right"></div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="reporter-row">
                     <div class="reporter-header">潮汐预报员电话：</div>
-                    <el-input class="input" v-model="localtable[0].FTIDALFORECASTERTEL" placeholder="请输入发送电话" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].FTIDALFORECASTERTEL" placeholder="请输入潮汐预报员电话" :disabled="!editable" @change="checkSubmit"></el-input>
                 </div>
             </div>
             <div class="separator-horizontal border-right"></div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="reporter-row">
                     <div class="reporter-header">水温预报员电话：</div>
-                    <el-input class="input" v-model="localtable[0].FWATERTEMPERATUREFORECASTERTEL" placeholder="请输入发送电话" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].FWATERTEMPERATUREFORECASTERTEL" placeholder="请输入水温预报员电话" :disabled="!editable" @change="checkSubmit"></el-input>
                 </div>
             </div>
             <div class="separator-horizontal"></div>

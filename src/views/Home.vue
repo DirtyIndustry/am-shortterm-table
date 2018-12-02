@@ -131,10 +131,8 @@ export default class Home extends Vue {
   }
   private created() {
     this.cookie = document.cookie
-    // this.cookie = 'i\'m a cookie.'
-    // this.usertype = 'fl'
     this.loadCookie()
-    this.getData()
+    // this.getData()
   }
 }
 </script>
