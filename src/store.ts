@@ -19,7 +19,7 @@ export default new Vuex.Store({
   state: {
     username: '',
     usertype: '',
-    coltime: new Date(),
+    coltime: new Date(new Date().toLocaleDateString()),
     amshorttable1: [
       new AmShortInfo1(),
       new AmShortInfo1(),
