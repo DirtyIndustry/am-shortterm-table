@@ -19,6 +19,10 @@ export default new Vuex.Store({
   state: {
     username: '',
     usertype: '',
+    iswindwave: true,
+    istide: true,
+    istemperature: true,
+    showalltable: false,
     coltime: new Date(new Date().toLocaleDateString()),
     amshorttable1: [
       new AmShortInfo1(),
@@ -133,6 +137,18 @@ export default new Vuex.Store({
     },
     setpublishmetainfo(state, value: PublishInfo[]): void {
       state.publishmetainfo = value
+    },
+    setiswindwave(state, value: boolean): void {
+      state.iswindwave = value
+    },
+    setistide(state, value: boolean): void {
+      state.istide = value
+    },
+    setistemperature(state, value: boolean): void {
+      state.istemperature = value
+    },
+    setshowalltable(state, value: boolean): void {
+      state.showalltable = value
     }
   },
   actions: {
@@ -180,6 +196,18 @@ export default new Vuex.Store({
     },
     setPublishMetaInfo(context, value: PublishInfo[]): void {
       context.commit('setpublishmetainfo', value)
+    },
+    setIsWindWave(context, value: boolean): void {
+      context.commit('setiswindwave', value)
+    },
+    setIsTide(context, value: boolean): void {
+      context.commit('setistide', value)
+    },
+    setIsTemperature(context, value: boolean): void {
+      context.commit('setistemperature', value)
+    },
+    setShowAllTable(context, value: boolean): void {
+      context.commit('setshowalltable', value)
     }
   }
 })

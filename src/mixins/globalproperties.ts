@@ -16,6 +16,10 @@ declare module 'vue/types/vue' {
     interface Vue {
         username: string
         usertype: string
+        iswindwave: boolean
+        istide: boolean
+        istemperature: boolean
+        showalltable: boolean
         coltime: Date
         amshorttable1: AmShortInfo1[]
         amshorttable2: AmShortInfo2[]
@@ -37,6 +41,14 @@ export default class GlobalProperties extends Vue {
     set username(value: string) { this.$store.dispatch('setUserName', value) }
     get usertype() { return this.$store.state.usertype }
     set usertype(value: string) { this.$store.dispatch('setUserType', value) }
+    get iswindwave() { return this.$store.state.iswindwave }
+    set iswindwave(value: boolean) { this.$store.dispatch('setIsWindWave', value) }
+    get istide() { return this.$store.state.istide }
+    set istide(value: boolean) { this.$store.dispatch('setIsTide', value) }
+    get istemperature() { return this.$store.state.istemperature }
+    set istemperature(value: boolean) { this.$store.dispatch('setIsTemperature', value) }
+    get showalltable() { return this.$store.state.showalltable }
+    set showalltable(value: boolean) { this.$store.dispatch('setShowAllTable', value) }
     get coltime() { return this.$store.state.coltime }
     set coltime(value: Date) { this.$store.dispatch('setColtime', value) }
     get amshorttable1() { return this.$store.state.amshorttable1 }

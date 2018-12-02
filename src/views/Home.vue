@@ -3,37 +3,39 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <HeaderStrip @query="getData"></HeaderStrip>
     <div class="separator-vertical"></div>
-    <AmShortTable1></AmShortTable1>
+    <AmShortTable1 v-show="iswindwave | istemperature | showalltable"></AmShortTable1>
     <div class="separator-vertical"></div>
-    <AmShortTable2></AmShortTable2>
+    <AmShortTable2 v-show="istide | showalltable"></AmShortTable2>
     <div class="separator-vertical"></div>
-    <AmShortTable3and4 title="上午三、3天海洋水文气象预报综述"
+    <AmShortTable3and4 v-show="iswindwave | istide | showalltable"
+      title="上午三、3天海洋水文气象预报综述"
       :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW"
       :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEWCX"
       @valueChange="table3changed">
       </AmShortTable3and4>
     <div class="separator-vertical"></div>
-    <AmShortTable3and4 title="上午四、24小时水文气象预报综述"
+    <AmShortTable3and4 v-show="iswindwave | istide | showalltable"
+      title="上午四、24小时水文气象预报综述"
       :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOUR"
       :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX"
       @valueChange="table4changed">
       </AmShortTable3and4>
     <div class="separator-vertical"></div>
-    <AmShortTable5></AmShortTable5>
+    <AmShortTable5 v-show="iswindwave | istemperature | showalltable"></AmShortTable5>
     <div class="separator-vertical"></div>
-    <AmShortTable6></AmShortTable6>
+    <AmShortTable6 v-show="istide | showalltable"></AmShortTable6>
     <div class="separator-vertical"></div>
-    <AmShortTable7></AmShortTable7>
+    <AmShortTable7 v-show="iswindwave | showalltable"></AmShortTable7>
     <div class="separator-vertical"></div>
-    <AmShortTable8></AmShortTable8>
+    <AmShortTable8 v-show="istide | showalltable"></AmShortTable8>
     <div class="separator-vertical"></div>
-    <AmShortTable9></AmShortTable9>
+    <AmShortTable9 v-show="iswindwave | istemperature | showalltable"></AmShortTable9>
     <div class="separator-vertical"></div>
-    <AmShortTable10></AmShortTable10>
+    <AmShortTable10 v-show="iswindwave | istemperature | showalltable"></AmShortTable10>
     <div class="separator-vertical"></div>
-    <AmShortTable11></AmShortTable11>
+    <AmShortTable11 v-show="istide | showalltable"></AmShortTable11>
     <div class="separator-vertical"></div>
-    <AmShortTable12></AmShortTable12>
+    <AmShortTable12 v-show="iswindwave | showalltable"></AmShortTable12>
     <div class="separator-vertical"></div>
     <PublishMetaInfo></PublishMetaInfo>
     <div class="separator-vertical"></div>
@@ -42,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Vue } from 'vue-property-decorator'
+import { Component, Mixins, Watch, Vue } from 'vue-property-decorator'
 import Axios from 'axios'
 import GlobalProperties from '../mixins/globalproperties'
 import HeaderStrip from '@/components/HeaderStrip.vue' // @ is an alias to /src
@@ -78,7 +80,10 @@ import PublishMetaInfo from '@/components/PublishMetaInfo.vue'
   mixins: [GlobalProperties]
 })
 export default class Home extends Vue {
-  private cookie: string = ''
+  @Watch('usertype')
+  private onUserTypeChanged(val: boolean, oldVal: boolean) {
+    this.setTypeShows()
+  }
   private loadCookie() {
     if (document.cookie !== '') {
       const userinfo: string[] = document.cookie.split('UserInfo=')[1].split('&')
@@ -97,6 +102,30 @@ export default class Home extends Vue {
       } // end-for(userinfo)
     } // end-if(cookie != '')
   } // end-loadCookie()
+  private setTypeShows() {
+    switch (this.usertype) {
+      case 'fl':
+        this.iswindwave = true
+        this.istide = false
+        this.istemperature = false
+        break
+      case 'cx':
+        this.iswindwave = false
+        this.istide = true
+        this.istemperature = false
+        break
+      case 'sw':
+        this.iswindwave = false
+        this.istide = false
+        this.istemperature = true
+        break
+      default:
+        this.iswindwave = true
+        this.istide = true
+        this.istemperature = true
+        break
+    }
+  }
   private getData() {
     Axios.post('http://123.234.129.234:10001/WebService/WebServices.asmx/GetTableData', {date: this.coltime})
       .then((res) => {
@@ -132,7 +161,7 @@ export default class Home extends Vue {
   private created() {
     this.cookie = document.cookie
     this.loadCookie()
-    // this.getData()
+    this.getData()
   }
 }
 </script>

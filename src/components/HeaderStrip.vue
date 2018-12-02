@@ -3,8 +3,8 @@
         <!-- <div class="info-panel"> -->
             <div class="yubaoyuan-container">
                 <div class="yubaoyuan">预报员类型:</div>
-                <el-select class="yubaoyuan-select" v-model="reportertype" placeholder="请选择" disabled>
-                    <el-option v-for="(item, index) in reportertypes" :key="index" :label="item" :value="item"></el-option>
+                <el-select class="yubaoyuan-select" v-model="usertype" placeholder="请选择">
+                    <el-option v-for="(item, index) in reportertypes" :key="index" :label="item.label" :value="item.value"></el-option>
                 </el-select>
             </div>
             <div class="pubdate-container">
@@ -22,7 +22,7 @@
         <!-- </div> -->
         <el-button @click="queryData">查询</el-button>
         <el-button>操作日志</el-button>
-        <el-button>显示所有</el-button>
+        <el-switch v-model="showalltable" active-text="显示所有" active-color="#13ce66"></el-switch>
         <el-button>选择模板并发布</el-button>
         <el-button>保存所有</el-button>
     </div>
@@ -36,7 +36,7 @@
         mixins: [GlobalProperties]
     })
     export default class HeaderStrip extends Vue {
-        private reportertypes = ['潮汐', '风、海浪', '水温', '无']
+        private reportertypes = [{label: '潮汐', value: 'cx'}, {label: '风、海浪', value: 'fl'}, {label: '水温', value: 'sw'}, {label: '无', value: ''}]
         private reportdate = new Date()
         private reportdateoption = {
             disabledDate(time: Date) {
@@ -87,8 +87,8 @@
         align-items: center;
         flex-wrap: wrap;
         font-weight: bold;
-        border: 1px solid #999999;
-        background-color: #999999;
+        border: 1px solid #f0f0f0;
+        background-color: #f0f0f0;
         box-shadow: 0px 5px 25px gray;
         z-index: 9;
     }
