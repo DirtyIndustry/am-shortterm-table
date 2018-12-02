@@ -5,10 +5,10 @@
             <div class="header-column border-right">区域</div>
             <div class="header-column border-right">日期</div>
             <div class="right-column">
-                <div class="content-column border-right">波高（h）</div>
-                <div class="content-column border-right">波向（方位）</div>
-                <div class="content-column border-right">风向（方位）</div>
-                <div class="content-column">风力（级）</div>
+                <div class="header-content-column border-right">波高（h）</div>
+                <div class="header-content-column border-right">波向（方位）</div>
+                <div class="header-content-column border-right">风向（方位）</div>
+                <div class="header-content-column">风力（级）</div>
             </div>
         </div>
         <div class="table-body border-left border-right border-bottom">
@@ -19,7 +19,7 @@
             </div>
             <div class="table-body-content-column">
                 <div class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index">
-                    <div class="header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
+                    <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
                         <el-input class="input" v-model="item.YRBHWWFWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
                     </div>
@@ -118,30 +118,38 @@ div {
     flex-direction: row;
 }
 .header-column {
-    height: 100%;
+    height: 30px;
     min-width: 100px;
+}
+.header-content-column {
+    height: 30px;
+    flex: 1;
 }
 .right-column {
     flex: 1;
     height: 100%;
 }
+.content-header-column {
+    height: 50px;
+    min-width: 100px;
+}
 .content-column {
     flex: 1;
-    height: 100%;
+    height: 50px;
     min-width: 120px;
 }
 .table-body {
     width: 100%;
-    height: 450px;
+    height: 458px;
     flex-direction: row;
 }
 .table-body-header-column {
     flex-direction: column;
-    height: 450px;
+    height: 459px;
 }
 .table-body-content-column {
     flex: 1;
-    height: 450px;
+    /* height: 450px; */
     flex-direction: column;
 }
 .table-body-row {

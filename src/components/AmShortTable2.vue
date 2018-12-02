@@ -173,7 +173,7 @@ div {
     flex-direction: row;
 }
 .header-column {
-    height: 100%;
+    height: 90px;
     min-width: 80px;
 }
 .header-column-second {
@@ -184,31 +184,31 @@ div {
 }
 .header-column-second-row {
     width: 100%;
-    height: 31px;
+    height: 100%;
     flex: 1;
     flex-direction: row;
 }
 .right-column {
     flex: 1;
-    height: 100%;
+    height: 90px;
 }
 .content-header-column {
-    height: 59px;
+    height: 60px;
     min-width: 80px;
 }
 .content-column {
     flex: 1;
-    height: 59px;
+    height: 60px;
     min-width: 79px;
 }
 .table-body {
     width: 100%;
-    height: 360px;
+    height: 365px;
     flex-direction: row;
 }
 .table-body-header-column {
     flex-direction: column;
-    /* height: 340px; */
+    height: 365px;
 }
 .table-body-content-column {
     flex: 1;

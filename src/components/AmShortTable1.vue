@@ -126,9 +126,10 @@ div {
 .header-content-column {
     flex: 1;
     height: 30px;
+    min-width: 120px;
 }
 .content-header-column {
-    min-width: 100px;
+    width: 100px;
     height: 60px;
 }
 .content-column {

@@ -133,7 +133,7 @@ div {
 }
 .content-column {
     flex: 1;
-    height: 100%;
+    height: 30px;
     min-width: 120px;
     flex-direction: column;
 }
