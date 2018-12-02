@@ -9,14 +9,14 @@
             </div>
         </div>
         <div class="table-body border-left border-right border-bottom">
-            <div class="header-column border-right">
+            <div class="body-header-column border-right">
                 <div class="table-body-row border-bottom">渤海</div>
                 <div class="table-body-row border-bottom">黄海北部</div>
                 <div class="table-body-row border-bottom">黄海中部</div>
                 <div class="table-body-row border-bottom">黄海南部</div>
                 <div class="table-body-row">潍坊近海</div>
             </div>
-            <div class="content-column border-right">
+            <div class="body-content-column border-right">
                 <div class="table-body-row border-bottom">
                     <el-input class="input" v-model="localtable[0].SA24HWFBOHAIWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
                 </div>
@@ -33,7 +33,7 @@
                     <el-input class="input" v-model="localtable[0].SA24HWFOFFSHOREWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
                 </div>
             </div>
-            <div class="content-column">
+            <div class="body-content-column">
                 <div class="table-body-row border-bottom"></div>
                 <div class="table-body-row border-bottom"></div>
                 <div class="table-body-row border-bottom"></div>
@@ -122,6 +122,11 @@ div {
     min-width: 100px;
     flex-direction: column;
 }
+.body-header-column {
+    height: 300px;
+    min-width: 100px;
+    flex-direction: column;
+}
 .right-column {
     flex: 1;
     height: 100%;
@@ -129,6 +134,12 @@ div {
 .content-column {
     flex: 1;
     height: 100%;
+    min-width: 120px;
+    flex-direction: column;
+}
+.body-content-column {
+    flex: 1;
+    height: 300px;
     min-width: 120px;
     flex-direction: column;
 }

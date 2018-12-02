@@ -208,11 +208,11 @@ div {
 }
 .table-body-header-column {
     flex-direction: column;
-    height: 100%;
+    height: 340px;
 }
 .table-body-content-column {
     flex: 1;
-    height: 100%;
+    height: 340px;
     flex-direction: column;
 }
 .table-body-row {

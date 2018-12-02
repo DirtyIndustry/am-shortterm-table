@@ -58,7 +58,7 @@
             </div>
             <div class="table-body-content-column">
                 <div class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index">
-                    <div class="header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
+                    <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
                         <el-input class="input" v-model="item.HTLFIRSTWAVEOFTIME" placeholder="请输入时间" :disabled="!editable" @change="checkSubmit"></el-input>
                     </div>
@@ -184,7 +184,7 @@ div {
 }
 .header-column-second-row {
     width: 100%;
-    height: 100%;
+    height: 31px;
     flex: 1;
     flex-direction: row;
 }
@@ -192,23 +192,27 @@ div {
     flex: 1;
     height: 100%;
 }
+.content-header-column {
+    height: 59px;
+    min-width: 80px;
+}
 .content-column {
     flex: 1;
-    height: 100%;
+    height: 59px;
     min-width: 79px;
 }
 .table-body {
     width: 100%;
-    height: 340px;
+    height: 360px;
     flex-direction: row;
 }
 .table-body-header-column {
     flex-direction: column;
-    height: 100%;
+    /* height: 340px; */
 }
 .table-body-content-column {
     flex: 1;
-    height: 100%;
+    /* height: 340px; */
     flex-direction: column;
 }
 .table-body-row {
