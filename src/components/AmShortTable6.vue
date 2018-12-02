@@ -64,28 +64,28 @@
                 <div class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index">
                     <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.TLFIRSTWAVEOFTIME" placeholder="请输入时间" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.TLFIRSTWAVEOFTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.TLFIRSTWAVETIDELEVEL" placeholder="请输入潮位" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.TLFIRSTWAVETIDELEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.TLFIRSTTIMELOWTIDE" placeholder="请输入时间" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.TLFIRSTTIMELOWTIDE" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.TLLOWTIDELEVELFORTHEFIRSTTIME" placeholder="请输入潮位" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.TLLOWTIDELEVELFORTHEFIRSTTIME" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.TLSECONDWAVEOFTIME" placeholder="请输入时间" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.TLSECONDWAVEOFTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.TLSECONDWAVETIDELEVEL" placeholder="请输入潮位" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.TLSECONDWAVETIDELEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.TLSECONDTIMELOWTIDE" placeholder="请输入时间" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.TLSECONDTIMELOWTIDE" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column">
-                        <el-input class="input" v-model="item.TLLOWTIDELEVELFORTHESECONDTIME" placeholder="请输入潮位" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.TLLOWTIDELEVELFORTHESECONDTIME" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
                     </div>
                 </div>
             </div>

@@ -5,13 +5,13 @@
             <div class="table-body-row border-bottom">
                 <div class="table-body-row-header">海浪:</div>
                 <div class="table-body-row-content">
-                    <el-input type="textarea" autosize placeholder="请输入内容" v-model="localupperstring" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input type="textarea" autosize placeholder="请输入内容" v-model="localupperstring" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                 </div>
             </div>
             <div class="table-body-row">
                 <div class="table-body-row-header">潮汐:</div>
                 <div class="table-body-row-content">
-                    <el-input type="textarea" autosize placeholder="请输入内容" v-model="locallowerstring" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input type="textarea" autosize placeholder="请输入内容" v-model="locallowerstring" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
                 </div>
             </div>
         </div>

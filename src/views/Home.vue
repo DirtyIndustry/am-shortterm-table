@@ -159,7 +159,6 @@ export default class Home extends Vue {
     this.amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX = arg[0]
   }
   private created() {
-    this.cookie = document.cookie
     this.loadCookie()
     this.getData()
   }

@@ -19,19 +19,19 @@
                 <div class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index">
                     <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.YRBHWWFWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.YRBHWWFWAVEHEIGHT" placeholder="请输入波高" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.YRBHWWFWAVEDIR" placeholder="请输入波向" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.YRBHWWFWAVEDIR" placeholder="请输入波向" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.YRBHWWFFLOWDIR" placeholder="请输入风向" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.YRBHWWFFLOWDIR" placeholder="请输入风向" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.YRBHWWFFLOWLEVEL" placeholder="请输入风力" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.YRBHWWFFLOWLEVEL" placeholder="请输入风力" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column">
-                        <el-input v-if="index > 2" class="input" v-model="item.YRBHWWFWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input v-if="index > 2" class="input" v-model="item.YRBHWWFWATERTEMPERATURE" placeholder="请输入水温" :disabled="!timeeditable || !istemperature" @change="checkSubmit"></el-input>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@ export default class AmShortTable1 extends Vue {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable1))
         this.checkSubmit()
     }
-    get editable() {
+    get timeeditable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
             return false
         } else if (this.coltime.getMonth() < new Date().getMonth()) {

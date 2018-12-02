@@ -6,11 +6,11 @@
                 <div class="body-row-header">渤海</div>
                 <div class="body-row-content">
                     <div class="two-words">有</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHLOWESTWAVE" placeholder="请输入最低浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHLOWESTWAVE" placeholder="请输入最低浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="two-words">m 到</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHHIGHESTWAVE" placeholder="请输入最高浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHHIGHESTWAVE" placeholder="请输入最高浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="two-words">m 的</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHWAVETYPE" placeholder="请输入浪高类型" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHWAVETYPE" placeholder="请输入浪高类型" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="one-word"></div>
                 </div>
             </div>
@@ -18,11 +18,11 @@
                 <div class="body-row-header">黄海北部</div>
                 <div class="body-row-content">
                     <div class="two-words">有</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHNORTHLOWESTWAVE" placeholder="请输入最低浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHNORTHLOWESTWAVE" placeholder="请输入最低浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="two-words">m 到</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHNORTHHIGHESTWAVE" placeholder="请输入最高浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHNORTHHIGHESTWAVE" placeholder="请输入最高浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="two-words">m 的</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHNORTHWAVETYPE" placeholder="请输入浪高类型" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWBHNORTHWAVETYPE" placeholder="请输入浪高类型" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="one-word"></div>
                 </div>
             </div>
@@ -30,9 +30,9 @@
                 <div class="body-row-header">刁口海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWDKSEAAREAWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWDKSEAAREAWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWDKSEAAREAWATERTEMPE" placeholder="请输入水温" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWDKSEAAREAWATERTEMPE" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -40,9 +40,9 @@
                 <div class="body-row-header">黄河口海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWHHKSEAAREAWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWHHKSEAAREAWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWHHKSEAAREAWATERTEMP" placeholder="请输入水温" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWHHKSEAAREAWATERTEMP" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -50,9 +50,9 @@
                 <div class="body-row-header">广利港海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWGLGSEAAREAWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWGLGSEAAREAWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWGLGSEAAREAWATERTEMP" placeholder="请输入水温" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWGLGSEAAREAWATERTEMP" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -60,9 +60,9 @@
                 <div class="body-row-header">东营港海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWDYGWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWDYGWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWDYGWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWDYGWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -70,9 +70,9 @@
                 <div class="body-row-header">新户海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWXHWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWXHWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWXHWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWXHWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -80,9 +80,9 @@
                 <div class="body-row-header">埕口海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWCKWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWCKWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
-                    <el-input class="body-row-content" v-model="localtable[0].EFWWCKWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="body-row-content" v-model="localtable[0].EFWWCKWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
                     <div class="one-word">℃</div>
                 </div>
             </div>

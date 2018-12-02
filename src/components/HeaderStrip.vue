@@ -36,7 +36,12 @@
         mixins: [GlobalProperties]
     })
     export default class HeaderStrip extends Vue {
-        private reportertypes = [{label: '潮汐', value: 'cx'}, {label: '风、海浪', value: 'fl'}, {label: '水温', value: 'sw'}, {label: '无', value: ''}]
+        private reportertypes = [
+            {label: '潮汐', value: 'cx'},
+            {label: '风、海浪', value: 'fl'},
+            {label: '水温', value: 'sw'},
+            {label: '无', value: ''}
+        ]
         private reportdate = new Date()
         private reportdateoption = {
             disabledDate(time: Date) {

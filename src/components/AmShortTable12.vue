@@ -12,19 +12,19 @@
         </div>
         <div class="table-body border-left border-right border-bottom">
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].WEATERSTATE" placeholder="请输入天气状况" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].WEATERSTATE" placeholder="请输入天气状况" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].TEMPERATURE" placeholder="请输入气温" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].TEMPERATURE" placeholder="请输入气温" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].WINDSPEED" placeholder="请输入风速" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].WINDSPEED" placeholder="请输入风速" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].WINDDIRECTION" placeholder="请输入风向" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].WINDDIRECTION" placeholder="请输入风向" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column">
-                <el-input class="input" v-model="localtable[0].WAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].WAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
             </div>
         </div>
         <div class="button-row">

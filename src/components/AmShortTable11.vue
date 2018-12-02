@@ -51,28 +51,28 @@
         </div>
         <div class="table-body border-left border-right border-bottom">
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].FIRSTHIGHTIME" placeholder="请输入时间" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].FIRSTHIGHTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].FIRSTHIGHLEVEL" placeholder="请输入潮位" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].FIRSTHIGHLEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].FIRSTLOWTIME" placeholder="请输入时间" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].FIRSTLOWTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].FIRSTLOWLEVEL" placeholder="请输入潮位" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].FIRSTLOWLEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].SECONDHIGHTIME" placeholder="请输入时间" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].SECONDHIGHTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].SECONDHIGHLEVEL" placeholder="请输入潮位" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].SECONDHIGHLEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column border-right">
-                <el-input class="input" v-model="localtable[0].SECONDLOWTIME" placeholder="请输入时间" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].SECONDLOWTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
             </div>
             <div class="content-column">
-                <el-input class="input" v-model="localtable[0].SECONDLOWLEVEL" placeholder="请输入潮位" :disabled="!editable" @change="checkSubmit"></el-input>
+                <el-input class="input" v-model="localtable[0].SECONDLOWLEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
             </div>
         </div>
         <div class="button-row">

@@ -21,16 +21,16 @@
                 <div class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index">
                     <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.YRBHWWFWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.YRBHWWFWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.YRBHWWFWAVEDIR" placeholder="请输入波向" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.YRBHWWFWAVEDIR" placeholder="请输入波向" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column border-right">
-                        <el-input class="input" v-model="item.YRBHWWFFLOWDIR" placeholder="请输入风向" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.YRBHWWFFLOWDIR" placeholder="请输入风向" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     </div>
                     <div class="content-column">
-                        <el-input class="input" v-model="item.YRBHWWFFLOWLEVEL" placeholder="请输入风力" :disabled="!editable" @change="checkSubmit"></el-input>
+                        <el-input class="input" v-model="item.YRBHWWFFLOWLEVEL" placeholder="请输入风力" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                     </div>
                 </div>
             </div>

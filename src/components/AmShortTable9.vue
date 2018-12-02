@@ -18,19 +18,19 @@
             </div>
             <div class="body-content-column border-right">
                 <div class="table-body-row border-bottom">
-                    <el-input class="input" v-model="localtable[0].SA24HWFBOHAIWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].SA24HWFBOHAIWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                 </div>
                 <div class="table-body-row border-bottom">
-                    <el-input class="input" v-model="localtable[0].SA24HWFNORTHOFYSWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].SA24HWFNORTHOFYSWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                 </div>
                 <div class="table-body-row border-bottom">
-                    <el-input class="input" v-model="localtable[0].SA24HWFMIDDLEOFYSWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].SA24HWFMIDDLEOFYSWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                 </div>
                 <div class="table-body-row border-bottom">
-                    <el-input class="input" v-model="localtable[0].SA24HWFSOUTHOFYSWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].SA24HWFSOUTHOFYSWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                 </div>
                 <div class="table-body-row">
-                    <el-input class="input" v-model="localtable[0].SA24HWFOFFSHOREWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].SA24HWFOFFSHOREWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
                 </div>
             </div>
             <div class="body-content-column">
@@ -39,7 +39,7 @@
                 <div class="table-body-row border-bottom"></div>
                 <div class="table-body-row border-bottom"></div>
                 <div class="table-body-row">
-                    <el-input class="input" v-model="localtable[0].SA24HWFOFFSHORESW" placeholder="请输入水温" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].SA24HWFOFFSHORESW" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
                 </div>
             </div>
         </div>
