@@ -69,7 +69,7 @@ export default class AmShortTable3and4 extends Vue {
     }
 
     private checkSubmit() {
-        if (this.localupperstring !== this.upperstring || this.locallowerstring !== this.lowerstring) {
+        if (this.localupperstring !== this.upperstring || this.locallowerstring !== this.lowerstring || this.amshortfakedata.AmShort3and4FakeData === true) {
             this.submitdisable = false
         } else {
             this.submitdisable = true
@@ -82,6 +82,7 @@ export default class AmShortTable3and4 extends Vue {
     }
     private submitClick() {
         this.valueChange()
+        this.amshortfakedata.AmShort3and4FakeData = false
         this.checkSubmit()
     }
     private mounted() {

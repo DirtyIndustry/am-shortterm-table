@@ -1,4 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator'
+import AmShortFakeDataInfo from '../types/amshortfakedatainfo'
 import AmShortInfo1 from '../types/amshortinfo1'
 import AmShortInfo2 from '../types/amshortinfo2'
 import AmShortInfo3and4 from '../types/amshortinfo3and4'
@@ -21,6 +22,7 @@ declare module 'vue/types/vue' {
         istemperature: boolean
         showalltable: boolean
         coltime: Date
+        amshortfakedata: AmShortFakeDataInfo
         amshorttable1: AmShortInfo1[]
         amshorttable2: AmShortInfo2[]
         amshorttable3and4: AmShortInfo3and4[]
@@ -51,6 +53,8 @@ export default class GlobalProperties extends Vue {
     set showalltable(value: boolean) { this.$store.dispatch('setShowAllTable', value) }
     get coltime() { return this.$store.state.coltime }
     set coltime(value: Date) { this.$store.dispatch('setColtime', value) }
+    get amshortfakedata() { return this.$store.state.amshortfakedata }
+    set amshortfakedata(value: AmShortFakeDataInfo) { this.$store.dispatch('setAmShortFakeData', value) }
     get amshorttable1() { return this.$store.state.amshorttable1 }
     set amshorttable1(value: AmShortInfo1[]) { this.$store.dispatch('setAmShortTable1', value) }
     get amshorttable2() { return this.$store.state.amshorttable2 }

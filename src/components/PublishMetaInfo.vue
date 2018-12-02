@@ -170,6 +170,9 @@ export default class PublishMetaInfo extends Vue {
     }
     private checkSubmit() {
         this.submitdisable = this.deepEqual(this.publishmetainfo, this.localtable)
+        if (this.amshortfakedata.PublishMetaInfoFakeData === true) {
+            this.submitdisable = false
+        }
     }
     private cancelClick() {
         this.localtable = JSON.parse(JSON.stringify(this.publishmetainfo))
@@ -177,6 +180,7 @@ export default class PublishMetaInfo extends Vue {
     }
     private submitClick() {
         this.publishmetainfo = JSON.parse(JSON.stringify(this.localtable))
+        this.amshortfakedata.PublishMetaInfoFakeData = false
         this.checkSubmit()
     }
     private mounted() {

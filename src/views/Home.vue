@@ -132,6 +132,7 @@ export default class Home extends Vue {
         console.log(res)
         if (res.data.d !== '') {
           const resdata = JSON.parse(res.data.d)
+          this.amshortfakedata = resdata.AmShortFakeData
           this.amshorttable1 = resdata.AmShort1Data
           this.amshorttable2 = resdata.AmShort2Data
           this.amshorttable3and4 = resdata.AmShort3and4Data

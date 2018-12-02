@@ -116,6 +116,9 @@ export default class AmShortTable11 extends Vue {
     }
     private checkSubmit() {
         this.submitdisable = this.deepEqual(this.amshorttable11, this.localtable)
+        if (this.amshortfakedata.AmShort11FakeData === true) {
+            this.submitdisable = false
+        }
     }
     private cancelClick() {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable11))
@@ -123,6 +126,7 @@ export default class AmShortTable11 extends Vue {
     }
     private submitClick() {
         this.amshorttable11 = JSON.parse(JSON.stringify(this.localtable))
+        this.amshortfakedata.AmShort11FakeData = false
         this.checkSubmit()
     }
     private mounted() {
