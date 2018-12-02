@@ -87,7 +87,9 @@
         align-items: center;
         flex-wrap: wrap;
         font-weight: bold;
+        border: 1px solid #999999;
         background-color: #999999;
+        box-shadow: 0px 5px 25px gray;
         z-index: 9;
     }
     .yubaoyuan-container {

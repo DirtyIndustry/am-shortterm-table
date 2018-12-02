@@ -62,6 +62,12 @@
             </div>
             <div class="separator-horizontal"></div>
         </div>
+        <div class="button-row">
+            <div class="separator-horizontal"></div>
+            <el-button size="small" @click="cancelClick">取消</el-button>
+            <div class="separator-horizontal"></div>
+            <el-button size="small" type="primary" :disabled="submitdisable" @click="submitClick">提交</el-button>
+        </div>
     </div>
 </template>
 
@@ -188,6 +194,7 @@ div {
 }
 .container {
     min-width: 800px;
+    max-width: 1050px;
     flex-direction: column;
     align-items: flex-start;
 }
@@ -238,5 +245,11 @@ div {
 }
 .reporter-select {
     flex: 1;
+}
+.button-row {
+    height: 40px;
+    width: 100%;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
 }
 </style>
