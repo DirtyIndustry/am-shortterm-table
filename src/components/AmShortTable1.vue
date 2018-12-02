@@ -139,12 +139,12 @@ div {
 }
 .table-body {
     width: 100%;
-    height: 360px;
+    height: 365px;
     flex-direction: row;
 }
 .table-body-header-column {
     flex-direction: column;
-    height: 360px;
+    height: 365px;
 }
 .table-body-header-row {
     flex: 1;
