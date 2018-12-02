@@ -34,6 +34,10 @@
     <AmShortTable11></AmShortTable11>
     <div class="separator-vertical"></div>
     <AmShortTable12></AmShortTable12>
+    <div class="separator-vertical"></div>
+    <PublishMetaInfo></PublishMetaInfo>
+    <div class="separator-vertical"></div>
+    <div class="separator-vertical"></div>
   </div>
 </template>
 
@@ -53,6 +57,7 @@ import AmShortTable9 from '@/components/AmShortTable9.vue'
 import AmShortTable10 from '@/components/AmShortTable10.vue'
 import AmShortTable11 from '@/components/AmShortTable11.vue'
 import AmShortTable12 from '@/components/AmShortTable12.vue'
+import PublishMetaInfo from '@/components/PublishMetaInfo.vue'
 
 @Component({
   components: {
@@ -67,7 +72,8 @@ import AmShortTable12 from '@/components/AmShortTable12.vue'
     AmShortTable9,
     AmShortTable10,
     AmShortTable11,
-    AmShortTable12
+    AmShortTable12,
+    PublishMetaInfo
   },
   mixins: [GlobalProperties]
 })
