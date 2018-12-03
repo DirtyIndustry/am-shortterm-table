@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, Mixins, Vue } from 'vue-property-decorator'
+import { Component, Watch, Emit, Mixins, Vue } from 'vue-property-decorator'
 import GlobalProperties from '../mixins/globalproperties'
 import AmShortInfo1 from '../types/amshortinfo1'
 
@@ -93,7 +93,12 @@ export default class AmShortTable1 extends Vue {
     private submitClick() {
         this.amshorttable1 = JSON.parse(JSON.stringify(this.localtable))
         this.amshortfakedata.AmShort1FakeData = false
+        this.submittable()
         this.checkSubmit()
+    }
+    @Emit('submit')
+    private submittable() {
+        return 1
     }
     private mounted() {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable1))

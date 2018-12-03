@@ -19,7 +19,7 @@ export default class AmShortInfo5 {
     public EFWWCKWAVEHEIGHT: string
     public EFWWCKWATERTEMPERATURE: string
     constructor() {
-        this.PUBLISHDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
         this.EFWWBHLOWESTWAVE = ''
         this.EFWWBHHIGHESTWAVE = ''
         this.EFWWBHWAVETYPE = ''

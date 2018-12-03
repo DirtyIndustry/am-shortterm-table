@@ -11,9 +11,9 @@ export default class AmShortInfo6 {
     public TLSECONDTIMELOWTIDE: string
     public TLLOWTIDELEVELFORTHESECONDTIME: string
     constructor() {
-        this.PUBLISHDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
         this.TLFORECASTSTANCE = ''
-        this.FORECASTDATE = new Date()
+        this.FORECASTDATE = new Date(new Date().toLocaleDateString())
         this.TLFIRSTWAVEOFTIME = ''
         this.TLFIRSTWAVETIDELEVEL = ''
         this.TLFIRSTTIMELOWTIDE = ''

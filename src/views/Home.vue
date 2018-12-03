@@ -3,7 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <HeaderStrip @query="getData"></HeaderStrip>
     <div class="separator-vertical"></div>
-    <AmShortTable1 v-show="iswindwave | istemperature | showalltable"></AmShortTable1>
+    <AmShortTable1 v-show="iswindwave | istemperature | showalltable" @submit="submitTable"></AmShortTable1>
     <div class="separator-vertical"></div>
     <AmShortTable2 v-show="istide | showalltable"></AmShortTable2>
     <div class="separator-vertical"></div>
@@ -150,6 +150,53 @@ export default class Home extends Vue {
       .catch((error) => {
         console.log(error)
       })
+  }
+  private submitTable(tablenumber: number): void {
+    let datajson = ''
+    switch (tablenumber) {
+      case 1:
+        datajson = JSON.stringify(this.amshorttable1)
+        break;
+      case 2:
+        datajson = JSON.stringify(this.amshorttable2)
+        break;
+      case 3:
+      case 4:
+        datajson = JSON.stringify(this.amshorttable3and4)
+        break;
+      case 5:
+        datajson = JSON.stringify(this.amshorttable5)
+        break;
+      case 6:
+        datajson = JSON.stringify(this.amshorttable6)
+        break;
+      case 7:
+        datajson = JSON.stringify(this.amshorttable7)
+        break;
+      case 8:
+        datajson = JSON.stringify(this.amshorttable8)
+        break;
+      case 9:
+        datajson = JSON.stringify(this.amshorttable9)
+        break;
+      case 10:
+        datajson = JSON.stringify(this.amshorttable10)
+        break;
+      case 11:
+        datajson = JSON.stringify(this.amshorttable11)
+        break;
+      case 12:
+        datajson = JSON.stringify(this.amshorttable12)
+        break;
+      default: break;
+    }
+    Axios.post('http://localhost:7652/WebServices.asmx/SetAmShortTableData', {tablenumber: tablenumber, usertype: this.usertype, datajson: datajson})
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
   private table3changed(arg: string[]) {
     this.amshorttable3and4[0].METEOROLOGICALREVIEW = arg[0]

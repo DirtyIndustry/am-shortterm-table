@@ -7,7 +7,7 @@ export default class AmShortInfo3and4 {
     public METEOROLOGICALREVIEW24HOURCX: string
     public METEOROLOGICALREVIEW7DAYSCX: string
     constructor() {
-        this.PUBLISHDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
         this.METEOROLOGICALREVIEW = ''
         this.METEOROLOGICALREVIEW24HOUR = ''
         this.METEOROLOGICALREVIEW7DAYS = ''

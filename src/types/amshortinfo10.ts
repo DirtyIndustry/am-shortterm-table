@@ -6,8 +6,8 @@ export default class AmShortInfo10 {
     public WAVEDIRECTION: string
     public WATERTEMPERATURE: string
     constructor() {
-        this.PUBLISHDATE = new Date()
-        this.FORECASTDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
+        this.FORECASTDATE = new Date(new Date().toLocaleDateString())
         this.WAVELEVELONE = ''
         this.WAVELEVELTYPE = ''
         this.WAVEDIRECTION = ''

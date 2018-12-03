@@ -10,8 +10,8 @@ export default class AmShortInfo11 {
     public SECONDLOWTIME: string
     public SECONDLOWLEVEL: string
     constructor() {
-        this.PUBLISHDATE = new Date()
-        this.FORECASTDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
+        this.FORECASTDATE = new Date(new Date().toLocaleDateString())
         this.FIRSTHIGHTIME = ''
         this.FIRSTHIGHLEVEL = ''
         this.FIRSTLOWTIME = ''

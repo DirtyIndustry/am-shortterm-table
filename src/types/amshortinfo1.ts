@@ -8,9 +8,9 @@ export default class AmShortInfo1 {
     public YRBHWWFFLOWLEVEL: string
     public YRBHWWFWATERTEMPERATURE: string
     constructor() {
-        this.PUBLISHDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
         this.REPORTAREA = ''
-        this.FORECASTDATE = new Date()
+        this.FORECASTDATE = new Date(new Date().toLocaleDateString())
         this.YRBHWWFWAVEHEIGHT = ''
         this.YRBHWWFWAVEDIR = ''
         this.YRBHWWFFLOWDIR = ''

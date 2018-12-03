@@ -7,8 +7,8 @@ export default class AmShortInfo12 {
     public WINDDIRECTION: string
     public WAVEHEIGHT: string
     constructor() {
-        this.PUBLISHDATE = new Date()
-        this.FORECASTDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
+        this.FORECASTDATE = new Date(new Date().toLocaleDateString())
         this.WEATERSTATE = ''
         this.TEMPERATURE = ''
         this.WINDSPEED = ''

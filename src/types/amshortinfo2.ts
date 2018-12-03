@@ -12,9 +12,9 @@ export default class AmShortInfo2 {
     public HTLLOWTIDELEVELFORTHESECONDTIM: string
 
     constructor() {
-        this.PUBLISHDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
         this.HTLHARBOUR = ''
-        this.FORECASTDATE = new Date()
+        this.FORECASTDATE = new Date(new Date().toLocaleDateString())
         this.HTLFIRSTWAVEOFTIME = ''
         this.HTLFIRSTWAVETIDELEVEL = ''
         this.HTLFIRSTTIMELOWTIDE = ''

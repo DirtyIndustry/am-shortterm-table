@@ -7,7 +7,7 @@ export default class AmShortInfo9 {
     public SA24HWFOFFSHOREWAVEHEIGHT: string
     public SA24HWFOFFSHORESW: string
     constructor() {
-        this.PUBLISHDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
         this.SA24HWFBOHAIWAVEHEIGHT = ''
         this.SA24HWFNORTHOFYSWAVEHEIGHT = ''
         this.SA24HWFMIDDLEOFYSWAVEHEIGHT = ''

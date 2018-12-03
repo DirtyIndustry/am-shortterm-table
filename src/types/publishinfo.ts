@@ -13,7 +13,7 @@ export default class PublishInfo {
     public ZHIBANTEL: string
     public SENDTEL: string
     constructor() {
-        this.PUBLISHDATE = new Date()
+        this.PUBLISHDATE = new Date(new Date().toLocaleDateString())
         this.PUBLISHHOUR = ''
         this.FRELEASEUNIT = ''
         this.FTELEPHONE = ''
