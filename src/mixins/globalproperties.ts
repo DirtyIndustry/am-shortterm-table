@@ -15,6 +15,7 @@ import PublishInfo from '../types/publishinfo'
 
 declare module 'vue/types/vue' {
     interface Vue {
+        hosturl: string
         username: string
         usertype: string
         iswindwave: boolean
@@ -39,6 +40,8 @@ declare module 'vue/types/vue' {
 }
 @Component
 export default class GlobalProperties extends Vue {
+    // public hosturl = 'http://123.234.129.234:10001/WebService/WebServices.asmx/'
+    public hosturl = 'http://localhost:7652/WebServices.asmx/'
     get username() { return this.$store.state.username }
     set username(value: string) { this.$store.dispatch('setUserName', value) }
     get usertype() { return this.$store.state.usertype }

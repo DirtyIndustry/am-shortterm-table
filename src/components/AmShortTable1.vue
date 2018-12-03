@@ -47,6 +47,7 @@
 
 <script lang="ts">
 import { Component, Watch, Emit, Mixins, Vue } from 'vue-property-decorator'
+import Axios from 'axios'
 import GlobalProperties from '../mixins/globalproperties'
 import AmShortInfo1 from '../types/amshortinfo1'
 
@@ -91,9 +92,17 @@ export default class AmShortTable1 extends Vue {
         this.checkSubmit()
     }
     private submitClick() {
-        this.amshorttable1 = JSON.parse(JSON.stringify(this.localtable))
-        this.amshortfakedata.AmShort1FakeData = false
-        this.submittable()
+        Axios.post('http://localhost:7652/WebServices.asmx/SetAmShortTableData',
+            {tablenumber: 1, usertype: this.usertype, datajson: JSON.stringify(this.localtable)})
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+        // this.amshorttable1 = JSON.parse(JSON.stringify(this.localtable))
+        // this.amshortfakedata.AmShort1FakeData = false
+        // this.submittable()
         this.checkSubmit()
     }
     @Emit('submit')

@@ -127,7 +127,7 @@ export default class Home extends Vue {
     }
   }
   private getData() {
-    Axios.post('http://123.234.129.234:10001/WebService/WebServices.asmx/GetTableData', {date: this.coltime})
+    Axios.post(this.hosturl + 'GetTableData', {date: this.coltime})
       .then((res) => {
         console.log(res)
         if (res.data.d !== '') {
@@ -156,41 +156,42 @@ export default class Home extends Vue {
     switch (tablenumber) {
       case 1:
         datajson = JSON.stringify(this.amshorttable1)
-        break;
+        break
       case 2:
         datajson = JSON.stringify(this.amshorttable2)
-        break;
+        break
       case 3:
       case 4:
         datajson = JSON.stringify(this.amshorttable3and4)
-        break;
+        break
       case 5:
         datajson = JSON.stringify(this.amshorttable5)
-        break;
+        break
       case 6:
         datajson = JSON.stringify(this.amshorttable6)
-        break;
+        break
       case 7:
         datajson = JSON.stringify(this.amshorttable7)
-        break;
+        break
       case 8:
         datajson = JSON.stringify(this.amshorttable8)
-        break;
+        break
       case 9:
         datajson = JSON.stringify(this.amshorttable9)
-        break;
+        break
       case 10:
         datajson = JSON.stringify(this.amshorttable10)
-        break;
+        break
       case 11:
         datajson = JSON.stringify(this.amshorttable11)
-        break;
+        break
       case 12:
         datajson = JSON.stringify(this.amshorttable12)
-        break;
-      default: break;
+        break
+      default: break
     }
-    Axios.post('http://localhost:7652/WebServices.asmx/SetAmShortTableData', {tablenumber: tablenumber, usertype: this.usertype, datajson: datajson})
+    Axios.post(this.hosturl + 'SetAmShortTableData',
+      {tablenumber, usertype: this.usertype, datajson})
     .then((res) => {
       console.log(res)
     })
