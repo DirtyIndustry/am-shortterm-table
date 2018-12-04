@@ -38,6 +38,7 @@
 
 <script lang="ts">
 import { Component, Watch, Mixins, Vue } from 'vue-property-decorator'
+import Axios from 'axios'
 import GlobalProperties from '../mixins/globalproperties'
 import AmShortInfo12 from '../types/amshortinfo12'
 
@@ -45,6 +46,7 @@ import AmShortInfo12 from '../types/amshortinfo12'
     mixins: [GlobalProperties]
 })
 export default class AmShortTable12 extends Vue {
+    private myThis: any = this
     private localtable = [
         new AmShortInfo12()
     ]
@@ -77,9 +79,32 @@ export default class AmShortTable12 extends Vue {
         this.checkSubmit()
     }
     private submitClick() {
-        this.amshorttable12 = JSON.parse(JSON.stringify(this.localtable))
-        this.amshortfakedata.AmShort12FakeData = false
-        this.checkSubmit()
+        Axios.post(this.hosturl + 'SetAmShortTableData',
+            {tablenumber: 12, usertype: this.usertype, datajson: JSON.stringify(this.localtable)})
+        .then((res) => {
+            console.log(res)
+            const resobj = JSON.parse(res.data.d)
+            if (resobj.Success === true) {
+                this.amshorttable12 = resobj.NewData
+                this.amshortfakedata.AmShort12FakeData = resobj.NewFakeData
+                this.checkSubmit()
+                this.myThis.$notify({
+                    title: '提交成功',
+                    message: '上午十二表单数据提交成功',
+                    type: 'success'
+                })
+            } else {
+                this.myThis.$notify.error({
+                    title: '提交失败',
+                    dangerouslyUseHTMLString: true,
+                    message: '<p>上午十二表单数据提交失败</p>'
+                        + (resobj.Description === '' ? '' :  '<p>' + resobj.Description + '</p>')
+                })
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
     private mounted() {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable12))

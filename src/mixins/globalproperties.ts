@@ -42,6 +42,7 @@ declare module 'vue/types/vue' {
 export default class GlobalProperties extends Vue {
     // public hosturl = 'http://123.234.129.234:10001/WebService/WebServices.asmx/'
     public hosturl = 'http://localhost:7652/WebServices.asmx/'
+    // public hosturl = 'http://localhost:7653/WebServices.asmx/'
     get username() { return this.$store.state.username }
     set username(value: string) { this.$store.dispatch('setUserName', value) }
     get usertype() { return this.$store.state.usertype }

@@ -55,6 +55,7 @@ import AmShortInfo1 from '../types/amshortinfo1'
     mixins: [GlobalProperties]
 })
 export default class AmShortTable1 extends Vue {
+    private myThis: any = this
     private localtable = [
         new AmShortInfo1(),
         new AmShortInfo1(),
@@ -92,18 +93,32 @@ export default class AmShortTable1 extends Vue {
         this.checkSubmit()
     }
     private submitClick() {
-        Axios.post('http://localhost:7652/WebServices.asmx/SetAmShortTableData',
+        Axios.post(this.hosturl + 'SetAmShortTableData',
             {tablenumber: 1, usertype: this.usertype, datajson: JSON.stringify(this.localtable)})
         .then((res) => {
             console.log(res)
+            const resobj = JSON.parse(res.data.d)
+            if (resobj.Success === true) {
+                this.amshorttable1 = resobj.NewData
+                this.amshortfakedata.AmShort1FakeData = resobj.NewFakeData
+                this.checkSubmit()
+                this.myThis.$notify({
+                    title: '提交成功',
+                    message: '上午一表单数据提交成功',
+                    type: 'success'
+                })
+            } else {
+                this.myThis.$notify.error({
+                    title: '提交失败',
+                    dangerouslyUseHTMLString: true,
+                    message: '<p>上午一表单数据提交失败</p>'
+                        + (resobj.Description === '' ? '' :  '<p>' + resobj.Description + '</p>')
+                })
+            }
         })
         .catch((error) => {
             console.log(error)
         })
-        // this.amshorttable1 = JSON.parse(JSON.stringify(this.localtable))
-        // this.amshortfakedata.AmShort1FakeData = false
-        // this.submittable()
-        this.checkSubmit()
     }
     @Emit('submit')
     private submittable() {
