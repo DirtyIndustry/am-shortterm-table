@@ -99,6 +99,7 @@
 <script lang="ts">
 import { Component, Watch, Mixins, Vue } from 'vue-property-decorator'
 import Axios from 'axios'
+import Utils from '@/utils/utils'
 import GlobalProperties from '../mixins/globalproperties'
 import AmShortInfo5 from '../types/amshortinfo5'
 
@@ -130,7 +131,7 @@ export default class AmShortTable5 extends Vue {
     }
     private checkSubmit() {
         this.submitdisable = this.deepEqual(this.amshorttable5, this.localtable)
-        if (this.amshortfakedata.AmShort5FakeData === true) {
+        if (this.amshortfakedata[3] === true) {
             this.submitdisable = false
         }
     }
@@ -139,32 +140,9 @@ export default class AmShortTable5 extends Vue {
         this.checkSubmit()
     }
     private submitClick() {
-        Axios.post(this.hosturl + 'SetAmShortTableData',
-            {tablenumber: 5, usertype: this.usertype, datajson: JSON.stringify(this.localtable)})
-        .then((res) => {
-            console.log(res)
-            const resobj = JSON.parse(res.data.d)
-            if (resobj.Success === true) {
-                this.amshorttable5 = resobj.NewData
-                this.amshortfakedata.AmShort5FakeData = resobj.NewFakeData
-                this.checkSubmit()
-                this.myThis.$notify({
-                    title: '提交成功',
-                    message: '上午五表单数据提交成功',
-                    type: 'success'
-                })
-            } else {
-                this.myThis.$notify.error({
-                    title: '提交失败',
-                    dangerouslyUseHTMLString: true,
-                    message: '<p>上午五表单数据提交失败</p>'
-                        + (resobj.Description === '' ? '' :  '<p>' + resobj.Description + '</p>')
-                })
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        if (this.submitdisable === false) {
+            Utils.doSubmit(5, 'AmShortTable5', this.localtable, 3, this.checkSubmit, '上午五')
+        }
     }
     private mounted() {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable5))

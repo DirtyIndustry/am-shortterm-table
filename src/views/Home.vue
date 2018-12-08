@@ -3,7 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <HeaderStrip @query="getData"></HeaderStrip>
     <div class="separator-vertical"></div>
-    <AmShortTable1 v-show="iswindwave | istemperature | showalltable" @submit="submitTable"></AmShortTable1>
+    <AmShortTable1 v-show="iswindwave | istemperature | showalltable"></AmShortTable1>
     <div class="separator-vertical"></div>
     <AmShortTable2 v-show="istide | showalltable"></AmShortTable2>
     <div class="separator-vertical"></div>
@@ -11,14 +11,16 @@
       title="上午三、3天海洋水文气象预报综述"
       :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW"
       :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEWCX"
-      @valueChange="table3changed">
+      @valueChange="table3changed"
+      ref="table3">
       </AmShortTable3and4>
     <div class="separator-vertical"></div>
     <AmShortTable3and4 v-show="iswindwave | istide | showalltable"
       title="上午四、24小时水文气象预报综述"
       :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOUR"
       :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX"
-      @valueChange="table4changed">
+      @valueChange="table4changed"
+      ref="table4">
       </AmShortTable3and4>
     <div class="separator-vertical"></div>
     <AmShortTable5 v-show="iswindwave | istemperature | showalltable"></AmShortTable5>
@@ -46,6 +48,7 @@
 <script lang="ts">
 import { Component, Mixins, Watch, Vue } from 'vue-property-decorator'
 import Axios from 'axios'
+import Utils from '@/utils/utils'
 import GlobalProperties from '../mixins/globalproperties'
 import HeaderStrip from '@/components/HeaderStrip.vue' // @ is an alias to /src
 import AmShortTable1 from '@/components/AmShortTable1.vue'
@@ -80,6 +83,7 @@ import PublishMetaInfo from '@/components/PublishMetaInfo.vue'
   mixins: [GlobalProperties]
 })
 export default class Home extends Vue {
+  private myThis: any = this
   @Watch('usertype')
   private onUserTypeChanged(val: boolean, oldVal: boolean) {
     this.setTypeShows()
@@ -127,7 +131,7 @@ export default class Home extends Vue {
     }
   }
   private getData() {
-    Axios.post(this.hosturl + 'GetTableData', {date: this.coltime})
+    Axios.post(Utils.hosturl + 'GetTableData', {date: this.coltime})
       .then((res) => {
         console.log(res)
         if (res.data.d !== '') {
@@ -151,62 +155,19 @@ export default class Home extends Vue {
         console.log(error)
       })
   }
-  private submitTable(tablenumber: number): void {
-    let datajson = ''
-    switch (tablenumber) {
-      case 1:
-        datajson = JSON.stringify(this.amshorttable1)
-        break
-      case 2:
-        datajson = JSON.stringify(this.amshorttable2)
-        break
-      case 3:
-      case 4:
-        datajson = JSON.stringify(this.amshorttable3and4)
-        break
-      case 5:
-        datajson = JSON.stringify(this.amshorttable5)
-        break
-      case 6:
-        datajson = JSON.stringify(this.amshorttable6)
-        break
-      case 7:
-        datajson = JSON.stringify(this.amshorttable7)
-        break
-      case 8:
-        datajson = JSON.stringify(this.amshorttable8)
-        break
-      case 9:
-        datajson = JSON.stringify(this.amshorttable9)
-        break
-      case 10:
-        datajson = JSON.stringify(this.amshorttable10)
-        break
-      case 11:
-        datajson = JSON.stringify(this.amshorttable11)
-        break
-      case 12:
-        datajson = JSON.stringify(this.amshorttable12)
-        break
-      default: break
-    }
-    Axios.post(this.hosturl + 'SetAmShortTableData',
-      {tablenumber, usertype: this.usertype, datajson})
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-  }
   private table3changed(arg: string[]) {
-    this.amshorttable3and4[0].METEOROLOGICALREVIEW = arg[0]
-    this.amshorttable3and4[0].METEOROLOGICALREVIEWCX = arg[1]
+    const localtable = JSON.parse(JSON.stringify(this.amshorttable3and4))
+    localtable[0].METEOROLOGICALREVIEW = arg[0]
+    localtable[0].METEOROLOGICALREVIEWCX = arg[1]
+    Utils.doSubmit(3, 'AmShortTable3and4', localtable, 2, this.myThis.$refs.table3.checkSubmit, '表单三')
   }
   private table4changed(arg: string[]) {
-    this.amshorttable3and4[0].METEOROLOGICALREVIEW24HOUR = arg[0]
-    this.amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX = arg[0]
+    const localtable = JSON.parse(JSON.stringify(this.amshorttable3and4))
+    localtable[0].METEOROLOGICALREVIEW24HOUR = arg[0]
+    localtable[0].METEOROLOGICALREVIEW24HOURCX = arg[1]
+    Utils.doSubmit(4, 'AmShortTable3and4', localtable, 2, this.myThis.$refs.table4.checkSubmit, '表单四')
   }
+
   private created() {
     this.loadCookie()
     this.getData()

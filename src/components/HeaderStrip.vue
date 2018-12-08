@@ -14,7 +14,7 @@
                 </div>
             <div class="pubtime-container">
                 <div class="pubtime">时间:</div>
-                <el-select class="pubtime-select" v-model="reporttime" placeholder="请选择">
+                <el-select class="pubtime-select" v-model="colhour" placeholder="请选择">
                     <el-option v-for="(item, index) in reporttimes" :key="index" :label="item" :value="item"></el-option>
                 </el-select>
                 <div class="pubtime-tail">时</div>
@@ -42,14 +42,13 @@
             {label: '水温', value: 'sw'},
             {label: '无', value: ''}
         ]
-        private reportdate = new Date()
         private reportdateoption = {
             disabledDate(time: Date) {
                 return time.getTime() > Date.now()
             }
         }
         private reportdateavailable = false
-        private reporttime = 10
+        // private reporttime = 10
         private reporttimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
         get reportertype() {
@@ -65,9 +64,6 @@
             }
         }
 
-        private modify() {
-            this.reporttime = 16
-        }
         private getSession(): void {
             console.log(this.reportertype)
         }

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import AmShortFakeDataInfo from './types/amshortfakedatainfo'
 import AmShortInfo1 from './types/amshortinfo1'
 import AmShortInfo2 from './types/amshortinfo2'
 import AmShortInfo3and4 from './types/amshortinfo3and4'
@@ -25,7 +24,8 @@ export default new Vuex.Store({
     istemperature: true,
     showalltable: false,
     coltime: new Date(new Date().toLocaleDateString()),
-    amshortfakedata: new AmShortFakeDataInfo(),
+    colhour: 10,
+    amshortfakedata: [false, false, false, false, false, false, false, false, false, false, false, false],
     amshorttable1: [
       new AmShortInfo1(),
       new AmShortInfo1(),
@@ -104,7 +104,10 @@ export default new Vuex.Store({
     setcoltime(state, value: Date): void {
       state.coltime = value
     },
-    setamshortfakedata(state, value: AmShortFakeDataInfo): void {
+    setcolhour(state, value: number): void {
+      state.colhour = value
+    },
+    setamshortfakedata(state, value: boolean[]): void {
       state.amshortfakedata = value
     },
     setamshorttable1(state, value: AmShortInfo1[]): void {
@@ -166,7 +169,10 @@ export default new Vuex.Store({
     setColtime(context, coltime: Date): void {
       context.commit('setcoltime', coltime)
     },
-    setAmShortFakeData(context, value: AmShortFakeDataInfo): void {
+    setColhour(context, value: number): void {
+      context.commit('setcolhour', value)
+    },
+    setAmShortFakeData(context, value: boolean[]): void {
       context.commit('setamshortfakedata', value)
     },
     setAmShortTable1(context, amshorttable1: AmShortInfo1[]): void {

@@ -26,6 +26,7 @@
 
 <script lang="ts">
 import { Component, Prop, Watch, Emit, Mixins, Vue } from 'vue-property-decorator'
+import Utils from '@/utils/utils'
 import GlobalProperties from '../mixins/globalproperties'
 import AmShortInfo3and4 from '../types/amshortinfo3and4'
 @Component({
@@ -40,17 +41,6 @@ export default class AmShortTable3and4 extends Vue {
     private locallowerstring = ''
     private submitdisable: boolean = true
 
-    @Watch('upperstring')
-    private onUpperStringChanged(val: string, oldVal: string) {
-        this.localupperstring = val
-        this.checkSubmit()
-    }
-    @Watch('lowerstring')
-    private onLowerStringChanged(val: string, oldVal: string) {
-        this.locallowerstring = val
-        this.checkSubmit()
-    }
-
     get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
             return false
@@ -62,30 +52,41 @@ export default class AmShortTable3and4 extends Vue {
             return true
         }
     }
+    public checkSubmit() {
+        if (this.localupperstring !== this.upperstring
+            || this.locallowerstring !== this.lowerstring
+            || this.amshortfakedata[2] === true) {
+            this.submitdisable = false
+        } else {
+            this.submitdisable = true
+        }
+    }
+    @Watch('upperstring')
+    private onUpperStringChanged(val: string, oldVal: string) {
+        this.localupperstring = val
+        this.checkSubmit()
+    }
+    @Watch('lowerstring')
+    private onLowerStringChanged(val: string, oldVal: string) {
+        this.locallowerstring = val
+        this.checkSubmit()
+    }
 
     @Emit('valueChange')
     private valueChange() {
         return [this.localupperstring, this.locallowerstring]
     }
 
-    private checkSubmit() {
-        if (this.localupperstring !== this.upperstring
-            || this.locallowerstring !== this.lowerstring
-            || this.amshortfakedata.AmShort3and4FakeData === true) {
-            this.submitdisable = false
-        } else {
-            this.submitdisable = true
-        }
-    }
     private cancelClick() {
         this.localupperstring = this.upperstring
         this.locallowerstring = this.lowerstring
         this.checkSubmit()
     }
     private submitClick() {
-        this.valueChange()
-        this.amshortfakedata.AmShort3and4FakeData = false
-        this.checkSubmit()
+        if (this.submitdisable === false) {
+            this.valueChange()
+            // this.checkSubmit()
+        }
     }
     private mounted() {
         this.localupperstring = this.upperstring

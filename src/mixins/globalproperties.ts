@@ -1,5 +1,4 @@
 import { Component, Vue } from 'vue-property-decorator'
-import AmShortFakeDataInfo from '../types/amshortfakedatainfo'
 import AmShortInfo1 from '../types/amshortinfo1'
 import AmShortInfo2 from '../types/amshortinfo2'
 import AmShortInfo3and4 from '../types/amshortinfo3and4'
@@ -15,7 +14,7 @@ import PublishInfo from '../types/publishinfo'
 
 declare module 'vue/types/vue' {
     interface Vue {
-        hosturl: string
+        // hosturl: string
         username: string
         usertype: string
         iswindwave: boolean
@@ -23,7 +22,8 @@ declare module 'vue/types/vue' {
         istemperature: boolean
         showalltable: boolean
         coltime: Date
-        amshortfakedata: AmShortFakeDataInfo
+        colhour: number
+        amshortfakedata: boolean[]
         amshorttable1: AmShortInfo1[]
         amshorttable2: AmShortInfo2[]
         amshorttable3and4: AmShortInfo3and4[]
@@ -41,7 +41,7 @@ declare module 'vue/types/vue' {
 @Component
 export default class GlobalProperties extends Vue {
     // public hosturl = 'http://123.234.129.234:10001/WebService/WebServices.asmx/'
-    public hosturl = 'http://localhost:7652/WebServices.asmx/'
+    // public hosturl = 'http://localhost:7652/WebServices.asmx/'
     // public hosturl = 'http://localhost:7653/WebServices.asmx/'
     get username() { return this.$store.state.username }
     set username(value: string) { this.$store.dispatch('setUserName', value) }
@@ -57,8 +57,10 @@ export default class GlobalProperties extends Vue {
     set showalltable(value: boolean) { this.$store.dispatch('setShowAllTable', value) }
     get coltime() { return this.$store.state.coltime }
     set coltime(value: Date) { this.$store.dispatch('setColtime', value) }
+    get colhour() { return this.$store.state.colhour }
+    set colhour(value: number) { this.$store.dispatch('setColhour', value) }
     get amshortfakedata() { return this.$store.state.amshortfakedata }
-    set amshortfakedata(value: AmShortFakeDataInfo) { this.$store.dispatch('setAmShortFakeData', value) }
+    set amshortfakedata(value: boolean[]) { this.$store.dispatch('setAmShortFakeData', value) }
     get amshorttable1() { return this.$store.state.amshorttable1 }
     set amshorttable1(value: AmShortInfo1[]) { this.$store.dispatch('setAmShortTable1', value) }
     get amshorttable2() { return this.$store.state.amshorttable2 }

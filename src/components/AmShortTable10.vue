@@ -44,6 +44,7 @@
 <script lang="ts">
 import { Component, Watch, Mixins, Vue } from 'vue-property-decorator'
 import Axios from 'axios'
+import Utils from '@/utils/utils'
 import GlobalProperties from '../mixins/globalproperties'
 import AmShortInfo10 from '../types/amshortinfo10'
 
@@ -75,7 +76,7 @@ export default class AmShortTable10 extends Vue {
     }
     private checkSubmit() {
         this.submitdisable = this.deepEqual(this.amshorttable10, this.localtable)
-        if (this.amshortfakedata.AmShort10FakeData === true) {
+        if (this.amshortfakedata[8] === true) {
             this.submitdisable = false
         }
     }
@@ -84,32 +85,9 @@ export default class AmShortTable10 extends Vue {
         this.checkSubmit()
     }
     private submitClick() {
-        Axios.post(this.hosturl + 'SetAmShortTableData',
-            {tablenumber: 10, usertype: this.usertype, datajson: JSON.stringify(this.localtable)})
-        .then((res) => {
-            console.log(res)
-            const resobj = JSON.parse(res.data.d)
-            if (resobj.Success === true) {
-                this.amshorttable10 = resobj.NewData
-                this.amshortfakedata.AmShort10FakeData = resobj.NewFakeData
-                this.checkSubmit()
-                this.myThis.$notify({
-                    title: '提交成功',
-                    message: '上午十表单数据提交成功',
-                    type: 'success'
-                })
-            } else {
-                this.myThis.$notify.error({
-                    title: '提交失败',
-                    dangerouslyUseHTMLString: true,
-                    message: '<p>上午十表单数据提交失败</p>'
-                        + (resobj.Description === '' ? '' :  '<p>' + resobj.Description + '</p>')
-                })
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        if (this.submitdisable === false) {
+            Utils.doSubmit(10, 'AmShortTable10', this.localtable, 8, this.checkSubmit, '上午十')
+        }
     }
     private mounted() {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable10))

@@ -3,19 +3,19 @@
         <div class="row-upper">
             <div class="separator-horizontal"></div>
             <div>发布单位：</div>
-            <el-input class="input" v-model="localtable[0].FRELEASEUNIT" placeholder="请输入发布单位" :disabled="!editable" @change="checkSubmit"></el-input>
+            <el-input class="input" v-model="localtable[0].FRELEASEUNIT" placeholder="请输入发布单位" :disabled="!timeeditable" @change="checkSubmit"></el-input>
             <div class="separator-horizontal"></div>
             <div>预报值班：</div>
-            <el-input class="input" v-model="localtable[0].ZHIBANTEL" placeholder="请输入值班电话" :disabled="!editable" @change="checkSubmit"></el-input>
+            <el-input class="input" v-model="localtable[0].ZHIBANTEL" placeholder="请输入值班电话" :disabled="!timeeditable" @change="checkSubmit"></el-input>
             <div class="separator-horizontal"></div>
         </div>
         <div class="row-upper">
             <div class="separator-horizontal"></div>
             <div>发布时间：</div>
-            <el-input class="input" v-model="publishdatestring" placeholder="请输入发送时间" :disabled="!editable" @change="checkSubmit"></el-input>
+            <el-input class="input" v-model="publishdatestring" placeholder="请输入发送时间" disabled ></el-input>
             <div class="separator-horizontal"></div>
             <div>预报发送：</div>
-            <el-input class="input" v-model="localtable[0].SENDTEL" placeholder="请输入发送电话" :disabled="!editable" @change="checkSubmit"></el-input>
+            <el-input class="input" v-model="localtable[0].SENDTEL" placeholder="请输入发送电话" :disabled="!timeeditable" @change="checkSubmit"></el-input>
             <div class="separator-horizontal"></div>
         </div>
         <div class="reporter-block border-top">
@@ -23,13 +23,13 @@
             <div class="reporter-column">
                 <div class="reporter-row">
                     <div class="reporter-header">海浪预报员：</div>
-                    <el-select class="reporter-select" v-model="localtable[0].FWAVEFORECASTER" placeholder="请选择">
+                    <el-select class="reporter-select" v-model="localtable[0].FWAVEFORECASTER" placeholder="请选择" :disabled="!timeeditable || !iswindwave" @change="checkSubmit">
                         <el-option v-for="(item, index) in reporterwavelist" :key="index" :label="item" :value="item"></el-option>
                     </el-select>
                 </div>
                 <div class="reporter-row">
                     <div class="reporter-header">海浪预报员电话：</div>
-                    <el-input class="input" v-model="localtable[0].FWAVEFORECASTERTEL" placeholder="请输入海浪预报员电话" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].FWAVEFORECASTERTEL" placeholder="请输入海浪预报员电话" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
                 </div>
             </div>
             <div class="separator-horizontal border-right"></div>
@@ -37,13 +37,13 @@
             <div class="reporter-column">
                 <div class="reporter-row">
                     <div class="reporter-header">潮汐预报员：</div>
-                    <el-select class="reporter-select" v-model="localtable[0].FTIDALFORECASTER" placeholder="请选择">
+                    <el-select class="reporter-select" v-model="localtable[0].FTIDALFORECASTER" placeholder="请选择" :disabled="!timeeditable || !istide" @change="checkSubmit">
                         <el-option v-for="(item, index) in reportertidelist" :key="index" :label="item" :value="item"></el-option>
                     </el-select>
                 </div>
                 <div class="reporter-row">
                     <div class="reporter-header">潮汐预报员电话：</div>
-                    <el-input class="input" v-model="localtable[0].FTIDALFORECASTERTEL" placeholder="请输入潮汐预报员电话" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].FTIDALFORECASTERTEL" placeholder="请输入潮汐预报员电话" :disabled="!timeeditable || !istide" @change="checkSubmit"></el-input>
                 </div>
             </div>
             <div class="separator-horizontal border-right"></div>
@@ -51,13 +51,13 @@
             <div class="reporter-column">
                 <div class="reporter-row">
                     <div class="reporter-header">水温预报员：</div>
-                    <el-select class="reporter-select" v-model="localtable[0].FWATERTEMPERATUREFORECASTER" placeholder="请选择">
+                    <el-select class="reporter-select" v-model="localtable[0].FWATERTEMPERATUREFORECASTER" placeholder="请选择" :disabled="!timeeditable || !istemperature" @change="checkSubmit">
                         <el-option v-for="(item, index) in reportertemperaturelist" :key="index" :label="item" :value="item"></el-option>
                     </el-select>
                 </div>
                 <div class="reporter-row">
                     <div class="reporter-header">水温预报员电话：</div>
-                    <el-input class="input" v-model="localtable[0].FWATERTEMPERATUREFORECASTERTEL" placeholder="请输入水温预报员电话" :disabled="!editable" @change="checkSubmit"></el-input>
+                    <el-input class="input" v-model="localtable[0].FWATERTEMPERATUREFORECASTERTEL" placeholder="请输入水温预报员电话" :disabled="!timeeditable || !istemperature" @change="checkSubmit"></el-input>
                 </div>
             </div>
             <div class="separator-horizontal"></div>
@@ -74,6 +74,7 @@
 <script lang="ts">
 import { Component, Watch, Mixins, Vue } from 'vue-property-decorator'
 import Axios from 'axios'
+import Utils from '@/utils/utils'
 import GlobalProperties from '../mixins/globalproperties'
 import PublishInfo from '../types/publishinfo'
 
@@ -128,9 +129,24 @@ export default class PublishMetaInfo extends Vue {
     private deepEqual = require('deep-equal')
     private submitdisable: boolean = true
     @Watch('publishmetainfo')
-    private onPublishMetaInfoChanged(val: any, oldVal: any) {
-        this.localtable = JSON.parse(JSON.stringify(this.publishmetainfo))
+    private onPublishMetaInfoChanged(val: PublishInfo[], oldVal: PublishInfo[]) {
+        this.setPubDateTime(val)
+        this.localtable = JSON.parse(JSON.stringify(val))
+        this.localtable[0].PUBLISHDATE = this.coltime
         this.checkSubmit()
+    }
+    @Watch('coltime')
+    private onColtimeChanged(val: Date, oldVal: Date) {
+        if (val) {
+            this.localtable[0].PUBLISHDATE = val
+        }
+    }
+    @Watch('colhour')
+    private onColhourChanged(val: number, oldVal: number) {
+        if (val) {
+            this.localtable[0].PUBLISHHOUR = val.toString()
+            this.checkSubmit()
+        }
     }
     get publishdatestring(): string {
         this.localtable[0].PUBLISHDATE = new Date(this.localtable[0].PUBLISHDATE)
@@ -139,27 +155,27 @@ export default class PublishMetaInfo extends Vue {
             + this.localtable[0].PUBLISHDATE.getDate() + '日'
             + this.localtable[0].PUBLISHHOUR + '时'
     }
-    set publishdatestring(value: string) {
-        const re = /^\d{4}年\d{1,2}月\d{1,2}日\d{1,2}时/
-        if (value.match(re)) {
-            let strarr = value.split('年')
-            const yearstr = strarr[0]
-            strarr = strarr[1].split('月')
-            const monthstr = strarr[0]
-            strarr = strarr[1].split('日')
-            const daystr = strarr[0]
-            strarr = strarr[1].split('时')
-            const hourstr = strarr[0]
-            const pubdate = new Date(yearstr + '/' + monthstr + '/' + daystr)
-            if (!isNaN(Number(pubdate))) {
-                this.localtable[0].PUBLISHDATE = pubdate
-            }
-            if (Number(hourstr) > -1 && Number(hourstr) < 24) {
-                this.localtable[0].PUBLISHHOUR = hourstr
-            }
-        }
-    }
-    get editable() {
+    // set publishdatestring(value: string) {
+    //     const re = /^\d{4}年\d{1,2}月\d{1,2}日\d{1,2}时/
+    //     if (value.match(re)) {
+    //         let strarr = value.split('年')
+    //         const yearstr = strarr[0]
+    //         strarr = strarr[1].split('月')
+    //         const monthstr = strarr[0]
+    //         strarr = strarr[1].split('日')
+    //         const daystr = strarr[0]
+    //         strarr = strarr[1].split('时')
+    //         const hourstr = strarr[0]
+    //         const pubdate = new Date(yearstr + '/' + monthstr + '/' + daystr)
+    //         if (!isNaN(Number(pubdate))) {
+    //             this.localtable[0].PUBLISHDATE = pubdate
+    //         }
+    //         if (Number(hourstr) > -1 && Number(hourstr) < 24) {
+    //             this.localtable[0].PUBLISHHOUR = hourstr
+    //         }
+    //     }
+    // }
+    get timeeditable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
             return false
         } else if (this.coltime.getMonth() < new Date().getMonth()) {
@@ -172,7 +188,7 @@ export default class PublishMetaInfo extends Vue {
     }
     private checkSubmit() {
         this.submitdisable = this.deepEqual(this.publishmetainfo, this.localtable)
-        if (this.amshortfakedata.PublishMetaInfoFakeData === true) {
+        if (this.amshortfakedata[11] === true) {
             this.submitdisable = false
         }
     }
@@ -181,35 +197,22 @@ export default class PublishMetaInfo extends Vue {
         this.checkSubmit()
     }
     private submitClick() {
-        Axios.post(this.hosturl + 'SetAmShortTableData',
-            {tablenumber: 0, usertype: this.usertype, datajson: JSON.stringify(this.localtable)})
-        .then((res) => {
-            console.log(res)
-            const resobj = JSON.parse(res.data.d)
-            if (resobj.Success === true) {
-                this.publishmetainfo = resobj.NewData
-                this.amshortfakedata.PublishMetaInfoFakeData = resobj.NewFakeData
-                this.checkSubmit()
-                this.myThis.$notify({
-                    title: '提交成功',
-                    message: '填报信息表单数据提交成功',
-                    type: 'success'
-                })
-            } else {
-                this.myThis.$notify.error({
-                    title: '提交失败',
-                    dangerouslyUseHTMLString: true,
-                    message: '<p>填报信息表单数据提交失败</p>'
-                        + (resobj.Description === '' ? '' :  '<p>' + resobj.Description + '</p>')
-                })
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        if (this.submitdisable === false) {
+            Utils.doSubmit(0, 'PublishMetaInfo', this.localtable, 11, this.checkSubmit, '填报信息')
+        }
+    }
+    private setPubDateTime(publishmetainfo: PublishInfo[]) {
+        publishmetainfo[0].PUBLISHDATE = this.coltime
+        if (publishmetainfo[0].PUBLISHHOUR !== '') {
+            this.colhour = Number(publishmetainfo[0].PUBLISHHOUR)
+        } else {
+            publishmetainfo[0].PUBLISHHOUR = this.colhour.toString()
+        }
     }
     private mounted() {
+        this.setPubDateTime(this.publishmetainfo)
         this.localtable = JSON.parse(JSON.stringify(this.publishmetainfo))
+        this.localtable[0].PUBLISHDATE = this.coltime
         this.checkSubmit()
     }
 }
