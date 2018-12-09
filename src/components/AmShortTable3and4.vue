@@ -1,20 +1,14 @@
 <template>
     <div class="container">
         <div class="header-row border-bottom border-top border-left border-right">{{title}}</div>
-        <div class="table-body border-left border-right border-bottom">
-            <div class="table-body-row border-bottom">
-                <div class="table-body-row-header">海浪:</div>
-                <div class="table-body-row-content">
-                    <el-input type="textarea" autosize placeholder="请输入内容" v-model="localupperstring" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
-                </div>
-            </div>
-            <div class="table-body-row">
-                <div class="table-body-row-header">潮汐:</div>
-                <div class="table-body-row-content">
-                    <el-input type="textarea" autosize placeholder="请输入内容" v-model="locallowerstring" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
-                </div>
-            </div>
-        </div>
+        <el-form class="table-body border-left border-right border-bottom" label-width="60px" status-icon :model="this" :rules="rules" ref="form">
+            <el-form-item class="table-body-row border-bottom" label="海浪：" prop="localupperstring">
+                <el-input class="input" type="textarea" autosize placeholder="请输入内容" v-model="localupperstring" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+            </el-form-item>
+            <el-form-item class="table-body-row" label="潮汐：" prop="locallowerstring">
+                <el-input class="input" type="textarea" autosize placeholder="请输入内容" v-model="locallowerstring" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+            </el-form-item>
+        </el-form>
         <div class="button-row">
             <div class="separator-horizontal"></div>
             <el-button size="small" @click="cancelClick">取消</el-button>
@@ -40,7 +34,10 @@ export default class AmShortTable3and4 extends Vue {
     private myThis: any = this
     private localupperstring = ''
     private locallowerstring = ''
-
+    private rules = {
+        localupperstring: [{validator: this.validateWave, trigger: 'blur'}],
+        locallowerstring: [{validator: this.validateTide, trigger: 'blur'}]
+    }
     private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
             return false
@@ -53,12 +50,7 @@ export default class AmShortTable3and4 extends Vue {
         }
     }
     public submitClick() {
-        if (this.checkValidate() === false) {
-            this.myThis.$notify.error({
-                title: '错误',
-                message: '数值不能为空'
-            })
-        } else if (this.iNeedSubmit === true) {
+        if (this.iNeedSubmit === true && this.checkValidate() === true) {
             this.valueChange()
         }
     }
@@ -90,13 +82,35 @@ export default class AmShortTable3and4 extends Vue {
     private needSubmitChange(value: boolean) {
         return value
     }
+    private validateWave(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'fl') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else {
+            callback()
+        }
+    }
+    private validateTide(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'cx') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else {
+            callback()
+        }
+    }
     private checkValidate() {
         let result = true
-        if (this.usertype === 'fl' && this.localupperstring === '') {
-            result = false
-        } else if (this.usertype === 'cx' && this.locallowerstring === '') {
-            result = false
-        }
+        this.myThis.$refs.form.validate((valid: boolean) => {
+            if (valid === false) {
+                result = false
+            }
+        })
         return result
     }
     private cancelClick() {
@@ -134,16 +148,16 @@ div {
     flex-direction: column;
 }
 .table-body-row {
-    width: 100%;
-    min-height: 40px;
-    flex-direction: row;
+    min-height: 50px;
+    margin-bottom: 0;
 }
-.table-body-row-header {
-    width: 60px;
+.input {
+    width: 99%;
 }
-.table-body-row-content {
-    flex: 1;
-    padding: 5px 5px 5px 0;
+.el-form-item >>> .el-form-item__content{
+    display: block;
+    width: 100% !important;
+    margin-left: 0 !important;
 }
 .border-bottom {
     border-bottom-width: 1px;
@@ -164,9 +178,6 @@ div {
     border-right-width: 1px;
     border-right-style: solid;
     border-right-color: #000;
-}
-.input {
-    width: 80%;
 }
 .button-row {
     height: 40px;
