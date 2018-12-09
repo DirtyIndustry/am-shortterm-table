@@ -18,7 +18,7 @@
             <!-- <el-form style="width: 100%;" status-icon :rules="rules" :model="localtable" ref="mainform"> -->
             <div class="table-body-content-column">
                 <el-form class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index"
-                    status-icon :model="item" :rules="rules" :ref="'form' + index">
+                status-icon :model="item" :rules="rules" :ref="'form' + index">
                     <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
                         <el-form-item class="el-form-item" prop="YRBHWWFWAVEHEIGHT">
@@ -155,9 +155,6 @@ export default class AmShortTable1 extends Vue {
                 }
             })
         }
-        // this.myThis.$refs.form0[0].validate((valid: boolean) => {
-        //     console.log(valid)
-        // })
         return result
     }
     private checkSubmit() {
