@@ -127,6 +127,30 @@ export default class PublishMetaInfo extends Vue {
         'HBY2006032'
     ]
     private deepEqual = require('deep-equal')
+    private get publishdatestring(): string {
+        this.localtable[0].PUBLISHDATE = new Date(this.localtable[0].PUBLISHDATE)
+        return this.localtable[0].PUBLISHDATE.getFullYear() + '年'
+            + (this.localtable[0].PUBLISHDATE.getMonth() + 1) + '月'
+            + this.localtable[0].PUBLISHDATE.getDate() + '日'
+            + this.localtable[0].PUBLISHHOUR + '时'
+    }
+    private get timeeditable() {
+        if (this.coltime.getFullYear() < new Date().getFullYear()) {
+            return false
+        } else if (this.coltime.getMonth() < new Date().getMonth()) {
+            return false
+        } else if (this.coltime.getDate() < new Date().getDate()) {
+            return false
+        } else {
+            return true
+        }
+    }
+    public checkSubmit() {
+        this.needsubmit.tablePublishMetaneedsubmit = !this.deepEqual(this.publishmetainfo, this.localtable)
+        if (this.amshortfakedata[11] === true) {
+            this.needsubmit.tablePublishMetaneedsubmit = true
+        }
+    }
     @Watch('publishmetainfo')
     private onPublishMetaInfoChanged(val: PublishInfo[], oldVal: PublishInfo[]) {
         this.setPubDateTime(val)
@@ -145,50 +169,6 @@ export default class PublishMetaInfo extends Vue {
         if (val) {
             this.localtable[0].PUBLISHHOUR = val.toString()
             this.checkSubmit()
-        }
-    }
-    get publishdatestring(): string {
-        this.localtable[0].PUBLISHDATE = new Date(this.localtable[0].PUBLISHDATE)
-        return this.localtable[0].PUBLISHDATE.getFullYear() + '年'
-            + (this.localtable[0].PUBLISHDATE.getMonth() + 1) + '月'
-            + this.localtable[0].PUBLISHDATE.getDate() + '日'
-            + this.localtable[0].PUBLISHHOUR + '时'
-    }
-    // set publishdatestring(value: string) {
-    //     const re = /^\d{4}年\d{1,2}月\d{1,2}日\d{1,2}时/
-    //     if (value.match(re)) {
-    //         let strarr = value.split('年')
-    //         const yearstr = strarr[0]
-    //         strarr = strarr[1].split('月')
-    //         const monthstr = strarr[0]
-    //         strarr = strarr[1].split('日')
-    //         const daystr = strarr[0]
-    //         strarr = strarr[1].split('时')
-    //         const hourstr = strarr[0]
-    //         const pubdate = new Date(yearstr + '/' + monthstr + '/' + daystr)
-    //         if (!isNaN(Number(pubdate))) {
-    //             this.localtable[0].PUBLISHDATE = pubdate
-    //         }
-    //         if (Number(hourstr) > -1 && Number(hourstr) < 24) {
-    //             this.localtable[0].PUBLISHHOUR = hourstr
-    //         }
-    //     }
-    // }
-    get timeeditable() {
-        if (this.coltime.getFullYear() < new Date().getFullYear()) {
-            return false
-        } else if (this.coltime.getMonth() < new Date().getMonth()) {
-            return false
-        } else if (this.coltime.getDate() < new Date().getDate()) {
-            return false
-        } else {
-            return true
-        }
-    }
-    private checkSubmit() {
-        this.needsubmit.tablePublishMetaneedsubmit = !this.deepEqual(this.publishmetainfo, this.localtable)
-        if (this.amshortfakedata[11] === true) {
-            this.needsubmit.tablePublishMetaneedsubmit = true
         }
     }
     private cancelClick() {

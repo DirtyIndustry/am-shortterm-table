@@ -41,7 +41,7 @@ export default class AmShortTable3and4 extends Vue {
     private localupperstring = ''
     private locallowerstring = ''
 
-    get editable() {
+    private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
             return false
         } else if (this.coltime.getMonth() < new Date().getMonth()) {
@@ -50,6 +50,11 @@ export default class AmShortTable3and4 extends Vue {
             return false
         } else {
             return true
+        }
+    }
+    public submitClick() {
+        if (this.iNeedSubmit === true) {
+            this.valueChange()
         }
     }
     public checkSubmit() {
@@ -85,12 +90,6 @@ export default class AmShortTable3and4 extends Vue {
         this.localupperstring = this.upperstring
         this.locallowerstring = this.lowerstring
         this.checkSubmit()
-    }
-    private submitClick() {
-        if (this.iNeedSubmit === true) {
-            this.valueChange()
-            // this.checkSubmit()
-        }
     }
     private mounted() {
         this.localupperstring = this.upperstring

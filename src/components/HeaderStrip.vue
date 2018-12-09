@@ -24,7 +24,7 @@
         <el-button>操作日志</el-button>
         <el-switch v-model="showalltable" active-text="显示所有" active-color="#13ce66"></el-switch>
         <el-button>选择模板并发布</el-button>
-        <el-button>保存所有</el-button>
+        <el-button :disabled="!iNeedSubmit" @click="submitAll">保存所有</el-button>
     </div>
 </template>
 
@@ -51,7 +51,7 @@
         // private reporttime = 10
         private reporttimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
-        get reportertype() {
+        private get reportertype() {
             switch (this.usertype) {
                 case 'fl':
                     return '风、海浪'
@@ -63,6 +63,14 @@
                     return '无'
             }
         }
+        private get iNeedSubmit() {
+            for (const value of this.needsubmit) {
+                if (value === true) {
+                    return true
+                }
+            }
+            return false
+        }
 
         private getSession(): void {
             console.log(this.reportertype)
@@ -70,6 +78,10 @@
         @Emit('query')
         private queryData() {
             console.log('query ' + this.coltime)
+        }
+        @Emit('submitAll')
+        private submitAll() {
+            console.log('submit all')
         }
     }
 </script>

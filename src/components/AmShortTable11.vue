@@ -100,12 +100,7 @@ export default class AmShortTable11 extends Vue {
         new AmShortInfo11()
     ]
     private deepEqual = require('deep-equal')
-    @Watch('amshorttable11')
-    private onAmShortTable11Changed(val: any, oldVal: any) {
-        this.localtable = JSON.parse(JSON.stringify(this.amshorttable11))
-        this.checkSubmit()
-    }
-    get editable() {
+    private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
             return false
         } else if (this.coltime.getMonth() < new Date().getMonth()) {
@@ -116,6 +111,16 @@ export default class AmShortTable11 extends Vue {
             return true
         }
     }
+    public submitClick() {
+        if (this.needsubmit.table11needsubmit === true) {
+            Utils.doSubmit(11, 'AmShortTable11', this.localtable, 9, this.checkSubmit, '上午十一')
+        }
+    }
+    @Watch('amshorttable11')
+    private onAmShortTable11Changed(val: any, oldVal: any) {
+        this.localtable = JSON.parse(JSON.stringify(this.amshorttable11))
+        this.checkSubmit()
+    }
     private checkSubmit() {
         this.needsubmit.table11needsubmit = !this.deepEqual(this.amshorttable11, this.localtable)
         if (this.amshortfakedata[9] === true) {
@@ -125,11 +130,6 @@ export default class AmShortTable11 extends Vue {
     private cancelClick() {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable11))
         this.checkSubmit()
-    }
-    private submitClick() {
-        if (this.needsubmit.table11needsubmit === true) {
-            Utils.doSubmit(11, 'AmShortTable11', this.localtable, 9, this.checkSubmit, '上午十一')
-        }
     }
     private mounted() {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable11))

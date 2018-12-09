@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HeaderStrip @query="getData"></HeaderStrip>
+    <HeaderStrip @query="getData" @submitAll="submitAll"></HeaderStrip>
     <div class="separator-vertical"></div>
-    <AmShortTable1 v-show="iswindwave | istemperature | showalltable"></AmShortTable1>
+    <AmShortTable1 v-show="iswindwave | istemperature | showalltable" ref="table1"></AmShortTable1>
     <div class="separator-vertical"></div>
-    <AmShortTable2 v-show="istide | showalltable"></AmShortTable2>
+    <AmShortTable2 v-show="istide | showalltable" ref="table2"></AmShortTable2>
     <div class="separator-vertical"></div>
     <AmShortTable3and4 v-show="iswindwave | istide | showalltable"
       title="上午三、3天海洋水文气象预报综述"
@@ -27,23 +27,23 @@
       ref="table4">
       </AmShortTable3and4>
     <div class="separator-vertical"></div>
-    <AmShortTable5 v-show="iswindwave | istemperature | showalltable"></AmShortTable5>
+    <AmShortTable5 v-show="iswindwave | istemperature | showalltable" ref="table5"></AmShortTable5>
     <div class="separator-vertical"></div>
-    <AmShortTable6 v-show="istide | showalltable"></AmShortTable6>
+    <AmShortTable6 v-show="istide | showalltable" ref="table6"></AmShortTable6>
     <div class="separator-vertical"></div>
-    <AmShortTable7 v-show="iswindwave | showalltable"></AmShortTable7>
+    <AmShortTable7 v-show="iswindwave | showalltable" ref="table7"></AmShortTable7>
     <div class="separator-vertical"></div>
-    <AmShortTable8 v-show="istide | showalltable"></AmShortTable8>
+    <AmShortTable8 v-show="istide | showalltable" ref="table8"></AmShortTable8>
     <div class="separator-vertical"></div>
-    <AmShortTable9 v-show="iswindwave | istemperature | showalltable"></AmShortTable9>
+    <AmShortTable9 v-show="iswindwave | istemperature | showalltable" ref="table9"></AmShortTable9>
     <div class="separator-vertical"></div>
-    <AmShortTable10 v-show="iswindwave | istemperature | showalltable"></AmShortTable10>
+    <AmShortTable10 v-show="iswindwave | istemperature | showalltable" ref="table10"></AmShortTable10>
     <div class="separator-vertical"></div>
-    <AmShortTable11 v-show="istide | showalltable"></AmShortTable11>
+    <AmShortTable11 v-show="istide | showalltable" ref="table11"></AmShortTable11>
     <div class="separator-vertical"></div>
-    <AmShortTable12 v-show="iswindwave | showalltable"></AmShortTable12>
+    <AmShortTable12 v-show="iswindwave | showalltable" ref="table12"></AmShortTable12>
     <div class="separator-vertical"></div>
-    <PublishMetaInfo></PublishMetaInfo>
+    <PublishMetaInfo  ref="tablepubmeta"></PublishMetaInfo>
     <div class="separator-vertical"></div>
     <div class="separator-vertical"></div>
   </div>
@@ -158,6 +158,22 @@ export default class Home extends Vue {
       .catch((error) => {
         console.log(error)
       })
+  }
+  private submitAll() {
+    console.log('submit all recived.')
+    this.myThis.$Refs.table1.submitClick()
+    this.myThis.$Refs.table2.submitClick()
+    this.myThis.$Refs.table3.submitClick()
+    this.myThis.$Refs.table4.submitClick()
+    this.myThis.$Refs.table5.submitClick()
+    this.myThis.$Refs.table6.submitClick()
+    this.myThis.$Refs.table7.submitClick()
+    this.myThis.$Refs.table8.submitClick()
+    this.myThis.$Refs.table9.submitClick()
+    this.myThis.$Refs.table10.submitClick()
+    this.myThis.$Refs.table11.submitClick()
+    this.myThis.$Refs.table12.submitClick()
+    this.myThis.$Refs.tablepubmeta.submitClick()
   }
   private table3changed(arg: string[]) {
     const localtable = JSON.parse(JSON.stringify(this.amshorttable3and4))
