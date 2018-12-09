@@ -37,7 +37,7 @@ export default class AmShortTable3and4 extends Vue {
     @Prop({default: ''}) public lowerstring!: string
     @Prop({default: ''}) public title!: string
     @Prop({default: false}) public iNeedSubmit!: boolean
-
+    private myThis: any = this
     private localupperstring = ''
     private locallowerstring = ''
 
@@ -53,7 +53,12 @@ export default class AmShortTable3and4 extends Vue {
         }
     }
     public submitClick() {
-        if (this.iNeedSubmit === true) {
+        if (this.checkValidate() === false) {
+            this.myThis.$notify.error({
+                title: '错误',
+                message: '数值不能为空'
+            })
+        } else if (this.iNeedSubmit === true) {
             this.valueChange()
         }
     }
@@ -85,7 +90,15 @@ export default class AmShortTable3and4 extends Vue {
     private needSubmitChange(value: boolean) {
         return value
     }
-
+    private checkValidate() {
+        let result = true
+        if (this.usertype === 'fl' && this.localupperstring === '') {
+            result = false
+        } else if (this.usertype === 'cx' && this.locallowerstring === '') {
+            result = false
+        }
+        return result
+    }
     private cancelClick() {
         this.localupperstring = this.upperstring
         this.locallowerstring = this.lowerstring

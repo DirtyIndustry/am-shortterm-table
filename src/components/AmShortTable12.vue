@@ -64,7 +64,12 @@ export default class AmShortTable12 extends Vue {
         }
     }
     public submitClick() {
-        if (this.needsubmit.table12needsubmit === true) {
+        if (this.checkValidate() === false) {
+            this.myThis.$notify.error({
+                title: '错误',
+                message: '表单十二数值不能为空'
+            })
+        } else if (this.needsubmit.table12needsubmit === true) {
             Utils.doSubmit(12, 'AmShortTable12', this.localtable, 10, this.checkSubmit, '上午十二')
         }
     }
@@ -72,6 +77,19 @@ export default class AmShortTable12 extends Vue {
     private onAmShortTable12Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable12))
         this.checkSubmit()
+    }
+    private checkValidate() {
+        let result = true
+        if (this.usertype === 'fl') {
+            if (this.localtable[0].WEATERSTATE === ''
+            || this.localtable[0].TEMPERATURE === ''
+            || this.localtable[0].WINDSPEED === ''
+            || this.localtable[0].WINDDIRECTION === ''
+            || this.localtable[0].WAVEHEIGHT === '') {
+                result = false
+            }
+        }
+        return result
     }
     private checkSubmit() {
         this.needsubmit.table12needsubmit = !this.deepEqual(this.amshorttable12, this.localtable)

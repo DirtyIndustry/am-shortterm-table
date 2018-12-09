@@ -145,10 +145,14 @@ export default class PublishMetaInfo extends Vue {
             return true
         }
     }
-    public checkSubmit() {
-        this.needsubmit.tablePublishMetaneedsubmit = !this.deepEqual(this.publishmetainfo, this.localtable)
-        if (this.amshortfakedata[11] === true) {
-            this.needsubmit.tablePublishMetaneedsubmit = true
+    public submitClick() {
+        if (this.checkValidate() === false) {
+            this.myThis.$notify.error({
+                title: '错误',
+                message: '填报信息不能为空'
+            })
+        } else if (this.needsubmit.tablePublishMetaneedsubmit === true) {
+            Utils.doSubmit(0, 'PublishMetaInfo', this.localtable, 11, this.checkSubmit, '填报信息')
         }
     }
     @Watch('publishmetainfo')
@@ -171,14 +175,39 @@ export default class PublishMetaInfo extends Vue {
             this.checkSubmit()
         }
     }
+    private checkValidate() {
+        let result = true
+        if (this.localtable[0].FRELEASEUNIT === ''
+        || this.localtable[0].ZHIBANTEL === ''
+        || this.localtable[0].SENDTEL === '') {
+            result = false
+        } else if (this.usertype === 'fl') {
+            if (this.localtable[0].FWAVEFORECASTER === ''
+            || this.localtable[0].FWAVEFORECASTERTEL === '') {
+                result = false
+            }
+        } else if (this.usertype === 'cx') {
+            if (this.localtable[0].FTIDALFORECASTER === ''
+            || this.localtable[0].FTIDALFORECASTERTEL === '') {
+                result = false
+            }
+        } else if (this.usertype === 'sw') {
+            if (this.localtable[0].FWATERTEMPERATUREFORECASTER === ''
+            || this.localtable[0].FWATERTEMPERATUREFORECASTERTEL === '') {
+                result = false
+            }
+        }
+        return result
+    }
+    private checkSubmit() {
+        this.needsubmit.tablePublishMetaneedsubmit = !this.deepEqual(this.publishmetainfo, this.localtable)
+        if (this.amshortfakedata[11] === true) {
+            this.needsubmit.tablePublishMetaneedsubmit = true
+        }
+    }
     private cancelClick() {
         this.localtable = JSON.parse(JSON.stringify(this.publishmetainfo))
         this.checkSubmit()
-    }
-    private submitClick() {
-        if (this.needsubmit.tablePublishMetaneedsubmit === true) {
-            Utils.doSubmit(0, 'PublishMetaInfo', this.localtable, 11, this.checkSubmit, '填报信息')
-        }
     }
     private setPubDateTime(publishmetainfo: PublishInfo[]) {
         publishmetainfo[0].PUBLISHDATE = this.coltime

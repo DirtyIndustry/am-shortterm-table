@@ -15,26 +15,39 @@
                 <div class="table-body-header-row border-bottom">渤海</div>
                 <div class="table-body-header-row">黄河海港</div>
             </div>
+            <!-- <el-form style="width: 100%;" status-icon :rules="rules" :model="localtable" ref="mainform"> -->
             <div class="table-body-content-column">
-                <div class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index">
+                <el-form class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index"
+                    status-icon :model="item" :rules="rules" :ref="'form' + index">
                     <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="YRBHWWFWAVEHEIGHT">
                         <el-input class="input" v-model="item.YRBHWWFWAVEHEIGHT" placeholder="请输入波高" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="YRBHWWFWAVEDIR">
                         <el-input class="input" v-model="item.YRBHWWFWAVEDIR" placeholder="请输入波向" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="YRBHWWFFLOWDIR">
                         <el-input class="input" v-model="item.YRBHWWFFLOWDIR" placeholder="请输入风向" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="YRBHWWFFLOWLEVEL">
                         <el-input class="input" v-model="item.YRBHWWFFLOWLEVEL" placeholder="请输入风力" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column">
-                        <el-input v-if="index > 2" class="input" v-model="item.YRBHWWFWATERTEMPERATURE" placeholder="请输入水温" :disabled="!timeeditable || !istemperature" @change="checkSubmit"></el-input>
+                        <el-form-item v-if="index > 2" class="el-form-item" prop="YRBHWWFWATERTEMPERATURE">
+                        <el-input class="input" v-model="item.YRBHWWFWATERTEMPERATURE" placeholder="请输入水温" :disabled="!timeeditable || !istemperature" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
-                </div>
+                </el-form>
             </div>
+            <!-- </el-form> -->
         </div>
         <div class="button-row">
             <div class="separator-horizontal"></div>
@@ -65,17 +78,39 @@ export default class AmShortTable1 extends Vue {
         new AmShortInfo1(),
         new AmShortInfo1()
     ]
+    private rules = {
+        YRBHWWFWAVEHEIGHT: [
+            {
+                validator: this.validateWindWave,
+                trigger: 'blur'
+            }
+        ],
+        YRBHWWFWAVEDIR: [
+            {
+                validator: this.validateWindWave,
+                trigger: 'blur'
+            }
+        ],
+        YRBHWWFFLOWDIR: [
+            {
+                validator: this.validateWindWave,
+                trigger: 'blur'
+            }
+        ],
+        YRBHWWFFLOWLEVEL: [
+            {
+                validator: this.validateWindWave,
+                trigger: 'blur'
+            }
+        ],
+        YRBHWWFWATERTEMPERATURE: [
+            {
+                validator: this.validateTemperature,
+                trigger: 'blur'
+            }
+        ]
+    }
     private deepEqual = require('deep-equal')
-    public submitClick() {
-        if (this.needsubmit[0] === true) {
-            Utils.doSubmit(1, 'AmShortTable1', this.localtable, 0, this.checkSubmit, '上午一')
-        }
-    }
-    @Watch('amshorttable1')
-    private onAmShortTable1Changed(val: any, oldVal: any) {
-        this.localtable = JSON.parse(JSON.stringify(this.amshorttable1))
-        this.checkSubmit()
-    }
     private get timeeditable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
             return false
@@ -86,6 +121,44 @@ export default class AmShortTable1 extends Vue {
         } else {
             return true
         }
+    }
+    public submitClick() {
+        if (this.needsubmit.table1needsubmit === true && this.validateForm() === true) {
+            Utils.doSubmit(1, 'AmShortTable1', this.localtable, 0, this.checkSubmit, '上午一')
+        }
+    }
+    @Watch('amshorttable1')
+    private onAmShortTable1Changed(val: any, oldVal: any) {
+        this.localtable = JSON.parse(JSON.stringify(this.amshorttable1))
+        this.checkSubmit()
+    }
+    private validateWindWave(rule: any, value: string, callback: any) {
+        if (this.usertype === 'fl' && !value) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
+    private validateTemperature(rule: any, value: string, callback: any) {
+        if (this.usertype === 'sw' && !value) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
+    private validateForm() {
+        let result = true
+        for (let i = 0; i < this.localtable.length; i++) {
+            this.myThis.$refs['form' + i][0].validate((valid: boolean) => {
+                if (valid === false) {
+                    result = false
+                }
+            })
+        }
+        // this.myThis.$refs.form0[0].validate((valid: boolean) => {
+        //     console.log(valid)
+        // })
+        return result
     }
     private checkSubmit() {
         this.needsubmit.table1needsubmit = !this.deepEqual(this.amshorttable1, this.localtable)
@@ -158,13 +231,22 @@ div {
 }
 .table-body-content-column {
     flex: 1;
-    /* height: 340px; */
     flex-direction: column;
 }
 .table-body-row {
-    /* flex: 1; */
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid #ff0000; */
     width: 100%;
-    /* height: 60px; */
+}
+.el-form-item {
+    height: 100%;
+    width: 100%;
+    margin: 0 5%;
+}
+.el-form-item >>> .el-form-item__content{
+    display: block;
+    width: 100% !important;
 }
 .border-bottom {
     border-bottom-width: 1px;
@@ -187,7 +269,8 @@ div {
     border-right-color: #000;
 }
 .input {
-    width: 90%;
+    /* width: 90%; */
+    /* left: 5%; */
 }
 .button-row {
     height: 40px;

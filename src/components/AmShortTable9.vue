@@ -80,7 +80,12 @@ export default class AmShortTable9 extends Vue {
         }
     }
     public submitClick() {
-        if (this.needsubmit.table9needsubmit === true) {
+        if (this.checkValidate() === false) {
+            this.myThis.$notify.error({
+                title: '错误',
+                message: '表单九数值不能为空'
+            })
+        } else if (this.needsubmit.table9needsubmit === true) {
             Utils.doSubmit(9, 'AmShortTable9', this.localtable, 7, this.checkSubmit, '上午九')
         }
     }
@@ -88,6 +93,21 @@ export default class AmShortTable9 extends Vue {
     private onAmShortTable9Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable9))
         this.checkSubmit()
+    }
+    private checkValidate() {
+        let result = true
+        if (this.usertype === 'fl') {
+            if (this.localtable[0].SA24HWFBOHAIWAVEHEIGHT === ''
+            || this.localtable[0].SA24HWFNORTHOFYSWAVEHEIGHT === ''
+            || this.localtable[0].SA24HWFMIDDLEOFYSWAVEHEIGHT === ''
+            || this.localtable[0].SA24HWFSOUTHOFYSWAVEHEIGHT === ''
+            || this.localtable[0].SA24HWFOFFSHOREWAVEHEIGHT === '') {
+                result = false
+            }
+        } else if (this.usertype === 'sw' && this.localtable[0].SA24HWFOFFSHORESW === '') {
+            result = false
+        }
+        return result
     }
     private checkSubmit() {
         this.needsubmit.table9needsubmit = !this.deepEqual(this.amshorttable9, this.localtable)

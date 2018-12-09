@@ -69,7 +69,12 @@ export default class AmShortTable10 extends Vue {
         }
     }
     public submitClick() {
-        if (this.needsubmit.table10needsubmit === true) {
+        if (this.checkValidate() === false) {
+            this.myThis.$notify.error({
+                title: '错误',
+                message: '表单十数值不能为空'
+            })
+        } else if (this.needsubmit.table10needsubmit === true) {
             Utils.doSubmit(10, 'AmShortTable10', this.localtable, 8, this.checkSubmit, '上午十')
         }
     }
@@ -77,6 +82,19 @@ export default class AmShortTable10 extends Vue {
     private onAmShortTable10Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable10))
         this.checkSubmit()
+    }
+    private checkValidate() {
+        let result = true
+        if (this.usertype === 'fl') {
+            if (this.localtable[0].WAVELEVELONE === ''
+            || this.localtable[0].WAVELEVELTYPE === ''
+            || this.localtable[0].WAVEDIRECTION === '') {
+                result = false
+            }
+        } else if (this.usertype === 'sw' && this.localtable[0].WATERTEMPERATURE === '') {
+            result = false
+        }
+        return result
     }
     private checkSubmit() {
         this.needsubmit.table10needsubmit = !this.deepEqual(this.amshorttable10, this.localtable)

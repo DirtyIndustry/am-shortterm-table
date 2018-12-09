@@ -124,7 +124,12 @@ export default class AmShortTable5 extends Vue {
         }
     }
     public submitClick() {
-        if (this.needsubmit.table5needsubmit === true) {
+        if (this.checkValidate() === false) {
+            this.myThis.$notify.error({
+                title: '错误',
+                message: '表单五数值不能为空'
+            })
+        } else if (this.needsubmit.table5needsubmit === true) {
             Utils.doSubmit(5, 'AmShortTable5', this.localtable, 3, this.checkSubmit, '上午五')
         }
     }
@@ -132,6 +137,35 @@ export default class AmShortTable5 extends Vue {
     private onAmShortTable5Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable5))
         this.checkSubmit()
+    }
+    private checkValidate() {
+        let result = true
+        if (this.usertype === 'fl') {
+            if (this.localtable[0].EFWWBHLOWESTWAVE === ''
+            || this.localtable[0].EFWWGLGSEAAREAWAVEHEIGHT === ''
+            || this.localtable[0].EFWWDYGWAVEHEIGHT === ''
+            || this.localtable[0].EFWWXHWAVEHEIGHT === ''
+            || this.localtable[0].EFWWCKWAVEHEIGHT === ''
+            || this.localtable[0].EFWWBHHIGHESTWAVE === ''
+            || this.localtable[0].EFWWBHWAVETYPE === ''
+            || this.localtable[0].EFWWBHNORTHLOWESTWAVE === ''
+            || this.localtable[0].EFWWBHNORTHHIGHESTWAVE === ''
+            || this.localtable[0].EFWWBHNORTHWAVETYPE === ''
+            || this.localtable[0].EFWWDKSEAAREAWAVEHEIGHT === ''
+            || this.localtable[0].EFWWHHKSEAAREAWAVEHEIGHT === '') {
+                result = false
+            }
+        } else if (this.usertype === 'sw') {
+            if (this.localtable[0].EFWWHHKSEAAREAWATERTEMP === ''
+            || this.localtable[0].EFWWGLGSEAAREAWATERTEMP === ''
+            || this.localtable[0].EFWWDYGWATERTEMPERATURE === ''
+            || this.localtable[0].EFWWXHWATERTEMPERATURE === ''
+            || this.localtable[0].EFWWCKWATERTEMPERATURE === ''
+            || this.localtable[0].EFWWDKSEAAREAWATERTEMPE === '') {
+                result = false
+            }
+        }
+        return result
     }
     private checkSubmit() {
         this.needsubmit.table5needsubmit = !this.deepEqual(this.amshorttable5, this.localtable)

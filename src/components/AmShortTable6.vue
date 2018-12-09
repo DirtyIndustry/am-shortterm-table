@@ -132,7 +132,12 @@ export default class AmShortTable6 extends Vue {
         }
     }
     public submitClick() {
-        if (this.needsubmit.table6needsubmit === true) {
+        if (this.checkValidate() === false) {
+            this.myThis.$notify.error({
+                title: '错误',
+                message: '表单六数值不能为空'
+            })
+        } else if (this.needsubmit.table6needsubmit === true) {
             Utils.doSubmit(6, 'AmShortTable6', this.localtable, 4, this.checkSubmit, '上午六')
         }
     }
@@ -140,6 +145,24 @@ export default class AmShortTable6 extends Vue {
     private onAmShortTable6Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable6))
         this.checkSubmit()
+    }
+    private checkValidate() {
+        let result = true
+        if (this.usertype === 'cx') {
+            this.localtable.forEach((item) => {
+                if (item.TLLOWTIDELEVELFORTHESECONDTIME === ''
+                || item.TLFIRSTWAVEOFTIME === ''
+                || item.TLFIRSTWAVETIDELEVEL === ''
+                || item.TLFIRSTTIMELOWTIDE === ''
+                || item.TLLOWTIDELEVELFORTHEFIRSTTIME === ''
+                || item.TLSECONDWAVEOFTIME === ''
+                || item.TLSECONDWAVETIDELEVEL === ''
+                || item.TLSECONDTIMELOWTIDE === '') {
+                    result = false
+                }
+            })
+        }
+        return result
     }
     private checkSubmit() {
         this.needsubmit.table6needsubmit = !this.deepEqual(this.amshorttable6, this.localtable)

@@ -117,7 +117,12 @@ export default class AmShortTable2 extends Vue {
     ]
     private deepEqual = require('deep-equal')
     public submitClick() {
-        if (this.needsubmit.table2needsubmit === true) {
+        if (this.checkValidate() === false) {
+            this.myThis.$notify.error({
+                title: '错误',
+                message: '表单二数值不能为空'
+            })
+        } else if (this.needsubmit.table2needsubmit === true) {
             Utils.doSubmit(2, 'AmShortTable2', this.localtable, 1, this.checkSubmit, '上午二')
         }
     }
@@ -142,6 +147,24 @@ export default class AmShortTable2 extends Vue {
         if (this.amshortfakedata[1] === true) {
             this.needsubmit.table2needsubmit = true
         }
+    }
+    private checkValidate() {
+        let result = true
+        this.localtable.forEach((item) => {
+            if (this.usertype === 'cx') {
+                if (item.HTLLOWTIDELEVELFORTHESECONDTIM === ''
+                || item.HTLFIRSTWAVEOFTIME === ''
+                || item.HTLFIRSTWAVETIDELEVEL === ''
+                || item.HTLFIRSTTIMELOWTIDE === ''
+                || item.HTLLOWTIDELEVELFORTHEFIRSTTIME === ''
+                || item.HTLSECONDWAVEOFTIME === ''
+                || item.HTLSECONDWAVETIDELEVEL === ''
+                || item.HTLSECONDTIMELOWTIDE === '') {
+                    result = false
+                }
+            }
+        })
+        return result
     }
     private cancelClick() {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable2))

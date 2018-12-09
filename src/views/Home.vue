@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-loading.fullscreen.lock="isloading">
     <img alt="Vue logo" src="../assets/logo.png">
     <HeaderStrip @query="getData" @submitAll="submitAll"></HeaderStrip>
     <div class="separator-vertical"></div>
@@ -88,6 +88,7 @@ import PublishMetaInfo from '@/components/PublishMetaInfo.vue'
 })
 export default class Home extends Vue {
   private myThis: any = this
+  private isloading = false
   @Watch('usertype')
   private onUserTypeChanged(val: boolean, oldVal: boolean) {
     this.setTypeShows()
@@ -135,6 +136,7 @@ export default class Home extends Vue {
     }
   }
   private getData() {
+    this.isloading = true
     Axios.post(Utils.hosturl + 'GetTableData', {date: this.coltime})
       .then((res) => {
         console.log(res)
@@ -154,26 +156,28 @@ export default class Home extends Vue {
           this.amshorttable12 = resdata.AmShort12Data
           this.publishmetainfo = resdata.PublishMetaInfo
         }
+        this.isloading = false
       })
       .catch((error) => {
         console.log(error)
+        this.isloading = false
       })
   }
   private submitAll() {
     console.log('submit all recived.')
-    this.myThis.$Refs.table1.submitClick()
-    this.myThis.$Refs.table2.submitClick()
-    this.myThis.$Refs.table3.submitClick()
-    this.myThis.$Refs.table4.submitClick()
-    this.myThis.$Refs.table5.submitClick()
-    this.myThis.$Refs.table6.submitClick()
-    this.myThis.$Refs.table7.submitClick()
-    this.myThis.$Refs.table8.submitClick()
-    this.myThis.$Refs.table9.submitClick()
-    this.myThis.$Refs.table10.submitClick()
-    this.myThis.$Refs.table11.submitClick()
-    this.myThis.$Refs.table12.submitClick()
-    this.myThis.$Refs.tablepubmeta.submitClick()
+    this.myThis.$refs.table1.submitClick()
+    this.myThis.$refs.table2.submitClick()
+    this.myThis.$refs.table3.submitClick()
+    this.myThis.$refs.table4.submitClick()
+    this.myThis.$refs.table5.submitClick()
+    this.myThis.$refs.table6.submitClick()
+    this.myThis.$refs.table7.submitClick()
+    this.myThis.$refs.table8.submitClick()
+    this.myThis.$refs.table9.submitClick()
+    this.myThis.$refs.table10.submitClick()
+    this.myThis.$refs.table11.submitClick()
+    this.myThis.$refs.table12.submitClick()
+    this.myThis.$refs.tablepubmeta.submitClick()
   }
   private table3changed(arg: string[]) {
     const localtable = JSON.parse(JSON.stringify(this.amshorttable3and4))
