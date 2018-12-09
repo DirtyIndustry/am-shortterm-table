@@ -11,7 +11,9 @@
       title="上午三、3天海洋水文气象预报综述"
       :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW"
       :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEWCX"
+      :iNeedSubmit="needsubmit.table3needsubmit"
       @valueChange="table3changed"
+      @needSubmitChange="table3submitchanged"
       ref="table3">
       </AmShortTable3and4>
     <div class="separator-vertical"></div>
@@ -19,7 +21,9 @@
       title="上午四、24小时水文气象预报综述"
       :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOUR"
       :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX"
+      :iNeedSubmit="needsubmit.table4needsubmit"
       @valueChange="table4changed"
+      @needSubmitChange="table4submitchanged"
       ref="table4">
       </AmShortTable3and4>
     <div class="separator-vertical"></div>
@@ -166,6 +170,12 @@ export default class Home extends Vue {
     localtable[0].METEOROLOGICALREVIEW24HOUR = arg[0]
     localtable[0].METEOROLOGICALREVIEW24HOURCX = arg[1]
     Utils.doSubmit(4, 'AmShortTable3and4', localtable, 2, this.myThis.$refs.table4.checkSubmit, '表单四')
+  }
+  private table3submitchanged(arg: boolean) {
+    this.needsubmit.table3needsubmit = arg
+  }
+  private table4submitchanged(arg: boolean) {
+    this.needsubmit.table4needsubmit = arg
   }
 
   private created() {

@@ -66,7 +66,7 @@
             <div class="separator-horizontal"></div>
             <el-button size="small" @click="cancelClick">取消</el-button>
             <div class="separator-horizontal"></div>
-            <el-button size="small" type="primary" :disabled="submitdisable" @click="submitClick">提交</el-button>
+            <el-button size="small" type="primary" :disabled="!needsubmit.tablePublishMetaneedsubmit" @click="submitClick">提交</el-button>
         </div>
     </div>
 </template>
@@ -127,7 +127,6 @@ export default class PublishMetaInfo extends Vue {
         'HBY2006032'
     ]
     private deepEqual = require('deep-equal')
-    private submitdisable: boolean = true
     @Watch('publishmetainfo')
     private onPublishMetaInfoChanged(val: PublishInfo[], oldVal: PublishInfo[]) {
         this.setPubDateTime(val)
@@ -187,9 +186,9 @@ export default class PublishMetaInfo extends Vue {
         }
     }
     private checkSubmit() {
-        this.submitdisable = this.deepEqual(this.publishmetainfo, this.localtable)
+        this.needsubmit.tablePublishMetaneedsubmit = !this.deepEqual(this.publishmetainfo, this.localtable)
         if (this.amshortfakedata[11] === true) {
-            this.submitdisable = false
+            this.needsubmit.tablePublishMetaneedsubmit = true
         }
     }
     private cancelClick() {
@@ -197,7 +196,7 @@ export default class PublishMetaInfo extends Vue {
         this.checkSubmit()
     }
     private submitClick() {
-        if (this.submitdisable === false) {
+        if (this.needsubmit.tablePublishMetaneedsubmit === true) {
             Utils.doSubmit(0, 'PublishMetaInfo', this.localtable, 11, this.checkSubmit, '填报信息')
         }
     }

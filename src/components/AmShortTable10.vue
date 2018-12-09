@@ -36,7 +36,7 @@
             <div class="separator-horizontal"></div>
             <el-button size="small" @click="cancelClick">取消</el-button>
             <div class="separator-horizontal"></div>
-            <el-button size="small" type="primary" :disabled="submitdisable" @click="submitClick">提交</el-button>
+            <el-button size="small" type="primary" :disabled="!needsubmit.table10needsubmit" @click="submitClick">提交</el-button>
         </div>
     </div>
 </template>
@@ -57,7 +57,6 @@ export default class AmShortTable10 extends Vue {
         new AmShortInfo10()
     ]
     private deepEqual = require('deep-equal')
-    private submitdisable: boolean = true
     @Watch('amshorttable10')
     private onAmShortTable10Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable10))
@@ -75,9 +74,9 @@ export default class AmShortTable10 extends Vue {
         }
     }
     private checkSubmit() {
-        this.submitdisable = this.deepEqual(this.amshorttable10, this.localtable)
+        this.needsubmit.table10needsubmit = !this.deepEqual(this.amshorttable10, this.localtable)
         if (this.amshortfakedata[8] === true) {
-            this.submitdisable = false
+            this.needsubmit.table10needsubmit = true
         }
     }
     private cancelClick() {
@@ -85,7 +84,7 @@ export default class AmShortTable10 extends Vue {
         this.checkSubmit()
     }
     private submitClick() {
-        if (this.submitdisable === false) {
+        if (this.needsubmit.table10needsubmit === true) {
             Utils.doSubmit(10, 'AmShortTable10', this.localtable, 8, this.checkSubmit, '上午十')
         }
     }

@@ -19,7 +19,7 @@
             <div class="separator-horizontal"></div>
             <el-button size="small" @click="cancelClick">取消</el-button>
             <div class="separator-horizontal"></div>
-            <el-button size="small" type="primary" :disabled="submitdisable" @click="submitClick">提交</el-button>
+            <el-button size="small" type="primary" :disabled="!iNeedSubmit" @click="submitClick">提交</el-button>
         </div>
     </div>
 </template>
@@ -36,10 +36,10 @@ export default class AmShortTable3and4 extends Vue {
     @Prop({default: ''}) public upperstring!: string
     @Prop({default: ''}) public lowerstring!: string
     @Prop({default: ''}) public title!: string
+    @Prop({default: false}) public iNeedSubmit!: boolean
 
     private localupperstring = ''
     private locallowerstring = ''
-    private submitdisable: boolean = true
 
     get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
@@ -56,9 +56,9 @@ export default class AmShortTable3and4 extends Vue {
         if (this.localupperstring !== this.upperstring
             || this.locallowerstring !== this.lowerstring
             || this.amshortfakedata[2] === true) {
-            this.submitdisable = false
+            this.needSubmitChange(true)
         } else {
-            this.submitdisable = true
+            this.needSubmitChange(false)
         }
     }
     @Watch('upperstring')
@@ -76,6 +76,10 @@ export default class AmShortTable3and4 extends Vue {
     private valueChange() {
         return [this.localupperstring, this.locallowerstring]
     }
+    @Emit('needSubmitChange')
+    private needSubmitChange(value: boolean) {
+        return value
+    }
 
     private cancelClick() {
         this.localupperstring = this.upperstring
@@ -83,7 +87,7 @@ export default class AmShortTable3and4 extends Vue {
         this.checkSubmit()
     }
     private submitClick() {
-        if (this.submitdisable === false) {
+        if (this.iNeedSubmit === true) {
             this.valueChange()
             // this.checkSubmit()
         }

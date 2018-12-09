@@ -11,6 +11,7 @@ import AmShortInfo10 from '../types/amshortinfo10'
 import AmShortInfo11 from '../types/amshortinfo11'
 import AmShortInfo12 from '../types/amshortinfo12'
 import PublishInfo from '../types/publishinfo'
+import NeedSubmitInfo from '@/types/needsubmitinfo'
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -23,6 +24,7 @@ declare module 'vue/types/vue' {
         showalltable: boolean
         coltime: Date
         colhour: number
+        needsubmit: NeedSubmitInfo
         amshortfakedata: boolean[]
         amshorttable1: AmShortInfo1[]
         amshorttable2: AmShortInfo2[]
@@ -59,6 +61,8 @@ export default class GlobalProperties extends Vue {
     set coltime(value: Date) { this.$store.dispatch('setColtime', value) }
     get colhour() { return this.$store.state.colhour }
     set colhour(value: number) { this.$store.dispatch('setColhour', value) }
+    get needsubmit() { return this.$store.state.needsubmit }
+    set needsubmit(value: NeedSubmitInfo) { this.$store.dispatch('setNeedSubmit', value) }
     get amshortfakedata() { return this.$store.state.amshortfakedata }
     set amshortfakedata(value: boolean[]) { this.$store.dispatch('setAmShortFakeData', value) }
     get amshorttable1() { return this.$store.state.amshorttable1 }

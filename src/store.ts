@@ -12,6 +12,7 @@ import AmShortInfo10 from './types/amshortinfo10'
 import AmShortInfo11 from './types/amshortinfo11'
 import AmShortInfo12 from './types/amshortinfo12'
 import PublishInfo from './types/publishinfo'
+import NeedSubmitInfo from '@/types/needsubmitinfo'
 
 Vue.use(Vuex)
 
@@ -25,6 +26,8 @@ export default new Vuex.Store({
     showalltable: false,
     coltime: new Date(new Date().toLocaleDateString()),
     colhour: 10,
+    // needsubmit: [false, false, false, false, false, false, false, false, false, false, false, false, false],
+    needsubmit: new NeedSubmitInfo(),
     amshortfakedata: [false, false, false, false, false, false, false, false, false, false, false, false],
     amshorttable1: [
       new AmShortInfo1(),
@@ -107,6 +110,9 @@ export default new Vuex.Store({
     setcolhour(state, value: number): void {
       state.colhour = value
     },
+    setneedsubmit(state, value: NeedSubmitInfo): void {
+      state.needsubmit = value
+    },
     setamshortfakedata(state, value: boolean[]): void {
       state.amshortfakedata = value
     },
@@ -171,6 +177,9 @@ export default new Vuex.Store({
     },
     setColhour(context, value: number): void {
       context.commit('setcolhour', value)
+    },
+    setNeedSubmit(context, value: NeedSubmitInfo): void {
+      context.commit('setneedsubmit', value)
     },
     setAmShortFakeData(context, value: boolean[]): void {
       context.commit('setamshortfakedata', value)
