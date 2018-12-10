@@ -1,12 +1,16 @@
 <template>
-    <div class="container">
+    <el-form class="container" status-icon :model="localtable[0]" :rules="rules" ref="form">
         <div class="row-upper">
             <div class="separator-horizontal"></div>
             <div>发布单位：</div>
+            <el-form-item class="el-form-item" prop="FRELEASEUNIT">
             <el-input class="input" v-model="localtable[0].FRELEASEUNIT" placeholder="请输入发布单位" :disabled="!timeeditable" @change="checkSubmit"></el-input>
+            </el-form-item>
             <div class="separator-horizontal"></div>
             <div>预报值班：</div>
+            <el-form-item class="el-form-item" prop="ZHIBANTEL">
             <el-input class="input" v-model="localtable[0].ZHIBANTEL" placeholder="请输入值班电话" :disabled="!timeeditable" @change="checkSubmit"></el-input>
+            </el-form-item>
             <div class="separator-horizontal"></div>
         </div>
         <div class="row-upper">
@@ -15,7 +19,9 @@
             <el-input class="input" v-model="publishdatestring" placeholder="请输入发送时间" disabled ></el-input>
             <div class="separator-horizontal"></div>
             <div>预报发送：</div>
+            <el-form-item class="el-form-item" prop="SENDTEL">
             <el-input class="input" v-model="localtable[0].SENDTEL" placeholder="请输入发送电话" :disabled="!timeeditable" @change="checkSubmit"></el-input>
+            </el-form-item>
             <div class="separator-horizontal"></div>
         </div>
         <div class="reporter-block border-top">
@@ -23,13 +29,17 @@
             <div class="reporter-column">
                 <div class="reporter-row">
                     <div class="reporter-header">海浪预报员：</div>
+                    <el-form-item class="el-form-item" prop="FWAVEFORECASTER">
                     <el-select class="reporter-select" v-model="localtable[0].FWAVEFORECASTER" placeholder="请选择" :disabled="!timeeditable || !iswindwave" @change="checkSubmit">
                         <el-option v-for="(item, index) in reporterwavelist" :key="index" :label="item" :value="item"></el-option>
                     </el-select>
+                    </el-form-item>
                 </div>
                 <div class="reporter-row">
                     <div class="reporter-header">海浪预报员电话：</div>
+                    <el-form-item class="el-form-item" prop="FWAVEFORECASTERTEL">
                     <el-input class="input" v-model="localtable[0].FWAVEFORECASTERTEL" placeholder="请输入海浪预报员电话" :disabled="!timeeditable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                 </div>
             </div>
             <div class="separator-horizontal border-right"></div>
@@ -37,13 +47,17 @@
             <div class="reporter-column">
                 <div class="reporter-row">
                     <div class="reporter-header">潮汐预报员：</div>
+                    <el-form-item class="el-form-item" prop="FTIDALFORECASTER">
                     <el-select class="reporter-select" v-model="localtable[0].FTIDALFORECASTER" placeholder="请选择" :disabled="!timeeditable || !istide" @change="checkSubmit">
                         <el-option v-for="(item, index) in reportertidelist" :key="index" :label="item" :value="item"></el-option>
                     </el-select>
+                    </el-form-item>
                 </div>
                 <div class="reporter-row">
                     <div class="reporter-header">潮汐预报员电话：</div>
+                    <el-form-item class="el-form-item" prop="FTIDALFORECASTERTEL">
                     <el-input class="input" v-model="localtable[0].FTIDALFORECASTERTEL" placeholder="请输入潮汐预报员电话" :disabled="!timeeditable || !istide" @change="checkSubmit"></el-input>
+                    </el-form-item>
                 </div>
             </div>
             <div class="separator-horizontal border-right"></div>
@@ -51,13 +65,17 @@
             <div class="reporter-column">
                 <div class="reporter-row">
                     <div class="reporter-header">水温预报员：</div>
+                    <el-form-item class="el-form-item" prop="FWATERTEMPERATUREFORECASTER">
                     <el-select class="reporter-select" v-model="localtable[0].FWATERTEMPERATUREFORECASTER" placeholder="请选择" :disabled="!timeeditable || !istemperature" @change="checkSubmit">
                         <el-option v-for="(item, index) in reportertemperaturelist" :key="index" :label="item" :value="item"></el-option>
                     </el-select>
+                    </el-form-item>
                 </div>
                 <div class="reporter-row">
                     <div class="reporter-header">水温预报员电话：</div>
+                    <el-form-item class="el-form-item" prop="FWATERTEMPERATUREFORECASTERTEL">
                     <el-input class="input" v-model="localtable[0].FWATERTEMPERATUREFORECASTERTEL" placeholder="请输入水温预报员电话" :disabled="!timeeditable || !istemperature" @change="checkSubmit"></el-input>
+                    </el-form-item>
                 </div>
             </div>
             <div class="separator-horizontal"></div>
@@ -68,7 +86,7 @@
             <div class="separator-horizontal"></div>
             <el-button size="small" type="primary" :disabled="!needsubmit.tablePublishMetaneedsubmit" @click="submitClick">提交</el-button>
         </div>
-    </div>
+    </el-form>
 </template>
 
 <script lang="ts">
@@ -126,6 +144,17 @@ export default class PublishMetaInfo extends Vue {
         'HBY2006030',
         'HBY2006032'
     ]
+    private rules = {
+        FRELEASEUNIT: [{required: true, trigger: 'blur'}],
+        FWAVEFORECASTER: [{validator: this.validateWave, trigger: 'blur'}],
+        FTIDALFORECASTER: [{validator: this.validateTide, trigger: 'blur'}],
+        FWATERTEMPERATUREFORECASTER: [{validator: this.validateTemp, trigger: 'blur'}],
+        FWAVEFORECASTERTEL: [{validator: this.validateWaveTel, trigger: 'blur'}],
+        FTIDALFORECASTERTEL: [{validator: this.validateTideTel, trigger: 'blur'}],
+        FWATERTEMPERATUREFORECASTERTEL: [{validator: this.validateTempTel, trigger: 'blur'}],
+        ZHIBANTEL: [{validator: this.validateTel, trigger: 'blur'}],
+        SENDTEL: [{validator: this.validateTel, trigger: 'blur'}]
+    }
     private deepEqual = require('deep-equal')
     private get publishdatestring(): string {
         this.localtable[0].PUBLISHDATE = new Date(this.localtable[0].PUBLISHDATE)
@@ -146,12 +175,7 @@ export default class PublishMetaInfo extends Vue {
         }
     }
     public submitClick() {
-        if (this.checkValidate() === false) {
-            this.myThis.$notify.error({
-                title: '错误',
-                message: '填报信息不能为空'
-            })
-        } else if (this.needsubmit.tablePublishMetaneedsubmit === true) {
+        if (this.needsubmit.tablePublishMetaneedsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(0, 'PublishMetaInfo', this.localtable, 11, this.checkSubmit, '填报信息')
         }
     }
@@ -175,28 +199,96 @@ export default class PublishMetaInfo extends Vue {
             this.checkSubmit()
         }
     }
+    private validateTel(rule: any, value: string, callback: any) {
+        if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (!this.isTel(value)) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
+    private validateWave(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'fl') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else {
+            return callback()
+        }
+    }
+    private validateTide(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'cx') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else {
+            return callback()
+        }
+    }
+    private validateTemp(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'sw') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else {
+            return callback()
+        }
+    }
+    private validateWaveTel(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'fl') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (!this.isTel(value)) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
+    private validateTideTel(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'cx') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (!this.isTel(value)) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
+    private validateTempTel(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'sw') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (!this.isTel(value)) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
     private checkValidate() {
         let result = true
-        if (this.localtable[0].FRELEASEUNIT === ''
-        || this.localtable[0].ZHIBANTEL === ''
-        || this.localtable[0].SENDTEL === '') {
-            result = false
-        } else if (this.usertype === 'fl') {
-            if (this.localtable[0].FWAVEFORECASTER === ''
-            || this.localtable[0].FWAVEFORECASTERTEL === '') {
+        this.myThis.$refs.form.validate((valid: boolean) => {
+            if (valid === false) {
                 result = false
             }
-        } else if (this.usertype === 'cx') {
-            if (this.localtable[0].FTIDALFORECASTER === ''
-            || this.localtable[0].FTIDALFORECASTERTEL === '') {
-                result = false
-            }
-        } else if (this.usertype === 'sw') {
-            if (this.localtable[0].FWATERTEMPERATUREFORECASTER === ''
-            || this.localtable[0].FWATERTEMPERATUREFORECASTERTEL === '') {
-                result = false
-            }
-        }
+        })
         return result
     }
     private checkSubmit() {
@@ -217,6 +309,17 @@ export default class PublishMetaInfo extends Vue {
             publishmetainfo[0].PUBLISHHOUR = this.colhour.toString()
         }
     }
+    private isTel(value: string): boolean {
+        let result = false
+        const fix = /^(0\d{2,3}-?)?\d{7}$/
+        const mobile = /^(\(?(\+86|0086)\)?)?1\d{10}$/
+        if (fix.test(value) === true) {
+            result = true
+        } else if (mobile.test(value) === true) {
+            result = true
+        }
+        return result
+    }
     private mounted() {
         this.setPubDateTime(this.publishmetainfo)
         this.localtable = JSON.parse(JSON.stringify(this.publishmetainfo))
@@ -233,6 +336,7 @@ div {
     justify-content: center;
 }
 .container {
+    display: flex;
     min-width: 800px;
     max-width: 1050px;
     flex-direction: column;
@@ -260,6 +364,15 @@ div {
     width: 110px;
     justify-content: flex-start;
     font-size: 13px;
+}
+.el-form-item {
+    height: 100%;
+    flex: 1;
+    margin: 0;
+}
+.el-form-item >>> .el-form-item__content{
+    display: block;
+    width: 100% !important;
 }
 .separator-horizontal {
     height: 80%;

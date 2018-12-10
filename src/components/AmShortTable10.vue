@@ -1,15 +1,19 @@
 <template>
     <div class="container">
         <div class="header-row border-bottom border-top border-left border-right">上午十、海阳海浪、水温预报</div>
-        <div class="body border-left border-right border-bottom">
+        <el-form class="body border-left border-right border-bottom" status-icon :model="localtable[0]" :rules="rules" ref="form">
             
             <div class="body-row">
                 <div class="body-row-content">
                     <div class="one-word"></div>
                     <div class="four-words">有</div>
+                    <el-form-item class="el-form-item" prop="WAVELEVELONE">
                     <el-input class="body-row-content" v-model="localtable[0].WAVELEVELONE" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="four-words">&nbsp;&nbsp;米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;的&nbsp;&nbsp;</div>
+                    <el-form-item class="el-form-item" prop="WAVELEVELTYPE">
                     <el-input class="body-row-content" v-model="localtable[0].WAVELEVELTYPE" placeholder="请输入浪高描述" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word"></div>
                 </div>
             </div>
@@ -17,7 +21,9 @@
                 <div class="body-row-content">
                     <div class="one-word"></div>
                     <div class="four-words">风浪向：</div>
+                    <el-form-item class="el-form-item" prop="WAVEDIRECTION">
                     <el-input class="body-row-content" v-model="localtable[0].WAVEDIRECTION" placeholder="请输入风浪向" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word"></div>
                 </div>
             </div>
@@ -25,13 +31,15 @@
                 <div class="body-row-content">
                     <div class="one-word"></div>
                     <div class="four-words">日平均水温：</div>
+                    <el-form-item class="el-form-item" prop="WATERTEMPERATURE">
                     <el-input class="body-row-content" v-model="localtable[0].WATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word">℃</div>
                     <div class="one-word"></div>
                 </div>
             </div>
             
-        </div>
+        </el-form>
         <div class="button-row">
             <div class="separator-horizontal"></div>
             <el-button size="small" @click="cancelClick">取消</el-button>
@@ -56,6 +64,12 @@ export default class AmShortTable10 extends Vue {
     private localtable = [
         new AmShortInfo10()
     ]
+    private rules = {
+        WAVELEVELONE: [{validator: this.validateWave, trigger: 'blur'}],
+        WAVELEVELTYPE: [{validator: this.validateWave, trigger: 'blur'}],
+        WAVEDIRECTION: [{validator: this.validateWave, trigger: 'blur'}],
+        WATERTEMPERATURE: [{validator: this.validateTemp, trigger: 'blur'}]
+    }
     private deepEqual = require('deep-equal')
     private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
@@ -69,12 +83,7 @@ export default class AmShortTable10 extends Vue {
         }
     }
     public submitClick() {
-        if (this.checkValidate() === false) {
-            this.myThis.$notify.error({
-                title: '错误',
-                message: '表单十数值不能为空'
-            })
-        } else if (this.needsubmit.table10needsubmit === true) {
+        if (this.needsubmit.table10needsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(10, 'AmShortTable10', this.localtable, 8, this.checkSubmit, '上午十')
         }
     }
@@ -83,17 +92,35 @@ export default class AmShortTable10 extends Vue {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable10))
         this.checkSubmit()
     }
+    private validateWave(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'fl') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else {
+            return callback()
+        }
+    }
+    private validateTemp(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'sw') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else {
+            return callback()
+        }
+    }
     private checkValidate() {
         let result = true
-        if (this.usertype === 'fl') {
-            if (this.localtable[0].WAVELEVELONE === ''
-            || this.localtable[0].WAVELEVELTYPE === ''
-            || this.localtable[0].WAVEDIRECTION === '') {
+        this.myThis.$refs.form.validate((valid: boolean) => {
+            if (valid === false) {
                 result = false
             }
-        } else if (this.usertype === 'sw' && this.localtable[0].WATERTEMPERATURE === '') {
-            result = false
-        }
+        })
         return result
     }
     private checkSubmit() {
@@ -131,6 +158,7 @@ div {
     flex-direction: row;
 }
 .body {
+    display: flex;
     width: 100%;
     height: 180px;
     flex-direction: column;
@@ -149,6 +177,15 @@ div {
 .four-words {
     width: 100px;
     justify-content: flex-start;
+}
+.el-form-item {
+    height: 100%;
+    flex: 1;
+    margin: 0;
+}
+.el-form-item >>> .el-form-item__content{
+    display: block;
+    width: 100% !important;
 }
 .border-bottom {
     border-bottom-width: 1px;

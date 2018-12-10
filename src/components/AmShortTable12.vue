@@ -10,23 +10,33 @@
                 <div class="content-column">浪高(m)</div>
             </div>
         </div>
-        <div class="table-body border-left border-right border-bottom">
+        <el-form class="table-body border-left border-right border-bottom" status-icon :model="localtable[0]" :rules="rules" ref="form">
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="WEATERSTATE">
                 <el-input class="input" v-model="localtable[0].WEATERSTATE" placeholder="请输入天气状况" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="TEMPERATURE">
                 <el-input class="input" v-model="localtable[0].TEMPERATURE" placeholder="请输入气温" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="WINDSPEED">
                 <el-input class="input" v-model="localtable[0].WINDSPEED" placeholder="请输入风速" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="WINDDIRECTION">
                 <el-input class="input" v-model="localtable[0].WINDDIRECTION" placeholder="请输入风向" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column">
+                <el-form-item class="el-form-item" prop="WAVEHEIGHT">
                 <el-input class="input" v-model="localtable[0].WAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
-        </div>
+        </el-form>
         <div class="button-row">
             <div class="separator-horizontal"></div>
             <el-button size="small" @click="cancelClick">取消</el-button>
@@ -51,6 +61,13 @@ export default class AmShortTable12 extends Vue {
     private localtable = [
         new AmShortInfo12()
     ]
+    private rules = {
+        WEATERSTATE: [{validator: this.validateWave, trigger: 'blur'}],
+        TEMPERATURE: [{validator: this.validateWave, trigger: 'blur'}],
+        WINDSPEED: [{validator: this.validateWave, trigger: 'blur'}],
+        WINDDIRECTION: [{validator: this.validateWave, trigger: 'blur'}],
+        WAVEHEIGHT: [{validator: this.validateWave, trigger: 'blur'}]
+    }
     private deepEqual = require('deep-equal')
     private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
@@ -64,12 +81,7 @@ export default class AmShortTable12 extends Vue {
         }
     }
     public submitClick() {
-        if (this.checkValidate() === false) {
-            this.myThis.$notify.error({
-                title: '错误',
-                message: '表单十二数值不能为空'
-            })
-        } else if (this.needsubmit.table12needsubmit === true) {
+        if (this.needsubmit.table12needsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(12, 'AmShortTable12', this.localtable, 10, this.checkSubmit, '上午十二')
         }
     }
@@ -78,17 +90,24 @@ export default class AmShortTable12 extends Vue {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable12))
         this.checkSubmit()
     }
+    private validateWave(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'fl') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else {
+            return callback()
+        }
+    }
     private checkValidate() {
         let result = true
-        if (this.usertype === 'fl') {
-            if (this.localtable[0].WEATERSTATE === ''
-            || this.localtable[0].TEMPERATURE === ''
-            || this.localtable[0].WINDSPEED === ''
-            || this.localtable[0].WINDDIRECTION === ''
-            || this.localtable[0].WAVEHEIGHT === '') {
+        this.myThis.$refs.form.validate((valid: boolean) => {
+            if (valid === false) {
                 result = false
             }
-        }
+        })
         return result
     }
     private checkSubmit() {
@@ -141,6 +160,7 @@ div {
     flex-direction: column;
 }
 .table-body {
+    display: flex;
     width: 100%;
     height: 60px;
     flex-direction: row;
@@ -148,6 +168,15 @@ div {
 .table-body-row {
     flex: 1;
     width: 100%;
+}
+.el-form-item {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+.el-form-item >>> .el-form-item__content{
+    display: block;
+    width: 100% !important;
 }
 .border-bottom {
     border-bottom-width: 1px;
@@ -171,6 +200,7 @@ div {
 }
 .input {
     width: 90%;
+    left: 5%;
 }
 .button-row {
     height: 40px;

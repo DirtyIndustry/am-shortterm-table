@@ -49,32 +49,48 @@
                 </div>
             </div>
         </div>
-        <div class="table-body border-left border-right border-bottom">
+        <el-form class="table-body border-left border-right border-bottom" status-icon :model="localtable[0]" :rules="rules" ref="form">
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="FIRSTHIGHTIME">
                 <el-input class="input" v-model="localtable[0].FIRSTHIGHTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="FIRSTHIGHLEVEL">
                 <el-input class="input" v-model="localtable[0].FIRSTHIGHLEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="FIRSTLOWTIME">
                 <el-input class="input" v-model="localtable[0].FIRSTLOWTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="FIRSTLOWLEVEL">
                 <el-input class="input" v-model="localtable[0].FIRSTLOWLEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="SECONDHIGHTIME">
                 <el-input class="input" v-model="localtable[0].SECONDHIGHTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="SECONDHIGHLEVEL">
                 <el-input class="input" v-model="localtable[0].SECONDHIGHLEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column border-right">
+                <el-form-item class="el-form-item" prop="SECONDLOWTIME">
                 <el-input class="input" v-model="localtable[0].SECONDLOWTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
             <div class="content-column">
+                <el-form-item class="el-form-item" prop="SECONDLOWLEVEL">
                 <el-input class="input" v-model="localtable[0].SECONDLOWLEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                </el-form-item>
             </div>
-        </div>
+        </el-form>
         <div class="button-row">
             <div class="separator-horizontal"></div>
             <el-button size="small" @click="cancelClick">取消</el-button>
@@ -99,6 +115,16 @@ export default class AmShortTable11 extends Vue {
     private localtable = [
         new AmShortInfo11()
     ]
+    private rules = {
+        FIRSTHIGHTIME: [{validator: this.validateTime, trigger: 'blur'}],
+        FIRSTLOWTIME: [{validator: this.validateTime, trigger: 'blur'}],
+        SECONDHIGHTIME: [{validator: this.validateTime, trigger: 'blur'}],
+        SECONDLOWTIME: [{validator: this.validateTime, trigger: 'blur'}],
+        FIRSTHIGHLEVEL: [{validator: this.validateHeight, trigger: 'blur'}],
+        FIRSTLOWLEVEL: [{validator: this.validateHeight, trigger: 'blur'}],
+        SECONDHIGHLEVEL: [{validator: this.validateHeight, trigger: 'blur'}],
+        SECONDLOWLEVEL: [{validator: this.validateHeight, trigger: 'blur'}]
+    }
     private deepEqual = require('deep-equal')
     private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
@@ -112,12 +138,7 @@ export default class AmShortTable11 extends Vue {
         }
     }
     public submitClick() {
-        if (this.checkValidate() === false) {
-            this.myThis.$notify.error({
-                title: '错误',
-                message: '表单十一数值不能为空'
-            })
-        } else if (this.needsubmit.table11needsubmit === true) {
+        if (this.needsubmit.table11needsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(11, 'AmShortTable11', this.localtable, 9, this.checkSubmit, '上午十一')
         }
     }
@@ -126,20 +147,41 @@ export default class AmShortTable11 extends Vue {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable11))
         this.checkSubmit()
     }
+    private validateHeight(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'cx') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (isNaN(+value)) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
+    private validateTime(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'cx') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (isNaN(+value) || value.length !== 4) {
+            callback(new Error(' '))
+        } else if (Number(value.substring(0, 2)) > 23 || Number(value.substring(2)) > 59) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
     private checkValidate() {
         let result = true
-        if (this.usertype === 'cx') {
-            if (this.localtable[0].FIRSTHIGHTIME === ''
-            || this.localtable[0].FIRSTHIGHLEVEL === ''
-            || this.localtable[0].FIRSTLOWTIME === ''
-            || this.localtable[0].FIRSTLOWLEVEL === ''
-            || this.localtable[0].SECONDHIGHTIME === ''
-            || this.localtable[0].SECONDHIGHLEVEL === ''
-            || this.localtable[0].SECONDLOWTIME === ''
-            || this.localtable[0].SECONDLOWLEVEL === '') {
+        this.myThis.$refs.form.validate((valid: boolean) => {
+            if (valid === false) {
                 result = false
             }
-        }
+        })
         return result
     }
     private checkSubmit() {
@@ -209,9 +251,19 @@ div {
     min-width: 79px;
 }
 .table-body {
+    display: flex;
     width: 100%;
     height: 60px;
     flex-direction: row;
+}
+.el-form-item {
+    height: 100%;
+    flex: 1;
+    margin: 0;
+}
+.el-form-item >>> .el-form-item__content{
+    display: block;
+    width: 100% !important;
 }
 .border-bottom {
     border-bottom-width: 1px;
@@ -235,6 +287,7 @@ div {
 }
 .input {
     width: 90%;
+    left: 5%;
 }
 .button-row {
     height: 40px;
