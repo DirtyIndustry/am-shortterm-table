@@ -18,21 +18,30 @@
                 <div class="table-body-row">营口港</div>
             </div>
             <div class="table-body-content-column">
-                <div class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index">
+                <el-form class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index"
+                status-icon :model="item" :rules="rules" :ref="'form' + index">
                     <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="YRBHWWFWAVEHEIGHT">
                         <el-input class="input" v-model="item.YRBHWWFWAVEHEIGHT" placeholder="请输入波高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="YRBHWWFWAVEDIR">
                         <el-input class="input" v-model="item.YRBHWWFWAVEDIR" placeholder="请输入波向" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="YRBHWWFFLOWDIR">
                         <el-input class="input" v-model="item.YRBHWWFFLOWDIR" placeholder="请输入风向" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column">
+                        <el-form-item class="el-form-item" prop="YRBHWWFFLOWLEVEL">
                         <el-input class="input" v-model="item.YRBHWWFFLOWLEVEL" placeholder="请输入风力" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
-                </div>
+                </el-form>
             </div>
         </div>
         <div class="button-row">
@@ -67,6 +76,12 @@ export default class AmShortTable7 extends Vue {
         new AmShortInfo7(),
         new AmShortInfo7()
     ]
+    private rules = {
+        YRBHWWFWAVEHEIGHT: [{validator: this.validateHeight, trigger: 'blur'}],
+        YRBHWWFWAVEDIR: [{validator: this.validateHeight, trigger: 'blur'}],
+        YRBHWWFFLOWDIR: [{validator: this.validateHeight, trigger: 'blur'}],
+        YRBHWWFFLOWLEVEL: [{validator: this.validateHeight, trigger: 'blur'}]
+    }
     private deepEqual = require('deep-equal')
     private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
@@ -80,12 +95,7 @@ export default class AmShortTable7 extends Vue {
         }
     }
     public submitClick() {
-        if (this.checkValidate() === false) {
-            this.myThis.$notify.error({
-                title: '错误',
-                message: '表单七数值不能为空'
-            })
-        } else if (this.needsubmit.table7needsubmit === true) {
+        if (this.needsubmit.table7needsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(7, 'AmShortTable7', this.localtable, 5, this.checkSubmit, '上午七')
         }
     }
@@ -94,14 +104,22 @@ export default class AmShortTable7 extends Vue {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable7))
         this.checkSubmit()
     }
+    private validateHeight(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'fl') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else {
+            return callback()
+        }
+    }
     private checkValidate() {
         let result = true
-        if (this.usertype === 'fl') {
-            this.localtable.forEach((item) => {
-                if (item.YRBHWWFWAVEHEIGHT === ''
-                || item.YRBHWWFWAVEDIR === ''
-                || item.YRBHWWFFLOWDIR === ''
-                || item.YRBHWWFFLOWLEVEL === '') {
+        for (let i = 0; i < this.localtable.length; i++) {
+            this.myThis.$refs['form' + i][0].validate((valid: boolean) => {
+                if (valid === false) {
                     result = false
                 }
             })
@@ -178,6 +196,7 @@ div {
     flex-direction: column;
 }
 .table-body-row {
+    display: flex;
     flex: 1;
     width: 100%;
 }
@@ -186,6 +205,15 @@ div {
     width: 100%;
     font-size: 19px;
     flex-direction: row;
+}
+.el-form-item {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+.el-form-item >>> .el-form-item__content{
+    display: block;
+    width: 100% !important;
 }
 .border-bottom {
     border-bottom-width: 1px;
@@ -209,6 +237,7 @@ div {
 }
 .input {
     width: 90%;
+    left: 5%;
 }
 .button-row {
     height: 40px;

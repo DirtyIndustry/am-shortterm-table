@@ -1,16 +1,22 @@
 <template>
     <div class="container">
         <div class="header-row border-bottom border-top border-left border-right">上午五、预计未来24小时海浪、水温预报</div>
-        <div class="body border-left border-right border-bottom">
+        <el-form class="body border-left border-right border-bottom" status-icon :model="localtable[0]" :rules="rules" ref="form">
             <div class="body-row">
                 <div class="body-row-header">渤海</div>
                 <div class="body-row-content">
                     <div class="two-words">有</div>
+                    <el-form-item class="el-form-item" prop="EFWWBHLOWESTWAVE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWBHLOWESTWAVE" placeholder="请输入最低浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="two-words">m 到</div>
+                    <el-form-item class="el-form-item" prop="EFWWBHHIGHESTWAVE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWBHHIGHESTWAVE" placeholder="请输入最高浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="two-words">m 的</div>
+                    <el-form-item class="el-form-item" prop="EFWWBHWAVETYPE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWBHWAVETYPE" placeholder="请输入浪高类型" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word"></div>
                 </div>
             </div>
@@ -18,11 +24,17 @@
                 <div class="body-row-header">黄海北部</div>
                 <div class="body-row-content">
                     <div class="two-words">有</div>
+                    <el-form-item class="el-form-item" prop="EFWWBHNORTHLOWESTWAVE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWBHNORTHLOWESTWAVE" placeholder="请输入最低浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="two-words">m 到</div>
+                    <el-form-item class="el-form-item" prop="EFWWBHNORTHHIGHESTWAVE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWBHNORTHHIGHESTWAVE" placeholder="请输入最高浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="two-words">m 的</div>
+                    <el-form-item class="el-form-item" prop="EFWWBHNORTHWAVETYPE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWBHNORTHWAVETYPE" placeholder="请输入浪高类型" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word"></div>
                 </div>
             </div>
@@ -30,9 +42,13 @@
                 <div class="body-row-header">刁口海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
+                    <el-form-item class="el-form-item" prop="EFWWDKSEAAREAWAVEHEIGHT">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWDKSEAAREAWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
+                    <el-form-item class="el-form-item" prop="EFWWDKSEAAREAWATERTEMPE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWDKSEAAREAWATERTEMPE" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -40,9 +56,13 @@
                 <div class="body-row-header">黄河口海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
+                    <el-form-item class="el-form-item" prop="EFWWHHKSEAAREAWAVEHEIGHT">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWHHKSEAAREAWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
+                    <el-form-item class="el-form-item" prop="EFWWHHKSEAAREAWATERTEMP">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWHHKSEAAREAWATERTEMP" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -50,9 +70,13 @@
                 <div class="body-row-header">广利港海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
+                    <el-form-item class="el-form-item" prop="EFWWGLGSEAAREAWAVEHEIGHT">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWGLGSEAAREAWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
+                    <el-form-item class="el-form-item" prop="EFWWGLGSEAAREAWATERTEMP">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWGLGSEAAREAWATERTEMP" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -60,9 +84,13 @@
                 <div class="body-row-header">东营港海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
+                    <el-form-item class="el-form-item" prop="EFWWDYGWAVEHEIGHT">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWDYGWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
+                    <el-form-item class="el-form-item" prop="EFWWDYGWATERTEMPERATURE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWDYGWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -70,9 +98,13 @@
                 <div class="body-row-header">新户海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
+                    <el-form-item class="el-form-item" prop="EFWWXHWAVEHEIGHT">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWXHWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
+                    <el-form-item class="el-form-item" prop="EFWWXHWATERTEMPERATURE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWXHWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word">℃</div>
                 </div>
             </div>
@@ -80,13 +112,17 @@
                 <div class="body-row-header">埕口海域</div>
                 <div class="body-row-content">
                     <div class="two-words">浪高</div>
+                    <el-form-item class="el-form-item" prop="EFWWCKWAVEHEIGHT">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWCKWAVEHEIGHT" placeholder="请输入浪高" :disabled="!editable || !iswindwave" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="four-words">米&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水温</div>
+                    <el-form-item class="el-form-item" prop="EFWWCKWATERTEMPERATURE">
                     <el-input class="body-row-content" v-model="localtable[0].EFWWCKWATERTEMPERATURE" placeholder="请输入水温" :disabled="!editable || !istemperature" @change="checkSubmit"></el-input>
+                    </el-form-item>
                     <div class="one-word">℃</div>
                 </div>
             </div>
-        </div>
+        </el-form>
         <div class="button-row">
             <div class="separator-horizontal"></div>
             <el-button size="small" @click="cancelClick">取消</el-button>
@@ -111,6 +147,26 @@ export default class AmShortTable5 extends Vue {
     private localtable = [
         new AmShortInfo5()
     ]
+    private rules = {
+        EFWWBHLOWESTWAVE: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWBHHIGHESTWAVE: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWBHWAVETYPE: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWBHNORTHLOWESTWAVE: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWBHNORTHHIGHESTWAVE: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWBHNORTHWAVETYPE: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWDKSEAAREAWAVEHEIGHT: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWHHKSEAAREAWAVEHEIGHT: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWGLGSEAAREAWAVEHEIGHT: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWDYGWAVEHEIGHT: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWXHWAVEHEIGHT: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWCKWAVEHEIGHT: [{validator: this.validateWave, trigger: 'blur'}],
+        EFWWDKSEAAREAWATERTEMPE: [{validator: this.validateTemp, trigger: 'blur'}],
+        EFWWHHKSEAAREAWATERTEMP: [{validator: this.validateTemp, trigger: 'blur'}],
+        EFWWGLGSEAAREAWATERTEMP: [{validator: this.validateTemp, trigger: 'blur'}],
+        EFWWDYGWATERTEMPERATURE: [{validator: this.validateTemp, trigger: 'blur'}],
+        EFWWXHWATERTEMPERATURE: [{validator: this.validateTemp, trigger: 'blur'}],
+        EFWWCKWATERTEMPERATURE: [{validator: this.validateTemp, trigger: 'blur'}]
+    }
     private deepEqual = require('deep-equal')
     private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
@@ -124,12 +180,7 @@ export default class AmShortTable5 extends Vue {
         }
     }
     public submitClick() {
-        if (this.checkValidate() === false) {
-            this.myThis.$notify.error({
-                title: '错误',
-                message: '表单五数值不能为空'
-            })
-        } else if (this.needsubmit.table5needsubmit === true) {
+        if (this.needsubmit.table5needsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(5, 'AmShortTable5', this.localtable, 3, this.checkSubmit, '上午五')
         }
     }
@@ -138,33 +189,35 @@ export default class AmShortTable5 extends Vue {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable5))
         this.checkSubmit()
     }
+    private validateWave(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'fl') {   // usertype
+            callback()
+        } else if (!value) {              // non empty
+            callback(new Error(' '))
+        } else if (value === '-') {       // '-' for no-value
+            callback()
+        } else {
+            return callback()
+        }
+    }
+    private validateTemp(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'sw') {   // usertype
+            callback()
+        } else if (!value) {              // non empty
+            callback(new Error(' '))
+        } else if (value === '-') {       // '-' for no-value
+            callback()
+        } else {
+            return callback()
+        }
+    }
     private checkValidate() {
         let result = true
-        if (this.usertype === 'fl') {
-            if (this.localtable[0].EFWWBHLOWESTWAVE === ''
-            || this.localtable[0].EFWWGLGSEAAREAWAVEHEIGHT === ''
-            || this.localtable[0].EFWWDYGWAVEHEIGHT === ''
-            || this.localtable[0].EFWWXHWAVEHEIGHT === ''
-            || this.localtable[0].EFWWCKWAVEHEIGHT === ''
-            || this.localtable[0].EFWWBHHIGHESTWAVE === ''
-            || this.localtable[0].EFWWBHWAVETYPE === ''
-            || this.localtable[0].EFWWBHNORTHLOWESTWAVE === ''
-            || this.localtable[0].EFWWBHNORTHHIGHESTWAVE === ''
-            || this.localtable[0].EFWWBHNORTHWAVETYPE === ''
-            || this.localtable[0].EFWWDKSEAAREAWAVEHEIGHT === ''
-            || this.localtable[0].EFWWHHKSEAAREAWAVEHEIGHT === '') {
+        this.myThis.$refs.form.validate((valid: boolean) => {
+            if (valid === false) {
                 result = false
             }
-        } else if (this.usertype === 'sw') {
-            if (this.localtable[0].EFWWHHKSEAAREAWATERTEMP === ''
-            || this.localtable[0].EFWWGLGSEAAREAWATERTEMP === ''
-            || this.localtable[0].EFWWDYGWATERTEMPERATURE === ''
-            || this.localtable[0].EFWWXHWATERTEMPERATURE === ''
-            || this.localtable[0].EFWWCKWATERTEMPERATURE === ''
-            || this.localtable[0].EFWWDKSEAAREAWATERTEMPE === '') {
-                result = false
-            }
-        }
+        })
         return result
     }
     private checkSubmit() {
@@ -202,6 +255,7 @@ div {
     flex-direction: row;
 }
 .body {
+    display: flex;
     width: 100%;
     height: 400px;
     flex-direction: column;
@@ -226,6 +280,15 @@ div {
 }
 .four-words {
     width: 100px;
+}
+.el-form-item {
+    height: 100%;
+    flex: 1;
+    margin: 0;
+}
+.el-form-item >>> .el-form-item__content{
+    /* display: block; */
+    width: 100% !important;
 }
 .border-bottom {
     border-bottom-width: 1px;

@@ -58,33 +58,50 @@
                 <div class="table-body-row">营口港</div>
             </div>
             <div class="table-body-content-column">
-                <div class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index">
+                <el-form class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index"
+                status-icon :model="item" :rules="rules" :ref="'form' + index">
                     <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="HTLFIRSTWAVEOFTIME">
                         <el-input class="input" v-model="item.HTLFIRSTWAVEOFTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="HTLFIRSTWAVETIDELEVEL">
                         <el-input class="input" v-model="item.HTLFIRSTWAVETIDELEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="HTLFIRSTTIMELOWTIDE">
                         <el-input class="input" v-model="item.HTLFIRSTTIMELOWTIDE" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="HTLLOWTIDELEVELFORTHEFIRSTTIME">
                         <el-input class="input" v-model="item.HTLLOWTIDELEVELFORTHEFIRSTTIME" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="HTLSECONDWAVEOFTIME">
                         <el-input class="input" v-model="item.HTLSECONDWAVEOFTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="HTLSECONDWAVETIDELEVEL">
                         <el-input class="input" v-model="item.HTLSECONDWAVETIDELEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="HTLSECONDTIMELOWTIDE">
                         <el-input class="input" v-model="item.HTLSECONDTIMELOWTIDE" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column">
+                        <el-form-item class="el-form-item" prop="HTLLOWTIDELEVELFORTHESECONDTIM">
                         <el-input class="input" v-model="item.HTLLOWTIDELEVELFORTHESECONDTIM" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
-                </div>
+                </el-form>
             </div>
         </div>
         <div class="button-row">
@@ -119,6 +136,16 @@ export default class AmShortTable8 extends Vue {
         new AmShortInfo8(),
         new AmShortInfo8()
     ]
+    private rules = {
+        HTLFIRSTWAVEOFTIME: [{validator: this.validateTime, trigger: 'blur'}],
+        HTLFIRSTTIMELOWTIDE: [{validator: this.validateTime, trigger: 'blur'}],
+        HTLSECONDWAVEOFTIME: [{validator: this.validateTime, trigger: 'blur'}],
+        HTLSECONDTIMELOWTIDE: [{validator: this.validateTime, trigger: 'blur'}],
+        HTLFIRSTWAVETIDELEVEL: [{validator: this.validateHeight, trigger: 'blur'}],
+        HTLLOWTIDELEVELFORTHEFIRSTTIME: [{validator: this.validateHeight, trigger: 'blur'}],
+        HTLSECONDWAVETIDELEVEL: [{validator: this.validateHeight, trigger: 'blur'}],
+        HTLLOWTIDELEVELFORTHESECONDTIM: [{validator: this.validateHeight, trigger: 'blur'}]
+    }
     private deepEqual = require('deep-equal')
     private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
@@ -132,12 +159,7 @@ export default class AmShortTable8 extends Vue {
         }
     }
     public submitClick() {
-        if (this.checkValidate() === false) {
-            this.myThis.$notify.error({
-                title: '错误',
-                message: '表单八数值不能为空'
-            })
-        } else if (this.needsubmit.table8needsubmit === true) {
+        if (this.needsubmit.table8needsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(8, 'AmShortTable8', this.localtable, 6, this.checkSubmit, '上午八')
         }
     }
@@ -146,18 +168,39 @@ export default class AmShortTable8 extends Vue {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable8))
         this.checkSubmit()
     }
+    private validateHeight(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'cx') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (isNaN(+value)) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
+    private validateTime(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'cx') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (isNaN(+value) || value.length !== 4) {
+            callback(new Error(' '))
+        } else if (Number(value.substring(0, 2)) > 23 || Number(value.substring(2)) > 59) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
     private checkValidate() {
         let result = true
-        if (this.usertype === 'cx') {
-            this.localtable.forEach((item) => {
-                if (item.HTLLOWTIDELEVELFORTHESECONDTIM === ''
-                || item.HTLFIRSTWAVEOFTIME === ''
-                || item.HTLFIRSTWAVETIDELEVEL === ''
-                || item.HTLFIRSTTIMELOWTIDE === ''
-                || item.HTLLOWTIDELEVELFORTHEFIRSTTIME === ''
-                || item.HTLSECONDWAVEOFTIME === ''
-                || item.HTLSECONDWAVETIDELEVEL === ''
-                || item.HTLSECONDTIMELOWTIDE === '') {
+        for (let i = 0; i < this.localtable.length; i++) {
+            this.myThis.$refs['form' + i][0].validate((valid: boolean) => {
+                if (valid === false) {
                     result = false
                 }
             })
@@ -249,6 +292,7 @@ div {
     flex-direction: column;
 }
 .table-body-row {
+    display: flex;
     flex: 1;
     width: 100%;
 }
@@ -257,6 +301,15 @@ div {
     width: 100%;
     font-size: 19px;
     flex-direction: row;
+}
+.el-form-item {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+.el-form-item >>> .el-form-item__content{
+    display: block;
+    width: 100% !important;
 }
 .border-bottom {
     border-bottom-width: 1px;
@@ -280,6 +333,7 @@ div {
 }
 .input {
     width: 90%;
+    left: 5%;
 }
 .button-row {
     height: 40px;

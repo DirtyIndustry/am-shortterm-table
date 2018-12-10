@@ -61,33 +61,50 @@
                 <div class="table-body-row">新户</div>
             </div>
             <div class="table-body-content-column">
-                <div class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index">
+                <el-form class="table-body-row" :class="{'border-top': index != 0}" v-for="(item, index) in localtable" :key="index"
+                status-icon :model="item" :rules="rules" :ref="'form' + index">
                     <div class="content-header-column border-right">{{new Date(item.FORECASTDATE).getMonth() + 1}}月{{new Date(item.FORECASTDATE).getDate()}}日</div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="TLFIRSTWAVEOFTIME">
                         <el-input class="input" v-model="item.TLFIRSTWAVEOFTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="TLFIRSTWAVETIDELEVEL">
                         <el-input class="input" v-model="item.TLFIRSTWAVETIDELEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="TLFIRSTTIMELOWTIDE">
                         <el-input class="input" v-model="item.TLFIRSTTIMELOWTIDE" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="TLLOWTIDELEVELFORTHEFIRSTTIME">
                         <el-input class="input" v-model="item.TLLOWTIDELEVELFORTHEFIRSTTIME" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="TLSECONDWAVEOFTIME">
                         <el-input class="input" v-model="item.TLSECONDWAVEOFTIME" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="TLSECONDWAVETIDELEVEL">
                         <el-input class="input" v-model="item.TLSECONDWAVETIDELEVEL" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column border-right">
+                        <el-form-item class="el-form-item" prop="TLSECONDTIMELOWTIDE">
                         <el-input class="input" v-model="item.TLSECONDTIMELOWTIDE" placeholder="请输入时间" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
                     <div class="content-column">
+                        <el-form-item class="el-form-item" prop="TLLOWTIDELEVELFORTHESECONDTIME">
                         <el-input class="input" v-model="item.TLLOWTIDELEVELFORTHESECONDTIME" placeholder="请输入潮位" :disabled="!editable || !istide" @change="checkSubmit"></el-input>
+                        </el-form-item>
                     </div>
-                </div>
+                </el-form>
             </div>
         </div>
         <div class="button-row">
@@ -119,6 +136,16 @@ export default class AmShortTable6 extends Vue {
         new AmShortInfo6(),
         new AmShortInfo6()
     ]
+    private rules = {
+        TLFIRSTWAVEOFTIME: [{validator: this.validateTime, trigger: 'blur'}],
+        TLFIRSTTIMELOWTIDE: [{validator: this.validateTime, trigger: 'blur'}],
+        TLSECONDWAVEOFTIME: [{validator: this.validateTime, trigger: 'blur'}],
+        TLSECONDTIMELOWTIDE: [{validator: this.validateTime, trigger: 'blur'}],
+        TLFIRSTWAVETIDELEVEL: [{validator: this.validateHeight, trigger: 'blur'}],
+        TLLOWTIDELEVELFORTHEFIRSTTIME: [{validator: this.validateHeight, trigger: 'blur'}],
+        TLSECONDWAVETIDELEVEL: [{validator: this.validateHeight, trigger: 'blur'}],
+        TLLOWTIDELEVELFORTHESECONDTIME: [{validator: this.validateHeight, trigger: 'blur'}]
+    }
     private deepEqual = require('deep-equal')
     private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
@@ -132,12 +159,7 @@ export default class AmShortTable6 extends Vue {
         }
     }
     public submitClick() {
-        if (this.checkValidate() === false) {
-            this.myThis.$notify.error({
-                title: '错误',
-                message: '表单六数值不能为空'
-            })
-        } else if (this.needsubmit.table6needsubmit === true) {
+        if (this.needsubmit.table6needsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(6, 'AmShortTable6', this.localtable, 4, this.checkSubmit, '上午六')
         }
     }
@@ -146,18 +168,39 @@ export default class AmShortTable6 extends Vue {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable6))
         this.checkSubmit()
     }
+    private validateHeight(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'cx') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (isNaN(+value)) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
+    private validateTime(rule: any, value: string, callback: any) {
+        if (this.usertype !== 'cx') {
+            callback()
+        } else if (!value) {
+            callback(new Error(' '))
+        } else if (value === '-') {
+            callback()
+        } else if (isNaN(+value) || value.length !== 4) {
+            callback(new Error(' '))
+        } else if (Number(value.substring(0, 2)) > 23 || Number(value.substring(2)) > 59) {
+            callback(new Error(' '))
+        } else {
+            return callback()
+        }
+    }
     private checkValidate() {
         let result = true
-        if (this.usertype === 'cx') {
-            this.localtable.forEach((item) => {
-                if (item.TLLOWTIDELEVELFORTHESECONDTIME === ''
-                || item.TLFIRSTWAVEOFTIME === ''
-                || item.TLFIRSTWAVETIDELEVEL === ''
-                || item.TLFIRSTTIMELOWTIDE === ''
-                || item.TLLOWTIDELEVELFORTHEFIRSTTIME === ''
-                || item.TLSECONDWAVEOFTIME === ''
-                || item.TLSECONDWAVETIDELEVEL === ''
-                || item.TLSECONDTIMELOWTIDE === '') {
+        for (let i = 0; i < this.localtable.length; i++) {
+            this.myThis.$refs['form' + i][0].validate((valid: boolean) => {
+                if (valid === false) {
                     result = false
                 }
             })
@@ -249,6 +292,7 @@ div {
     flex-direction: column;
 }
 .table-body-row {
+    display: flex;
     flex: 1;
     width: 100%;
 }
@@ -257,6 +301,16 @@ div {
     width: 100%;
     font-size: 19px;
     flex-direction: row;
+}
+.el-form-item {
+    height: 100%;
+    /* width: 100%; */
+    flex: 1;
+    margin: 0;
+}
+.el-form-item >>> .el-form-item__content{
+    /* display: block; */
+    width: 100% !important;
 }
 .border-bottom {
     border-bottom-width: 1px;
@@ -280,6 +334,7 @@ div {
 }
 .input {
     width: 90%;
+    left: 5%;
 }
 .button-row {
     height: 40px;
