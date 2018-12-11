@@ -1,4 +1,6 @@
 export default class AmShortInfo9 {
+    [key: string]: Date|string
+    [index: number]: string
     public PUBLISHDATE: Date
     public SA24HWFBOHAIWAVEHEIGHT: string
     public SA24HWFNORTHOFYSWAVEHEIGHT: string

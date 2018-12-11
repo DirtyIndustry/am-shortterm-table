@@ -1,4 +1,6 @@
 export default class PublishInfo {
+    [key: string]: Date|string
+    [index: number]: string
     public PUBLISHDATE: Date
     public PUBLISHHOUR: string
     public FRELEASEUNIT: string

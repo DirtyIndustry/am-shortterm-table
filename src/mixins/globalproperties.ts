@@ -27,6 +27,7 @@ declare module 'vue/types/vue' {
         colhour: number
         needsubmit: NeedSubmitInfo
         amshortfakedata: boolean[]
+        amshortvalid: boolean[]
         amshorttable1: AmShortInfo1[]
         amshorttable2: AmShortInfo2[]
         amshorttable3and4: AmShortInfo3and4[]
@@ -67,6 +68,8 @@ export default class GlobalProperties extends Vue {
     set needsubmit(value: NeedSubmitInfo) { this.$store.dispatch('setNeedSubmit', value) }
     get amshortfakedata() { return this.$store.state.amshortfakedata }
     set amshortfakedata(value: boolean[]) { this.$store.dispatch('setAmShortFakeData', value) }
+    get amshortvalid() { return this.$store.state.amshortvalid }
+    set amshortvalid(value: boolean[]) { this.$store.dispatch('setAmShortValid', value) }
     get amshorttable1() { return this.$store.state.amshorttable1 }
     set amshorttable1(value: AmShortInfo1[]) { this.$store.dispatch('setAmShortTable1', value) }
     get amshorttable2() { return this.$store.state.amshorttable2 }

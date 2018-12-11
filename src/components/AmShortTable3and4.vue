@@ -67,11 +67,13 @@ export default class AmShortTable3and4 extends Vue {
     private onUpperStringChanged(val: string, oldVal: string) {
         this.localupperstring = val
         this.checkSubmit()
+        this.checkValidate()
     }
     @Watch('lowerstring')
     private onLowerStringChanged(val: string, oldVal: string) {
         this.locallowerstring = val
         this.checkSubmit()
+        this.checkValidate()
     }
 
     @Emit('valueChange')
@@ -111,6 +113,11 @@ export default class AmShortTable3and4 extends Vue {
                 result = false
             }
         })
+        if (this.title.includes('上午三')) {
+            this.amshortvalid[3] = result
+        } else if (this.title.includes('上午四')) {
+            this.amshortvalid[4] = result
+        }
         return result
     }
     private cancelClick() {

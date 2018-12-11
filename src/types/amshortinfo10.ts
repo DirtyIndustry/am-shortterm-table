@@ -1,4 +1,6 @@
 export default class AmShortInfo10 {
+    [key: string]: Date|string
+    [index: number]: string
     public PUBLISHDATE: Date
     public FORECASTDATE: Date
     public WAVELEVELONE: string

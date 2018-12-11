@@ -145,7 +145,7 @@ export default class PublishMetaInfo extends Vue {
         'HBY2006032'
     ]
     private rules = {
-        FRELEASEUNIT: [{required: true, trigger: 'blur'}],
+        FRELEASEUNIT: [{required: true, message: ' ', trigger: 'blur'}],
         FWAVEFORECASTER: [{validator: this.validateWave, trigger: 'blur'}],
         FTIDALFORECASTER: [{validator: this.validateTide, trigger: 'blur'}],
         FWATERTEMPERATUREFORECASTER: [{validator: this.validateTemp, trigger: 'blur'}],
@@ -185,6 +185,7 @@ export default class PublishMetaInfo extends Vue {
         this.localtable = JSON.parse(JSON.stringify(val))
         this.localtable[0].PUBLISHDATE = this.coltime
         this.checkSubmit()
+        this.checkValidate()
     }
     @Watch('coltime')
     private onColtimeChanged(val: Date, oldVal: Date) {
@@ -289,6 +290,7 @@ export default class PublishMetaInfo extends Vue {
                 result = false
             }
         })
+        this.amshortvalid[0] = result
         return result
     }
     private checkSubmit() {

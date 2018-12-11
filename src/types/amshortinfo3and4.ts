@@ -1,4 +1,6 @@
 export default class AmShortInfo3and4 {
+    [key: string]: Date|string
+    [index: number]: string
     public PUBLISHDATE: Date
     public METEOROLOGICALREVIEW: string
     public METEOROLOGICALREVIEW24HOUR: string

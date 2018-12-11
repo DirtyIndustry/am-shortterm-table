@@ -152,6 +152,7 @@ export default class AmShortTable2 extends Vue {
     private onAmShortTable2Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable2))
         this.checkSubmit()
+        this.checkValidate()
     }
     private get editable() {
         if (this.coltime.getFullYear() < new Date().getFullYear()) {
@@ -207,6 +208,7 @@ export default class AmShortTable2 extends Vue {
                 }
             })
         }
+        this.amshortvalid[2] = result
         return result
     }
     private cancelClick() {

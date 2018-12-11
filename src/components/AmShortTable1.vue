@@ -131,6 +131,7 @@ export default class AmShortTable1 extends Vue {
     private onAmShortTable1Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable1))
         this.checkSubmit()
+        this.validateForm()
     }
     private validateWindWave(rule: any, value: string, callback: any) {
         if (this.usertype === 'fl' && !value) {
@@ -155,6 +156,7 @@ export default class AmShortTable1 extends Vue {
                 }
             })
         }
+        this.amshortvalid[1] = result
         return result
     }
     private checkSubmit() {

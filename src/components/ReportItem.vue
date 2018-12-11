@@ -67,6 +67,13 @@ export default class ReportItem extends Vue {
 .icon {
     font-size: 35px;
 }
+.icon-column >>> .fa-play:hover {
+    color: blueviolet;
+    cursor: pointer;
+}
+.icon-column >>> .fa-play:active {
+    color: black;
+}
 .title-row {
     display: flex;
     flex: 2;

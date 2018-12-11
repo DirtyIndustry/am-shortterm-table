@@ -167,6 +167,7 @@ export default class AmShortTable8 extends Vue {
     private onAmShortTable8Changed(val: any, oldVal: any) {
         this.localtable = JSON.parse(JSON.stringify(this.amshorttable8))
         this.checkSubmit()
+        this.checkValidate()
     }
     private validateHeight(rule: any, value: string, callback: any) {
         if (this.usertype !== 'cx') {
@@ -205,6 +206,7 @@ export default class AmShortTable8 extends Vue {
                 }
             })
         }
+        this.amshortvalid[8] = result
         return result
     }
     private checkSubmit() {

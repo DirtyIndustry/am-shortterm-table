@@ -1,4 +1,6 @@
 export default class AmShortFakeDataInfo {
+    [key: string]: boolean
+    [index: number]: boolean
     public AmShort1FakeData: boolean
     public AmShort2FakeData: boolean
     public AmShort3and4FakeData: boolean

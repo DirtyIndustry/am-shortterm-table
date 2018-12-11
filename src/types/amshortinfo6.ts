@@ -1,4 +1,6 @@
 export default class AmShortInfo6 {
+    [key: string]: Date|string
+    [index: number]: string
     public PUBLISHDATE: Date
     public TLFORECASTSTANCE: string
     public FORECASTDATE: Date

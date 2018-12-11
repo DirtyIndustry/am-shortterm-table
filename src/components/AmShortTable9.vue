@@ -115,6 +115,7 @@
         private onAmShortTable9Changed(val: any, oldVal: any) {
             this.localtable = JSON.parse(JSON.stringify(this.amshorttable9))
             this.checkSubmit()
+            this.checkValidate()
         }
         private validateWave(rule: any, value: string, callback: any) {
             if (this.usertype !== 'fl') {
@@ -145,6 +146,7 @@
                     result = false
                 }
             })
+            this.amshortvalid[9] = result
             return result
         }
         private checkSubmit() {

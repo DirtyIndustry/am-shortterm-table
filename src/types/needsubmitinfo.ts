@@ -1,5 +1,7 @@
 export default class NeedSubmitInfo {
+    [index: number]: boolean
     [key: string]: boolean
+    public tablePublishMetaneedsubmit: boolean
     public table1needsubmit: boolean
     public table2needsubmit: boolean
     public table3needsubmit: boolean
@@ -12,9 +14,8 @@ export default class NeedSubmitInfo {
     public table10needsubmit: boolean
     public table11needsubmit: boolean
     public table12needsubmit: boolean
-    public tablePublishMetaneedsubmit: boolean
-
     constructor() {
+        this.tablePublishMetaneedsubmit = false
         this.table1needsubmit = false
         this.table2needsubmit = false
         this.table3needsubmit = false
@@ -27,7 +28,6 @@ export default class NeedSubmitInfo {
         this.table10needsubmit = false
         this.table11needsubmit = false
         this.table12needsubmit = false
-        this.tablePublishMetaneedsubmit = false
     }
     public *[Symbol.iterator](): IterableIterator<boolean> {
         for (const key in this) {

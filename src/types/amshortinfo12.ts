@@ -1,4 +1,6 @@
 export default class AmShortInfo12 {
+    [key: string]: Date|string
+    [index: number]: string
     public PUBLISHDATE: Date
     public FORECASTDATE: Date
     public WEATERSTATE: string
