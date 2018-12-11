@@ -265,10 +265,6 @@ div {
     border-right-style: solid;
     border-right-color: #000;
 }
-.input {
-    /* width: 90%; */
-    /* left: 5%; */
-}
 .button-row {
     height: 40px;
     width: 100%;

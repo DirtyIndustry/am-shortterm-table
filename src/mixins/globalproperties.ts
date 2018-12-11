@@ -12,6 +12,7 @@ import AmShortInfo11 from '../types/amshortinfo11'
 import AmShortInfo12 from '../types/amshortinfo12'
 import PublishInfo from '../types/publishinfo'
 import NeedSubmitInfo from '@/types/needsubmitinfo'
+import ReportInfo from '@/types/reportinfo'
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -38,6 +39,7 @@ declare module 'vue/types/vue' {
         amshorttable11: AmShortInfo11[]
         amshorttable12: AmShortInfo12[]
         publishmetainfo: PublishInfo[]
+        reportlist: ReportInfo[]
     }
 }
 @Component
@@ -89,4 +91,6 @@ export default class GlobalProperties extends Vue {
     set amshorttable12(value: AmShortInfo12[]) { this.$store.dispatch('setAmShortTable12', value) }
     get publishmetainfo() { return this.$store.state.publishmetainfo }
     set publishmetainfo(value: PublishInfo[]) { this.$store.dispatch('setPublishMetaInfo', value) }
+    get reportlist() { return this.$store.state.reportlist }
+    set reportlist(value: ReportInfo[]) { this.$store.dispatch('setReportList', value) }
 }

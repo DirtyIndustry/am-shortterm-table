@@ -13,6 +13,7 @@ import AmShortInfo11 from './types/amshortinfo11'
 import AmShortInfo12 from './types/amshortinfo12'
 import PublishInfo from './types/publishinfo'
 import NeedSubmitInfo from '@/types/needsubmitinfo'
+import ReportInfo from '@/types/reportInfo'
 
 Vue.use(Vuex)
 
@@ -95,6 +96,9 @@ export default new Vuex.Store({
     ],
     publishmetainfo: [
       new PublishInfo()
+    ],
+    reportlist: [
+      new ReportInfo()
     ]
   },
   mutations: {
@@ -163,6 +167,9 @@ export default new Vuex.Store({
     },
     setshowalltable(state, value: boolean): void {
       state.showalltable = value
+    },
+    setreportlist(state, value: ReportInfo[]): void {
+      state.reportlist = value
     }
   },
   actions: {
@@ -231,6 +238,9 @@ export default new Vuex.Store({
     },
     setShowAllTable(context, value: boolean): void {
       context.commit('setshowalltable', value)
+    },
+    setReportList(context, value: ReportInfo[]): void {
+      context.commit('setreportlist', value)
     }
   }
 })
