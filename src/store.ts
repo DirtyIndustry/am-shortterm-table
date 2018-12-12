@@ -24,6 +24,7 @@ export default new Vuex.Store({
     iswindwave: true,
     istide: true,
     istemperature: true,
+    isloading: false,
     showalltable: false,
     coltime: new Date(new Date().toLocaleDateString()),
     colhour: 10,
@@ -109,6 +110,9 @@ export default new Vuex.Store({
     setusertype(state, value: string): void {
       state.usertype = value
     },
+    setisloading(state, value: boolean): void {
+      state.isloading = value
+    },
     setcoltime(state, value: Date): void {
       state.coltime = value
     },
@@ -182,6 +186,9 @@ export default new Vuex.Store({
     },
     setUserType(context, usertype: string): void {
       context.commit('setusertype', usertype)
+    },
+    setIsLoading(context, value: boolean): void {
+      context.commit('setisloading', value)
     },
     setColtime(context, coltime: Date): void {
       context.commit('setcoltime', coltime)

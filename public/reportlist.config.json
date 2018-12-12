@@ -4,14 +4,14 @@
         "reportTitle": "4号预报单(a4)-2014",
         "reportStatusDesc": "准备就绪, 可以生成预报单",
         "reportButtonDisable": false,
-        "datasource": [1, 2, 3]
+        "datasource": [0, 1, 2, 3]
     },
     {
         "reportStatus": "ready",
         "reportTitle": "5号预报单（a4）",
         "reportStatusDesc": "准备就绪, 可以生成预报单",
         "reportButtonDisable": false,
-        "datasource": [1, 2, 3]
+        "datasource": [0, 1, 2, 3]
     },
     {
         "reportStatus": "ready",

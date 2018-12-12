@@ -12,12 +12,17 @@
 </template>
 
 <script>
+import Utils from '@/utils/utils.ts'
 export default({
   beforeCreate() {
     document.querySelector('body').setAttribute('style', 'background-color: #d2ffe7;')
   },
   beforeDestroy() {
     document.querySelector('body').removeAttribute('style')
+  },
+  mounted() {
+    Utils.loadCookie()
+    Utils.getData()
   }
 })
 </script>

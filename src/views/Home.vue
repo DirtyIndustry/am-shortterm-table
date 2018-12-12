@@ -88,29 +88,13 @@ import PublishMetaInfo from '@/components/PublishMetaInfo.vue'
 })
 export default class Home extends Vue {
   private myThis: any = this
-  private isloading = false
   @Watch('usertype')
   private onUserTypeChanged(val: boolean, oldVal: boolean) {
     this.setTypeShows()
   }
-  private loadCookie() {
-    if (document.cookie !== '') {
-      const userinfo: string[] = document.cookie.split('UserInfo=')[1].split('&')
-      for (const info of userinfo) {
-        const pair: string[] = info.split('=')
-        switch (pair[0]) {
-          case 'UserName':
-            this.username = pair[1]
-            break
-          case 'Type':
-            this.usertype = pair[1]
-            break
-          default:
-            break
-        } // end-switch(pair[0])
-      } // end-for(userinfo)
-    } // end-if(cookie != '')
-  } // end-loadCookie()
+  private getData() {
+    Utils.getData()
+  }
   private setTypeShows() {
     switch (this.usertype) {
       case 'fl':
@@ -134,34 +118,6 @@ export default class Home extends Vue {
         this.istemperature = true
         break
     }
-  }
-  private getData() {
-    this.isloading = true
-    Axios.post(Utils.hosturl + 'GetTableData', {date: this.coltime})
-      .then((res) => {
-        console.log(res)
-        if (res.data.d !== '') {
-          const resdata = JSON.parse(res.data.d)
-          this.amshortfakedata = resdata.AmShortFakeData
-          this.amshorttable1 = resdata.AmShort1Data
-          this.amshorttable2 = resdata.AmShort2Data
-          this.amshorttable3and4 = resdata.AmShort3and4Data
-          this.amshorttable5 = resdata.AmShort5Data
-          this.amshorttable6 = resdata.AmShort6Data
-          this.amshorttable7 = resdata.AmShort7Data
-          this.amshorttable8 = resdata.AmShort8Data
-          this.amshorttable9 = resdata.AmShort9Data
-          this.amshorttable10 = resdata.AmShort10Data
-          this.amshorttable11 = resdata.AmShort11Data
-          this.amshorttable12 = resdata.AmShort12Data
-          this.publishmetainfo = resdata.PublishMetaInfo
-        }
-        this.isloading = false
-      })
-      .catch((error) => {
-        console.log(error)
-        this.isloading = false
-      })
   }
   private submitAll() {
     console.log('submit all recived.')
@@ -196,11 +152,6 @@ export default class Home extends Vue {
   }
   private table4submitchanged(arg: boolean) {
     this.needsubmit.table4needsubmit = arg
-  }
-
-  private created() {
-    this.loadCookie()
-    this.getData()
   }
 }
 </script>

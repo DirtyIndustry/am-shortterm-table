@@ -313,7 +313,7 @@ export default class PublishMetaInfo extends Vue {
     }
     private isTel(value: string): boolean {
         let result = false
-        const fix = /^(0\d{2,3}-?)?\d{7}$/
+        const fix = /^(0\d{2,3}-?)?\d{7,8}$/
         const mobile = /^(\(?(\+86|0086)\)?)?1\d{10}$/
         if (fix.test(value) === true) {
             result = true

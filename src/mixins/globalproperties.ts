@@ -22,6 +22,7 @@ declare module 'vue/types/vue' {
         iswindwave: boolean
         istide: boolean
         istemperature: boolean
+        isloading: boolean
         showalltable: boolean
         coltime: Date
         colhour: number
@@ -58,6 +59,8 @@ export default class GlobalProperties extends Vue {
     set istide(value: boolean) { this.$store.dispatch('setIsTide', value) }
     get istemperature() { return this.$store.state.istemperature }
     set istemperature(value: boolean) { this.$store.dispatch('setIsTemperature', value) }
+    get isloading() { return this.$store.state.isloading }
+    set isloading(value: boolean) { this.$store.dispatch('setIsLoading', value) }
     get showalltable() { return this.$store.state.showalltable }
     set showalltable(value: boolean) { this.$store.dispatch('setShowAllTable', value) }
     get coltime() { return this.$store.state.coltime }

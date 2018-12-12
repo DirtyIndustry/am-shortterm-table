@@ -45,85 +45,187 @@ export default class About extends Vue {
   }
   private checkReportStatus() {
     this.reportlist.forEach((report) => {
+      report.reportStatusDesc = ''
       report.datasource.forEach((num) => {
         switch (num) {
           case 0:
             console.log('填报信息')
-            console.log(this.hasEmpty(this.publishmetainfo))
-            // console.log(this.needsubmit.tablePublishMetaneedsubmit)
-            // console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.publishmetainfo)) {
+              report.reportStatusDesc += '填报信息有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.tablePublishMetaneedsubmit === true) {
+              report.reportStatusDesc += '填报信息尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '填报信息有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 1:
             console.log('表单一')
-            console.log(this.hasEmpty(this.amshorttable1))
-            // console.log(this.needsubmit.table1needsubmit?'需要提交':'')
-            // console.log(this.amshortvalid[num]?'':'数据不合规')
+            if (this.hasEmpty(this.amshorttable1)) {
+              report.reportStatusDesc += '表单一有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table1needsubmit === true) {
+              report.reportStatusDesc += '表单一尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单一有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 2:
             console.log('表单二')
-            console.log(this.hasEmpty(this.amshorttable2))
-            // console.log(this.needsubmit.table2needsubmit)
-            // console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable2)) {
+              report.reportStatusDesc += '表单二有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table2needsubmit === true) {
+              report.reportStatusDesc += '表单二尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单二有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 3:
             console.log('表单三')
-            console.log(this.hasEmpty(this.amshorttable3and4))
-            // console.log(this.needsubmit.table3needsubmit)
-            // console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable3and4)) {
+              report.reportStatusDesc += '表单三、四有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table3needsubmit === true) {
+              report.reportStatusDesc += '表单三尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单三有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 4:
             console.log('表单四')
-            console.log(this.needsubmit.table4needsubmit)
-            console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable3and4)) {
+              report.reportStatusDesc += '表单三、四有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table4needsubmit === true) {
+              report.reportStatusDesc += '表单四尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单四有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 4:
             console.log('表单五')
-            console.log(this.needsubmit.table5needsubmit)
-            console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable5)) {
+              report.reportStatusDesc += '表单五有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table5needsubmit === true) {
+              report.reportStatusDesc += '表单五尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单五有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 4:
             console.log('表单六')
-            console.log(this.needsubmit.table6needsubmit)
-            console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable6)) {
+              report.reportStatusDesc += '表单六有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table6needsubmit === true) {
+              report.reportStatusDesc += '表单六尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单六有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 4:
             console.log('表单七')
-            console.log(this.needsubmit.table7needsubmit)
-            console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable7)) {
+              report.reportStatusDesc += '表单七有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table7needsubmit === true) {
+              report.reportStatusDesc += '表单七尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单七有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 4:
             console.log('表单八')
-            console.log(this.needsubmit.table8needsubmit)
-            console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable8)) {
+              report.reportStatusDesc += '表单八有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table8needsubmit === true) {
+              report.reportStatusDesc += '表单八尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单八有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 4:
             console.log('表单九')
-            console.log(this.needsubmit.table9needsubmit)
-            console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable9)) {
+              report.reportStatusDesc += '表单九有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table9needsubmit === true) {
+              report.reportStatusDesc += '表单九尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单九有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 4:
             console.log('表单十')
-            console.log(this.needsubmit.table10needsubmit)
-            console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable10)) {
+              report.reportStatusDesc += '表单十有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table10needsubmit === true) {
+              report.reportStatusDesc += '表单十尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单十有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 4:
             console.log('表单十一')
-            console.log(this.needsubmit.table11needsubmit)
-            console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable11)) {
+              report.reportStatusDesc += '表单十一有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table11needsubmit === true) {
+              report.reportStatusDesc += '表单十一尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单十一有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
           case 4:
             console.log('表单十二')
-            console.log(this.needsubmit.table12needsubmit)
-            console.log(this.amshortvalid[num])
+            if (this.hasEmpty(this.amshorttable12)) {
+              report.reportStatusDesc += '表单十二有空白数据，'
+              report.reportStatus = 'notready'
+            } else if (this.needsubmit.table12needsubmit === true) {
+              report.reportStatusDesc += '表单十二尚未提交，'
+              report.reportStatus = 'notready'
+            } else if (this.amshortvalid[num]) {
+              report.reportStatusDesc += '表单十二有数据不合规，'
+              report.reportStatus = 'notready'
+            }
             break
         }
       })
+      report.reportStatusDesc = report.reportStatusDesc.substring(0, report.reportStatusDesc.length - 1)
     })
   }
-  private hasEmpty(array: Array<any>) {
+  private hasEmpty(array: any[]) {
     let result = false
     array.forEach((obj: any) => {
-      for(const key in obj) {
+      for (const key in obj) {
         if (obj[key] === '') {
           result = true
         }
@@ -142,7 +244,7 @@ export default class About extends Vue {
         this.text = 'Need Submit!'
       }
     }
-    if (this.configloaded = true) {
+    if (this.configloaded === true) {
       this.checkReportStatus()
     }
   }
