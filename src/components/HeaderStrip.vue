@@ -75,7 +75,6 @@
         private getSession(): void {
             console.log(this.reportertype)
         }
-        @Emit('gotoWordPage')
         private gotoWordPage() {
             console.log('go to word page.')
             const myThis = this

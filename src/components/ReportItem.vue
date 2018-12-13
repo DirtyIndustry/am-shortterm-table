@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+        <!-- <div class="separator-horizontal"></div> -->
+        <div class="select-column">
+            <el-checkbox class="checkbox" v-model="report.selected" @change="selectChanged"></el-checkbox>
+        </div>
         <div class="icon-column">
             <div v-if="report.reportStatus === 'done'" class="icon fa fa-check vert"></div>
             <div v-if="report.reportStatus === 'ready'" class="icon fa fa-play bleu"></div>
@@ -21,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Prop, Watch, Vue } from 'vue-property-decorator'
+import { Component, Mixins, Prop, Emit, Watch, Vue } from 'vue-property-decorator'
 import Utils from '@/utils/utils'
 import GlobalProperties from '../mixins/globalproperties'
 import ReportInfo from '@/types/reportinfo'
@@ -30,7 +34,11 @@ import ReportInfo from '@/types/reportinfo'
     mixins: [GlobalProperties]
 })
 export default class ReportItem extends Vue {
-@Prop() private report!: ReportInfo
+    @Prop() private report!: ReportInfo
+    @Emit('selectChanged')
+    private selectChanged(val: boolean) {
+        return val
+    }
 }
 </script>
 
@@ -44,8 +52,14 @@ export default class ReportItem extends Vue {
     display: flex;
     flex-direction: row;
 }
+.select-column {
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .icon-column {
-    width: 80px;
+    width: 60px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -61,6 +75,13 @@ export default class ReportItem extends Vue {
     display: flex;
     width: 60px;
     height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.checkbox {
+    height: 100%;
+    width: 100%;
+    display: flex;
     align-items: center;
     justify-content: center;
 }

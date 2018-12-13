@@ -2,8 +2,10 @@
   <div class="about" v-loading.fullscreen.lock="isloading">
     <h1>预报单制作</h1>
     <p>{{text}}</p>
+    <ReportHeaderStrip :checkedAll="checkedAll" :isIndeterminate="isIndeterminate" @checkAllChange="checkAllChange"></ReportHeaderStrip>
+    <div class="separator-vertical"></div>
     <div v-for="(item, index) in reportlist" :key="index">
-      <ReportItem :report="item"></ReportItem>
+      <ReportItem :report="item" @selectChanged="singleSelectChanged"></ReportItem>
       <div class="separator-vertical"></div>
     </div>
   </div>
@@ -15,11 +17,13 @@
   import Utils from '@/utils/utils'
   import GlobalProperties from '../mixins/globalproperties'
   import ReportItem from '@/components/ReportItem.vue'
+  import ReportHeaderStrip from '@/components/ReportHeaderStrip.vue'
   import ReportInfo from '@/types/reportinfo'
 
   @Component({
     components: {
-      ReportItem
+      ReportItem,
+      ReportHeaderStrip
     },
     mixins: [GlobalProperties]
   })
@@ -27,6 +31,8 @@
     private myThis: any = this
     private text: string = ''
     private configloaded: boolean = false
+    private checkedAll: boolean = true
+    private isIndeterminate: boolean = false
     @Watch('isloading')
     private onIsLoadingChanged(val: boolean, oldVal: boolean) {
       if (val === false) {
@@ -266,6 +272,26 @@
         return true
       }
       return false
+    }
+    private singleSelectChanged(val: boolean) {
+      const initial = this.reportlist[0].selected
+      this.isIndeterminate = false
+      this.reportlist.forEach((report) => {
+        if (report.selected !== initial) {
+          this.checkedAll = false
+          this.isIndeterminate = true
+        }
+      })
+      if (this.isIndeterminate === false) {
+        this.checkedAll = initial
+      }
+    }
+    private checkAllChange(val: boolean) {
+      this.checkedAll = val
+      this.isIndeterminate = false
+      this.reportlist.forEach((report) => {
+        report.selected = val
+      })
     }
     private created() {
       console.log('about page created.')

@@ -91,8 +91,8 @@ export default class AmShortTable4 extends Vue {
     }
     private checkSubmit() {
         if (this.localtable[0].METEOROLOGICALREVIEW24HOUR !== this.amshorttable3and4[0].METEOROLOGICALREVIEW24HOUR
-            || this.localtable[0].METEOROLOGICALREVIEW24HOURCX !== this.amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX
-            || this.amshortfakedata[4] === true) {
+        || this.localtable[0].METEOROLOGICALREVIEW24HOURCX !== this.amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX
+        || this.amshortfakedata[4] === true) {
             this.needsubmit.table4needsubmit = true
         } else {
             this.needsubmit.table4needsubmit = false
