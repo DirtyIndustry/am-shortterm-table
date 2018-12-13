@@ -23,7 +23,7 @@
         <el-button @click="queryData">查询</el-button>
         <el-button>操作日志</el-button>
         <el-switch v-model="showalltable" active-text="显示所有" active-color="#13ce66"></el-switch>
-        <el-button>选择模板并发布</el-button>
+        <el-button @click="gotoWordPage">选择模板并发布</el-button>
         <el-button :disabled="!iNeedSubmit" @click="submitAll">保存所有</el-button>
     </div>
 </template>
@@ -74,6 +74,12 @@
 
         private getSession(): void {
             console.log(this.reportertype)
+        }
+        @Emit('gotoWordPage')
+        private gotoWordPage() {
+            console.log('go to word page.')
+            const myThis = this
+            myThis.$router.push('about')
         }
         @Emit('query')
         private queryData() {

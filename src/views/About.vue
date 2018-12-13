@@ -102,8 +102,8 @@
                 break
               case 3:
                 // console.log('表单三')
-                if (this.hasEmpty(this.amshorttable3and4)) {
-                  report.reportStatusDesc += '表单三、四有空白数据，'
+                if (this.table3HasEmpty()) {
+                  report.reportStatusDesc += '表单三有空白数据，'
                   report.reportStatus = 'notready'
                 } else if (this.amshortfakedata[num] === true) {
                   report.reportStatusDesc += '表单三尚未提交，'
@@ -115,8 +115,8 @@
                 break
               case 4:
                 // console.log('表单四')
-                if (this.hasEmpty(this.amshorttable3and4)) {
-                  report.reportStatusDesc += '表单三、四有空白数据，'
+                if (this.table4HasEmpty()) {
+                  report.reportStatusDesc += '表单四有空白数据，'
                   report.reportStatus = 'notready'
                 } else if (this.amshortfakedata[num] === true) {
                   report.reportStatusDesc += '表单四尚未提交，'
@@ -232,7 +232,12 @@
                 break
             }
           })
-          report.reportStatusDesc = report.reportStatusDesc.substring(0, report.reportStatusDesc.length - 1)
+          if (report.reportStatusDesc === '') {
+            report.reportStatus = 'ready'
+            report.reportStatusDesc = '等待提交制作'
+          } else {
+            report.reportStatusDesc = report.reportStatusDesc.substring(0, report.reportStatusDesc.length - 1)
+          }
         }
       })
     }
@@ -247,6 +252,20 @@
         }
       })
       return result
+    }
+    private table3HasEmpty() {
+      if (this.amshorttable3and4[0].METEOROLOGICALREVIEW === ''
+      || this.amshorttable3and4[0].METEOROLOGICALREVIEWCX === '') {
+        return true
+      }
+      return false
+    }
+    private table4HasEmpty() {
+      if (this.amshorttable3and4[0].METEOROLOGICALREVIEW24HOUR === ''
+      || this.amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX === '') {
+        return true
+      }
+      return false
     }
     private created() {
       console.log('about page created.')

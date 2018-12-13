@@ -48,7 +48,6 @@
 
 <script lang="ts">
 import { Component, Watch, Mixins, Vue } from 'vue-property-decorator'
-import Axios from 'axios'
 import Utils from '@/utils/utils'
 import GlobalProperties from '../mixins/globalproperties'
 import AmShortInfo12 from '../types/amshortinfo12'

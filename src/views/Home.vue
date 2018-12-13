@@ -1,31 +1,15 @@
 <template>
   <div class="home" v-loading.fullscreen.lock="isloading">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HeaderStrip @query="getData" @submitAll="submitAll"></HeaderStrip>
+    <HeaderStrip @query="getData" @submitAll="submitAll" ></HeaderStrip>
     <div class="separator-vertical"></div>
     <AmShortTable1 v-show="iswindwave | istemperature | showalltable" ref="table1"></AmShortTable1>
     <div class="separator-vertical"></div>
     <AmShortTable2 v-show="istide | showalltable" ref="table2"></AmShortTable2>
     <div class="separator-vertical"></div>
-    <AmShortTable3and4 v-show="iswindwave | istide | showalltable"
-      title="上午三、3天海洋水文气象预报综述"
-      :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW"
-      :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEWCX"
-      :iNeedSubmit="needsubmit.table3needsubmit"
-      @valueChange="table3changed"
-      @needSubmitChange="table3submitchanged"
-      ref="table3">
-      </AmShortTable3and4>
+    <AmShortTable3 v-show="iswindwave | istide | showalltable" ref="table3" ></AmShortTable3>
     <div class="separator-vertical"></div>
-    <AmShortTable3and4 v-show="iswindwave | istide | showalltable"
-      title="上午四、24小时水文气象预报综述"
-      :upperstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOUR"
-      :lowerstring="amshorttable3and4[0].METEOROLOGICALREVIEW24HOURCX"
-      :iNeedSubmit="needsubmit.table4needsubmit"
-      @valueChange="table4changed"
-      @needSubmitChange="table4submitchanged"
-      ref="table4">
-      </AmShortTable3and4>
+    <AmShortTable4 v-show="iswindwave | istide | showalltable" ref="table4" ></AmShortTable4>
     <div class="separator-vertical"></div>
     <AmShortTable5 v-show="iswindwave | istemperature | showalltable" ref="table5"></AmShortTable5>
     <div class="separator-vertical"></div>
@@ -51,13 +35,13 @@
 
 <script lang="ts">
 import { Component, Mixins, Watch, Vue } from 'vue-property-decorator'
-import Axios from 'axios'
 import Utils from '@/utils/utils'
 import GlobalProperties from '../mixins/globalproperties'
 import HeaderStrip from '@/components/HeaderStrip.vue' // @ is an alias to /src
 import AmShortTable1 from '@/components/AmShortTable1.vue'
 import AmShortTable2 from '@/components/AmShortTable2.vue'
-import AmShortTable3and4 from '@/components/AmShortTable3and4.vue'
+import AmShortTable3 from '@/components/AmShortTable3.vue'
+import AmShortTable4 from '@/components/AmShortTable4.vue'
 import AmShortTable5 from '@/components/AmShortTable5.vue'
 import AmShortTable6 from '@/components/AmShortTable6.vue'
 import AmShortTable7 from '@/components/AmShortTable7.vue'
@@ -73,7 +57,8 @@ import PublishMetaInfo from '@/components/PublishMetaInfo.vue'
     HeaderStrip,
     AmShortTable1,
     AmShortTable2,
-    AmShortTable3and4,
+    AmShortTable3,
+    AmShortTable4,
     AmShortTable5,
     AmShortTable6,
     AmShortTable7,
@@ -134,24 +119,6 @@ export default class Home extends Vue {
     this.myThis.$refs.table11.submitClick()
     this.myThis.$refs.table12.submitClick()
     this.myThis.$refs.tablepubmeta.submitClick()
-  }
-  private table3changed(arg: string[]) {
-    const localtable = JSON.parse(JSON.stringify(this.amshorttable3and4))
-    localtable[0].METEOROLOGICALREVIEW = arg[0]
-    localtable[0].METEOROLOGICALREVIEWCX = arg[1]
-    Utils.doSubmit(3, 'AmShortTable3and4', localtable, this.myThis.$refs.table3.checkSubmit, '表单三')
-  }
-  private table4changed(arg: string[]) {
-    const localtable = JSON.parse(JSON.stringify(this.amshorttable3and4))
-    localtable[0].METEOROLOGICALREVIEW24HOUR = arg[0]
-    localtable[0].METEOROLOGICALREVIEW24HOURCX = arg[1]
-    Utils.doSubmit(4, 'AmShortTable3and4', localtable, this.myThis.$refs.table4.checkSubmit, '表单四')
-  }
-  private table3submitchanged(arg: boolean) {
-    this.needsubmit.table3needsubmit = arg
-  }
-  private table4submitchanged(arg: boolean) {
-    this.needsubmit.table4needsubmit = arg
   }
 }
 </script>
