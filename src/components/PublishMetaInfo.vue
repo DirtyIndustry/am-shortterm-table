@@ -145,15 +145,15 @@ export default class PublishMetaInfo extends Vue {
         'HBY2006032'
     ]
     private rules = {
-        FRELEASEUNIT: [{required: true, message: ' ', trigger: 'blur'}],
+        FRELEASEUNIT: [{validator: this.validateUnit, trigger: 'blur'}],
+        ZHIBANTEL: [{validator: this.validateZHIBANTEL, trigger: 'blur'}],
+        SENDTEL: [{validator: this.validateSENDTEL, trigger: 'blur'}],
         FWAVEFORECASTER: [{validator: this.validateWave, trigger: 'blur'}],
         FTIDALFORECASTER: [{validator: this.validateTide, trigger: 'blur'}],
         FWATERTEMPERATUREFORECASTER: [{validator: this.validateTemp, trigger: 'blur'}],
         FWAVEFORECASTERTEL: [{validator: this.validateWaveTel, trigger: 'blur'}],
         FTIDALFORECASTERTEL: [{validator: this.validateTideTel, trigger: 'blur'}],
-        FWATERTEMPERATUREFORECASTERTEL: [{validator: this.validateTempTel, trigger: 'blur'}],
-        ZHIBANTEL: [{validator: this.validateTel, trigger: 'blur'}],
-        SENDTEL: [{validator: this.validateTel, trigger: 'blur'}]
+        FWATERTEMPERATUREFORECASTERTEL: [{validator: this.validateTempTel, trigger: 'blur'}]
     }
     private deepEqual = require('deep-equal')
     private get publishdatestring(): string {
@@ -200,13 +200,31 @@ export default class PublishMetaInfo extends Vue {
             this.checkSubmit()
         }
     }
-    private validateTel(rule: any, value: string, callback: any) {
-        if (!value) {
-            callback(new Error(' '))
+    private validateUnit(rule: any, value: string, callback: any) {
+        if (this.localtable[0].FRELEASEUNIT === '') {
+            callback(new Error('发布单位不能为空'))
+        } else {
+            return callback()
+        }
+    }
+    private validateZHIBANTEL(rule: any, value: string, callback: any) {
+        if (this.localtable[0].ZHIBANTEL === '') {
+            callback(new Error('电话号码不能为空'))
         } else if (value === '-') {
             callback()
-        } else if (!this.isTel(value)) {
-            callback(new Error(' '))
+        } else if (!this.isTel(this.localtable[0].ZHIBANTEL)) {
+            callback(new Error('电话号码格式不正确'))
+        } else {
+            return callback()
+        }
+    }
+    private validateSENDTEL(rule: any, value: string, callback: any) {
+        if (this.localtable[0].SENDTEL === '') {
+            callback(new Error('电话号码不能为空'))
+        } else if (value === '-') {
+            callback()
+        } else if (!this.isTel(this.localtable[0].SENDTEL)) {
+            callback(new Error('电话号码格式不正确'))
         } else {
             return callback()
         }
@@ -215,7 +233,7 @@ export default class PublishMetaInfo extends Vue {
         if (this.usertype !== 'fl') {
             callback()
         } else if (!value) {
-            callback(new Error(' '))
+            callback(new Error('请选择海浪预报员'))
         } else if (value === '-') {
             callback()
         } else {
@@ -226,7 +244,7 @@ export default class PublishMetaInfo extends Vue {
         if (this.usertype !== 'cx') {
             callback()
         } else if (!value) {
-            callback(new Error(' '))
+            callback(new Error('请选择潮汐预报员'))
         } else if (value === '-') {
             callback()
         } else {
@@ -237,7 +255,7 @@ export default class PublishMetaInfo extends Vue {
         if (this.usertype !== 'sw') {
             callback()
         } else if (!value) {
-            callback(new Error(' '))
+            callback(new Error('请选择水温预报员'))
         } else if (value === '-') {
             callback()
         } else {
@@ -248,11 +266,11 @@ export default class PublishMetaInfo extends Vue {
         if (this.usertype !== 'fl') {
             callback()
         } else if (!value) {
-            callback(new Error(' '))
+            callback(new Error('电话号码不能为空'))
         } else if (value === '-') {
             callback()
         } else if (!this.isTel(value)) {
-            callback(new Error(' '))
+            callback(new Error('电话号码格式不正确'))
         } else {
             return callback()
         }
@@ -261,11 +279,11 @@ export default class PublishMetaInfo extends Vue {
         if (this.usertype !== 'cx') {
             callback()
         } else if (!value) {
-            callback(new Error(' '))
+            callback(new Error('电话号码不能为空'))
         } else if (value === '-') {
             callback()
         } else if (!this.isTel(value)) {
-            callback(new Error(' '))
+            callback(new Error('电话号码格式不正确'))
         } else {
             return callback()
         }
@@ -274,11 +292,11 @@ export default class PublishMetaInfo extends Vue {
         if (this.usertype !== 'sw') {
             callback()
         } else if (!value) {
-            callback(new Error(' '))
+            callback(new Error('电话号码不能为空'))
         } else if (value === '-') {
             callback()
         } else if (!this.isTel(value)) {
-            callback(new Error(' '))
+            callback(new Error('电话号码格式不正确'))
         } else {
             return callback()
         }

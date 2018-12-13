@@ -139,13 +139,13 @@ export default class Home extends Vue {
     const localtable = JSON.parse(JSON.stringify(this.amshorttable3and4))
     localtable[0].METEOROLOGICALREVIEW = arg[0]
     localtable[0].METEOROLOGICALREVIEWCX = arg[1]
-    Utils.doSubmit(3, 'AmShortTable3and4', localtable, 2, this.myThis.$refs.table3.checkSubmit, '表单三')
+    Utils.doSubmit(3, 'AmShortTable3and4', localtable, this.myThis.$refs.table3.checkSubmit, '表单三')
   }
   private table4changed(arg: string[]) {
     const localtable = JSON.parse(JSON.stringify(this.amshorttable3and4))
     localtable[0].METEOROLOGICALREVIEW24HOUR = arg[0]
     localtable[0].METEOROLOGICALREVIEW24HOURCX = arg[1]
-    Utils.doSubmit(4, 'AmShortTable3and4', localtable, 2, this.myThis.$refs.table4.checkSubmit, '表单四')
+    Utils.doSubmit(4, 'AmShortTable3and4', localtable, this.myThis.$refs.table4.checkSubmit, '表单四')
   }
   private table3submitchanged(arg: boolean) {
     this.needsubmit.table3needsubmit = arg
