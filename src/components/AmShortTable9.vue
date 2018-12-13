@@ -151,7 +151,7 @@
         }
         private checkSubmit() {
             this.needsubmit.table9needsubmit = !this.deepEqual(this.amshorttable9, this.localtable)
-            if (this.amshortfakedata[7] === true) {
+            if (this.amshortfakedata[9] === true) {
                 this.needsubmit.table9needsubmit = true
             }
         }

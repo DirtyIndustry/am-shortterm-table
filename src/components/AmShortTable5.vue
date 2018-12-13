@@ -224,7 +224,7 @@ export default class AmShortTable5 extends Vue {
     }
     private checkSubmit() {
         this.needsubmit.table5needsubmit = !this.deepEqual(this.amshorttable5, this.localtable)
-        if (this.amshortfakedata[3] === true) {
+        if (this.amshortfakedata[5] === true) {
             this.needsubmit.table5needsubmit = true
         }
     }

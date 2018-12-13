@@ -30,7 +30,7 @@ export default new Vuex.Store({
     colhour: 10,
     // needsubmit: [false, false, false, false, false, false, false, false, false, false, false, false, false],
     needsubmit: new NeedSubmitInfo(),
-    amshortfakedata: [false, false, false, false, false, false, false, false, false, false, false, false],
+    amshortfakedata: [false, false, false, false, false, false, false, false, false, false, false, false, false],
     amshortvalid: [false, false, false, false, false, false, false, false, false, false, false, false, false],
     amshorttable1: [
       new AmShortInfo1(),

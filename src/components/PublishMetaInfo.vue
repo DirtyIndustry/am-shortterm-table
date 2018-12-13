@@ -295,7 +295,7 @@ export default class PublishMetaInfo extends Vue {
     }
     private checkSubmit() {
         this.needsubmit.tablePublishMetaneedsubmit = !this.deepEqual(this.publishmetainfo, this.localtable)
-        if (this.amshortfakedata[11] === true) {
+        if (this.amshortfakedata[0] === true) {
             this.needsubmit.tablePublishMetaneedsubmit = true
         }
     }
