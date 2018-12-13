@@ -108,7 +108,7 @@
         }
         public submitClick() {
             if (this.needsubmit.table9needsubmit === true && this.checkValidate() === true) {
-                Utils.doSubmit(9, 'AmShortTable9', this.localtable, 7, this.checkSubmit, '上午九')
+                Utils.doSubmit(9, 'AmShortTable9', this.localtable, this.checkSubmit, '上午九')
             }
         }
         @Watch('amshorttable9')

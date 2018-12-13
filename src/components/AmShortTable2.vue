@@ -145,7 +145,7 @@ export default class AmShortTable2 extends Vue {
     private deepEqual = require('deep-equal')
     public submitClick() {
         if (this.needsubmit.table2needsubmit === true && this.checkValidate() === true) {
-            Utils.doSubmit(2, 'AmShortTable2', this.localtable, 1, this.checkSubmit, '上午二')
+            Utils.doSubmit(2, 'AmShortTable2', this.localtable, this.checkSubmit, '上午二')
         }
     }
     @Watch('amshorttable2')

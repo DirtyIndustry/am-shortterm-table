@@ -56,7 +56,6 @@ const getData = () => {
 const doSubmit = (tablenumber: number,
                   globaldataname: string,
                   localdata: any,
-                  fakeindex: number,
                   check: () => void,
                   title: string): void => {
     Axios.post(hosturl + 'SetAmShortTableData',
@@ -67,7 +66,7 @@ const doSubmit = (tablenumber: number,
             if (resobj.Success === true) {
                 store.dispatch('set' + globaldataname, resobj.NewData)
                 const fakelist = store.state.amshortfakedata
-                fakelist[fakeindex] = resobj.NewFakeData
+                fakelist[tablenumber] = resobj.NewFakeData
                 store.dispatch('setAmShortFakeData', fakelist)
                 check()
                 Vue.prototype.$notify({
@@ -96,7 +95,6 @@ class Utils {
     public readonly doSubmit: (tablenumber: number,
                                globaldataname: string,
                                localdata: any,
-                               fakeindex: number,
                                check: () => void,
                                title: string) => void
     constructor() {

@@ -160,7 +160,7 @@ export default class AmShortTable6 extends Vue {
     }
     public submitClick() {
         if (this.needsubmit.table6needsubmit === true && this.checkValidate() === true) {
-            Utils.doSubmit(6, 'AmShortTable6', this.localtable, 4, this.checkSubmit, '上午六')
+            Utils.doSubmit(6, 'AmShortTable6', this.localtable, this.checkSubmit, '上午六')
         }
     }
     @Watch('amshorttable6')

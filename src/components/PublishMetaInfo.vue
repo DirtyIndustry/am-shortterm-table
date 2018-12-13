@@ -176,7 +176,7 @@ export default class PublishMetaInfo extends Vue {
     }
     public submitClick() {
         if (this.needsubmit.tablePublishMetaneedsubmit === true && this.checkValidate() === true) {
-            Utils.doSubmit(0, 'PublishMetaInfo', this.localtable, 11, this.checkSubmit, '填报信息')
+            Utils.doSubmit(0, 'PublishMetaInfo', this.localtable, this.checkSubmit, '填报信息')
         }
     }
     @Watch('publishmetainfo')
