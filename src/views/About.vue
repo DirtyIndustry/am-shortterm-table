@@ -2,7 +2,7 @@
   <div class="about" v-loading.fullscreen.lock="isloading">
     <h1>预报单制作</h1>
     <p>{{text}}</p>
-    <ReportHeaderStrip :checkedAll="checkedAll" :isIndeterminate="isIndeterminate" @checkAllChange="checkAllChange"></ReportHeaderStrip>
+    <ReportHeaderStrip :checkedAll="checkedAll" :isIndeterminate="isIndeterminate" @checkAllChange="checkAllChange" @generate="generateWord"></ReportHeaderStrip>
     <div class="separator-vertical"></div>
     <div v-for="(item, index) in reportlist" :key="index">
       <ReportItem :report="item" @selectChanged="singleSelectChanged"></ReportItem>
@@ -52,7 +52,7 @@
     }
     private requestReportStatus() {
       Axios.post(Utils.hosturl + 'GetAmShortReportStatus',
-        { publishdate: this.coltime, datajson: JSON.stringify(this.reportlist) })
+        { publishdate: this.coltime, publishhour: this.colhour, datajson: JSON.stringify(this.reportlist) })
         .then((res) => {
           this.reportlist = JSON.parse(res.data.d)
           this.checkReportStatus()
@@ -293,6 +293,19 @@
         report.selected = val
       })
     }
+    private generateWord() {
+      Axios.post(Utils.hosturl + 'GenerateAmShortReport',
+      {publishdate: this.coltime, publishhour: this.colhour, datajson: JSON.stringify(this.reportlist)})
+      .then((res) => {
+        console.log(res.data.d)
+        if (res.data.d !== '') {
+          this.reportlist = JSON.parse(res.data.d)
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    }
     private created() {
       console.log('about page created.')
       this.loadReportConfig()
@@ -305,6 +318,7 @@
         }
       }
       if (this.configloaded === true) {
+        this.requestReportStatus()
         this.checkReportStatus()
       }
     }

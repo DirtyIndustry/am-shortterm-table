@@ -3,7 +3,7 @@
     <div class="separator-horizontal"></div>
     <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="checkAllChange">选择全部</el-checkbox>
     <div class="separator-horizontal"></div>
-    <el-button>发布表单</el-button>
+    <el-button @click="generate">发布表单</el-button>
     <el-button @click="gotoHomePage">返回报表</el-button>
 </div>
 </template>
@@ -26,6 +26,10 @@ export default class ReportHeaderStrip extends Vue {
     @Emit('checkAllChange')
     private checkAllChange(val: boolean) {
         return val
+    }
+    @Emit('generate')
+    private generate() {
+        return null
     }
     private gotoHomePage() {
         const myThis = this
