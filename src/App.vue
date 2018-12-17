@@ -1,36 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <img src="./assets/logo.png">
+    <div>
+      <p>
+        If Element is successfully added to this project, you'll see an
+        <code v-text="'<el-button>'"></code>
+        below
+      </p>
+      <el-button>el-button</el-button>
     </div>
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"/>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
-import Utils from '@/utils/utils.ts'
-export default({
-  beforeCreate() {
-    document.querySelector('body').setAttribute('style', 'background-color: #d2ffe7;')
-  },
-  beforeDestroy() {
-    document.querySelector('body').removeAttribute('style')
-  },
-  mounted() {
-    Utils.loadCookie()
-    Utils.getData()
-  }
-})
-</script>
+import HelloWorld from './components/HelloWorld.vue'
 
+export default {
+  name: 'app',
+  components: {
+    HelloWorld
+  }
+}
+</script>
 
 <style>
 #app {
-  font-family: '微软雅黑', Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
