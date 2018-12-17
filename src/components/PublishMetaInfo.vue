@@ -85,6 +85,8 @@
             <el-button size="small" @click="cancelClick">取消</el-button>
             <div class="separator-horizontal"></div>
             <el-button size="small" type="primary" :disabled="!needsubmit.tablePublishMetaneedsubmit" @click="submitClick">提交</el-button>
+            <div class="separator-horizontal"></div>
+            <div class="fakedatadesc">{{fakedatadesc}}</div>
         </div>
     </el-form>
 </template>
@@ -173,6 +175,7 @@ export default class PublishMetaInfo extends Vue {
             return true
         }
     }
+    private get fakedatadesc() { return Utils.getFakeDataDesc(this.amshortfakedata[0]) }
     public submitClick() {
         if (this.needsubmit.tablePublishMetaneedsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(0, 'PublishMetaInfo', this.localtable, this.checkSubmit, '填报信息')
@@ -312,7 +315,7 @@ export default class PublishMetaInfo extends Vue {
     }
     private checkSubmit() {
         this.needsubmit.tablePublishMetaneedsubmit = !this.deepEqual(this.publishmetainfo, this.localtable)
-        if (this.amshortfakedata[0] === true) {
+        if (this.amshortfakedata[0] !== 0) {
             this.needsubmit.tablePublishMetaneedsubmit = true
         }
     }
@@ -392,6 +395,9 @@ div {
 .el-form-item >>> .el-form-item__content{
     display: block;
     width: 100% !important;
+}
+.fakedatadesc {
+    color: red;
 }
 .separator-horizontal {
     height: 80%;

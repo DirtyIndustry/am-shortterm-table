@@ -108,6 +108,8 @@
             <el-button size="small" @click="cancelClick">取消</el-button>
             <div class="separator-horizontal"></div>
             <el-button size="small" type="primary" :disabled="!needsubmit.table2needsubmit" @click="submitClick">提交</el-button>
+            <div class="separator-horizontal"></div>
+            <div class="fakedatadesc">{{fakedatadesc}}</div>
         </div>
     </div>
 </template>
@@ -164,6 +166,7 @@ export default class AmShortTable2 extends Vue {
             return true
         }
     }
+    private get fakedatadesc() { return Utils.getFakeDataDesc(this.amshortfakedata[2]) }
     private validateHeight(rule: any, value: string, callback: any) {
         if (this.usertype !== 'cx') {
             callback()
@@ -194,7 +197,7 @@ export default class AmShortTable2 extends Vue {
     }
     private checkSubmit() {
         this.needsubmit.table2needsubmit = !this.deepEqual(this.amshorttable2, this.localtable)
-        if (this.amshortfakedata[2] === true) {
+        if (this.amshortfakedata[2] !== 0) {
             this.needsubmit.table2needsubmit = true
         }
     }
@@ -307,6 +310,9 @@ div {
 .el-form-item >>> .el-form-item__content{
     display: block;
     width: 100% !important;
+}
+.fakedatadesc {
+    color: red;
 }
 .border-bottom {
     border-bottom-width: 1px;

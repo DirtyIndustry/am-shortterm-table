@@ -57,7 +57,7 @@ export default class AmShortTable3and4 extends Vue {
     public checkSubmit() {
         if (this.localupperstring !== this.upperstring
             || this.locallowerstring !== this.lowerstring
-            || this.amshortfakedata[3] === true) {
+            || this.amshortfakedata[3] !== 0) {
             this.needSubmitChange(true)
         } else {
             this.needSubmitChange(false)

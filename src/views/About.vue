@@ -36,7 +36,7 @@
     @Watch('isloading')
     private onIsLoadingChanged(val: boolean, oldVal: boolean) {
       if (val === false) {
-        this.checkReportStatus()
+        // this.checkReportStatus()
       }
     }
     private loadReportConfig() {
@@ -51,14 +51,17 @@
         })
     }
     private requestReportStatus() {
+      this.isloading = true
       Axios.post(Utils.hosturl + 'GetAmShortReportStatus',
         { publishdate: this.coltime, publishhour: this.colhour, datajson: JSON.stringify(this.reportlist) })
         .then((res) => {
           this.reportlist = JSON.parse(res.data.d)
-          this.checkReportStatus()
+          // this.checkReportStatus()
+          this.isloading = false
         })
         .catch((error) => {
           console.error(error)
+          this.isloading = false
         })
     }
     private checkReportStatus() {
@@ -72,7 +75,7 @@
                 if (this.hasEmpty(this.publishmetainfo)) {
                   report.reportStatusDesc += '填报信息有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '填报信息尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -85,7 +88,7 @@
                 if (this.hasEmpty(this.amshorttable1)) {
                   report.reportStatusDesc += '表单一有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单一尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -98,7 +101,7 @@
                 if (this.hasEmpty(this.amshorttable2)) {
                   report.reportStatusDesc += '表单二有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单二尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -111,7 +114,7 @@
                 if (this.table3HasEmpty()) {
                   report.reportStatusDesc += '表单三有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单三尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -124,7 +127,7 @@
                 if (this.table4HasEmpty()) {
                   report.reportStatusDesc += '表单四有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单四尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -137,7 +140,7 @@
                 if (this.hasEmpty(this.amshorttable5)) {
                   report.reportStatusDesc += '表单五有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单五尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -150,7 +153,7 @@
                 if (this.hasEmpty(this.amshorttable6)) {
                   report.reportStatusDesc += '表单六有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单六尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -163,7 +166,7 @@
                 if (this.hasEmpty(this.amshorttable7)) {
                   report.reportStatusDesc += '表单七有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单七尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -176,7 +179,7 @@
                 if (this.hasEmpty(this.amshorttable8)) {
                   report.reportStatusDesc += '表单八有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单八尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -189,7 +192,7 @@
                 if (this.hasEmpty(this.amshorttable9)) {
                   report.reportStatusDesc += '表单九有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单九尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -202,7 +205,7 @@
                 if (this.hasEmpty(this.amshorttable10)) {
                   report.reportStatusDesc += '表单十有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单十尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -215,7 +218,7 @@
                 if (this.hasEmpty(this.amshorttable11)) {
                   report.reportStatusDesc += '表单十一有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单十一尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -228,7 +231,7 @@
                 if (this.hasEmpty(this.amshorttable12)) {
                   report.reportStatusDesc += '表单十二有空白数据，'
                   report.reportStatus = 'notready'
-                } else if (this.amshortfakedata[num] === true) {
+                } else if (this.amshortfakedata[num] !== 0) {
                   report.reportStatusDesc += '表单十二尚未提交，'
                   report.reportStatus = 'notready'
                 } else if (!this.amshortvalid[num]) {
@@ -298,6 +301,11 @@
       {publishdate: this.coltime, publishhour: this.colhour, datajson: JSON.stringify(this.reportlist)})
       .then((res) => {
         console.log(res.data.d)
+        this.myThis.$notify({
+            title: '完成',
+            message: '预报单生成完成',
+            type: 'success'
+        })
         if (res.data.d !== '') {
           this.reportlist = JSON.parse(res.data.d)
         }
@@ -319,7 +327,7 @@
       }
       if (this.configloaded === true) {
         this.requestReportStatus()
-        this.checkReportStatus()
+        // this.checkReportStatus()
       }
     }
   }

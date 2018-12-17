@@ -49,6 +49,8 @@
             <el-button size="small" @click="cancelClick">取消</el-button>
             <div class="separator-horizontal"></div>
             <el-button size="small" type="primary" :disabled="!needsubmit.table7needsubmit" @click="submitClick">提交</el-button>
+            <div class="separator-horizontal"></div>
+            <div class="fakedatadesc">{{fakedatadesc}}</div>
         </div>
     </div>
 </template>
@@ -93,6 +95,7 @@ export default class AmShortTable7 extends Vue {
             return true
         }
     }
+    private get fakedatadesc() { return Utils.getFakeDataDesc(this.amshortfakedata[7]) }
     public submitClick() {
         if (this.needsubmit.table7needsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(7, 'AmShortTable7', this.localtable, this.checkSubmit, '上午七')
@@ -129,7 +132,7 @@ export default class AmShortTable7 extends Vue {
     }
     private checkSubmit() {
         this.needsubmit.table7needsubmit = !this.deepEqual(this.amshorttable7, this.localtable)
-        if (this.amshortfakedata[7] === true) {
+        if (this.amshortfakedata[7] !== 0) {
             this.needsubmit.table7needsubmit = true
         }
     }
@@ -215,6 +218,9 @@ div {
 .el-form-item >>> .el-form-item__content{
     display: block;
     width: 100% !important;
+}
+.fakedatadesc {
+    color: red;
 }
 .border-bottom {
     border-bottom-width: 1px;

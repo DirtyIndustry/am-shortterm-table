@@ -14,6 +14,8 @@
             <el-button size="small" @click="cancelClick">取消</el-button>
             <div class="separator-horizontal"></div>
             <el-button size="small" type="primary" :disabled="!needsubmit.table3needsubmit" @click="submitClick">提交</el-button>
+            <div class="separator-horizontal"></div>
+            <div class="fakedatadesc">{{fakedatadesc}}</div>
         </div>
     </div>
 </template>
@@ -46,6 +48,7 @@ export default class AmShortTable3 extends Vue {
             return true
         }
     }
+    private get fakedatadesc() { return Utils.getFakeDataDesc(this.amshortfakedata[3]) }
     public submitClick() {
         if (this.needsubmit.table3needsubmit === true && this.checkValidate() === true) {
             Utils.doSubmit(3, 'AmShortTable3and4', this.localtable, this.checkSubmit, '表单三')
@@ -92,7 +95,7 @@ export default class AmShortTable3 extends Vue {
     private checkSubmit() {
         if (this.localtable[0].METEOROLOGICALREVIEW !== this.amshorttable3and4[0].METEOROLOGICALREVIEW
             || this.localtable[0].METEOROLOGICALREVIEWCX !== this.amshorttable3and4[0].METEOROLOGICALREVIEWCX
-            || this.amshortfakedata[3] === true) {
+            || this.amshortfakedata[3] !== 0) {
             this.needsubmit.table3needsubmit = true
         } else {
             this.needsubmit.table3needsubmit = false
@@ -141,6 +144,9 @@ div {
     display: block;
     width: 100% !important;
     margin-left: 0 !important;
+}
+.fakedatadesc {
+    color: red;
 }
 .border-bottom {
     border-bottom-width: 1px;

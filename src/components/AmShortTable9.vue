@@ -67,6 +67,8 @@
             <el-button size="small" @click="cancelClick">取消</el-button>
             <div class="separator-horizontal"></div>
             <el-button size="small" type="primary" :disabled="!needsubmit.table9needsubmit" @click="submitClick">提交</el-button>
+            <div class="separator-horizontal"></div>
+            <div class="fakedatadesc">{{fakedatadesc}}</div>
         </div>
     </div>
 </template>
@@ -105,6 +107,7 @@
                 return true
             }
         }
+        private get fakedatadesc() { return Utils.getFakeDataDesc(this.amshortfakedata[9]) }
         public submitClick() {
             if (this.needsubmit.table9needsubmit === true && this.checkValidate() === true) {
                 Utils.doSubmit(9, 'AmShortTable9', this.localtable, this.checkSubmit, '上午九')
@@ -150,7 +153,7 @@
         }
         private checkSubmit() {
             this.needsubmit.table9needsubmit = !this.deepEqual(this.amshorttable9, this.localtable)
-            if (this.amshortfakedata[9] === true) {
+            if (this.amshortfakedata[9] !== 0) {
                 this.needsubmit.table9needsubmit = true
             }
         }
@@ -237,6 +240,9 @@
     .el-form-item >>> .el-form-item__content{
         display: block;
         width: 100% !important;
+    }
+    .fakedatadesc {
+        color: red;
     }
     .border-bottom {
         border-bottom-width: 1px;

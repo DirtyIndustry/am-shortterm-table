@@ -30,7 +30,7 @@ export default new Vuex.Store({
     colhour: 10,
     // needsubmit: [false, false, false, false, false, false, false, false, false, false, false, false, false],
     needsubmit: new NeedSubmitInfo(),
-    amshortfakedata: [false, false, false, false, false, false, false, false, false, false, false, false, false],
+    amshortfakedata: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     amshortvalid: [true, true, true, true, true, true, true, true, true, true, true, true, true],
     amshorttable1: [
       new AmShortInfo1(),
@@ -122,7 +122,7 @@ export default new Vuex.Store({
     setneedsubmit(state, value: NeedSubmitInfo): void {
       state.needsubmit = value
     },
-    setamshortfakedata(state, value: boolean[]): void {
+    setamshortfakedata(state, value: number[]): void {
       state.amshortfakedata = value
     },
     setamshortvalid(state, value: boolean[]): void {
@@ -199,7 +199,7 @@ export default new Vuex.Store({
     setNeedSubmit(context, value: NeedSubmitInfo): void {
       context.commit('setneedsubmit', value)
     },
-    setAmShortFakeData(context, value: boolean[]): void {
+    setAmShortFakeData(context, value: number[]): void {
       context.commit('setamshortfakedata', value)
     },
     setAmShortValid(context, value: boolean[]): void {

@@ -88,6 +88,30 @@ const doSubmit = (tablenumber: number,
         })
 }
 
+const getFakeDataDesc = (fake: number) => {
+    let result = ''
+    const fakestr = PrefixInteger(fake, 4)
+    if (fakestr.length === 4) {
+        if (Number(fakestr.substring(0, 1)) > 0) {
+            result += '海冰数据未提交 '
+        }
+        if (Number(fakestr.substring(1, 2)) > 0) {
+            result += '风浪数据未提交 '
+        }
+        if (Number(fakestr.substring(2, 3)) > 0) {
+            result += '潮汐数据未提交 '
+        }
+        if (Number(fakestr.substring(3)) > 0) {
+            result += '水温数据未提交 '
+        }
+    }
+    return result.trim()
+}
+
+function PrefixInteger(num: number, length: number): string {
+    return (Array(length).join('0') + num).slice(-length)
+}
+
 class Utils {
     public readonly hosturl: string
     public readonly loadCookie: () => void
@@ -97,11 +121,13 @@ class Utils {
                                localdata: any,
                                check: () => void,
                                title: string) => void
+    public readonly getFakeDataDesc: (fake: number) => string
     constructor() {
         this.hosturl = hosturl
         this.loadCookie = loadCookie
         this.getData = getData
         this.doSubmit = doSubmit
+        this.getFakeDataDesc = getFakeDataDesc
     }
 }
 export default new Utils()
